@@ -1,9 +1,18 @@
 namespace SpriteKind {
     export const Film = SpriteKind.create()
+    export const UI = SpriteKind.create()
 }
+// interaction between patrolling enemies and players 
+// 
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    Spr_Pat.vy = 0
+    pause(2000)
+    Spr_Pat.vy = 50
+})
 // resets movement once picture is taken
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
-    controller.moveSprite(Spr_Patr, 100, 100)
+    controller.moveSprite(Spr_Player, 100, 100)
 })
 // Interaction that allows player to pick up film
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSprite) {
@@ -14,7 +23,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSpr
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
         if (info.score() > 0) {
-            controller.moveSprite(Spr_Patr, 0, 0)
+            controller.moveSprite(Spr_Player, 0, 0)
             projectile = sprites.createProjectileFromSprite(img`
                 ........111.....................
                 .......11111....................
@@ -48,7 +57,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
                 ......11111111..................
                 .......11111....................
                 ........111.....................
-                `, Spr_Patr, -200, 0)
+                `, Spr_Player, -200, 0)
             info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
@@ -59,7 +68,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
         if (info.score() > 0) {
-            controller.moveSprite(Spr_Patr, 0, 0)
+            controller.moveSprite(Spr_Player, 0, 0)
             projectile = sprites.createProjectileFromSprite(img`
                 .....................111........
                 ....................11111.......
@@ -93,7 +102,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
                 ..................11111111......
                 ....................11111.......
                 .....................111........
-                `, Spr_Patr, 200, 0)
+                `, Spr_Player, 200, 0)
             info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
@@ -104,7 +113,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
         if (info.score() > 0) {
-            controller.moveSprite(Spr_Patr, 0, 0)
+            controller.moveSprite(Spr_Player, 0, 0)
             projectile = sprites.createProjectileFromSprite(img`
                 .............111111.............
                 ..........111111111111..........
@@ -138,7 +147,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
                 ................................
                 ................................
                 ................................
-                `, Spr_Patr, 0, -200)
+                `, Spr_Player, 0, -200)
             info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
@@ -149,7 +158,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
         if (info.score() > 0) {
-            controller.moveSprite(Spr_Patr, 0, 0)
+            controller.moveSprite(Spr_Player, 0, 0)
             projectile = sprites.createProjectileFromSprite(img`
                 ................................
                 ................................
@@ -183,20 +192,29 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
                 ........1111111111111111........
                 ..........111111111111..........
                 .............111111.............
-                `, Spr_Patr, 0, 200)
+                `, Spr_Player, 0, 200)
             info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
         }
     }
 })
+// interaction between patrolling enemies and camera flash
+// 
+// 
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Spr_Pat.vy = 0
+    pause(3000)
+    Spr_Pat.vy = 50
+})
 let projectile: Sprite = null
+let Spr_Pat: Sprite = null
 let Spr_Film: Sprite = null
-let Spr_Patr: Sprite = null
+let Spr_Player: Sprite = null
 tiles.setCurrentTilemap(tilemap`level2`)
 info.setScore(5)
 info.setLife(3)
-Spr_Patr = sprites.create(img`
+Spr_Player = sprites.create(img`
     . . . . 8 8 8 8 8 8 8 . . . . . 
     . . 8 8 8 8 8 8 8 8 8 8 8 . . . 
     . 8 8 8 8 8 8 8 8 8 8 8 8 8 . . 
@@ -214,9 +232,9 @@ Spr_Patr = sprites.create(img`
     . . . . 8 8 8 8 8 8 8 . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-scene.cameraFollowSprite(Spr_Patr)
-controller.moveSprite(Spr_Patr, 100, 100)
-tiles.placeOnTile(Spr_Patr, tiles.getTileLocation(2, 2))
+scene.cameraFollowSprite(Spr_Player)
+controller.moveSprite(Spr_Player, 100, 100)
+tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
 music.play(music.createSong(assets.song`Tip Toe`), music.PlaybackMode.LoopingInBackground)
 Spr_Film = sprites.create(img`
     . . . . . . . . . . . . . . . . 
@@ -237,7 +255,7 @@ Spr_Film = sprites.create(img`
     . . . . . . . . . . f . . . . . 
     `, SpriteKind.Film)
 tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
-Spr_Patr = sprites.create(img`
+Spr_Pat = sprites.create(img`
     . . f f f f f f f f f . . . . . 
     . f f f f f f f f f f f f . . . 
     f f f f f f f f f f f f f f . . 
@@ -255,3 +273,6 @@ Spr_Patr = sprites.create(img`
     . . . . 2 2 2 2 2 2 2 . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Enemy)
+tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
+Spr_Pat.vy = 50
+Spr_Pat.setBounceOnWall(true)
