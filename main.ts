@@ -90,14 +90,14 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 // 
 // 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    Spr_Pat.vy = 0
+    otherSprite.vy = 0
     One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
     Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
     info.changeScoreBy(10)
     music.setVolume(111)
     music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
     pause(3000)
-    Spr_Pat.vy = 50
+    otherSprite.vy = 50
 })
 let One_Liner: string[] = []
 let projectile: Sprite = null
@@ -242,5 +242,9 @@ Spr_Pat = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
 tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
 Spr_Pat.vy = 50
 Spr_Pat.setBounceOnWall(true)
+let Spr_Pat_2 = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
+tiles.placeOnTile(Spr_Pat_2, tiles.getTileLocation(15, 4))
+Spr_Pat_2.vy = 50
+Spr_Pat_2.setBounceOnWall(true)
 music.setVolume(50)
 music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
