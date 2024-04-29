@@ -184,21 +184,21 @@ b b b b b b b b b b b b b b b .
             case "F4~x5tRx}/JF|)A#g8II":
             case "Film":return img`
 . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . f f f f . . . . . . 
-. . . . . c b b b b f . . . . . 
-. . . . c b b b b b b f . . . . 
-. . . c b b f b b f b b f . . . 
-. . . c b b b b b b b b f . . . 
-. . . c b b b b b b b b f . . . 
-. . . c b b f b b f b b f . . . 
-. . . . c b b b b b b f . . . . 
-. . . . . c b b b b f . . . . . 
-. . . . . . c c f f . . . . . . 
-. . . . . . . f . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
+. . . . f f f f f f f . . . . . 
+. . . f b b b b b b b f . . . . 
+. . f b b b b . b b b b f . . . 
+. f b b . b b b b b . b b f . . 
+. f b b b b b b b b b b b f . . 
+. f b b b b b b b b b b b f . . 
+. f b . b b b b b b b . b f . . 
+. f b b b b b b b b b b b f . . 
+. f b b b b b b b b b b b f . . 
+. f b b . b b b b b . b b f . . 
+. . f b b b b . b b b b f . . . 
+. . . f b b b b b b b f . . . . 
+. . . . f f f f f f f . . . . . 
+. . . . . . . . . f . . . . . . 
+. . . . . . . . . . f . . . . . 
 `;
         }
         return null;

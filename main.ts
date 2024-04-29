@@ -1,7 +1,6 @@
 namespace SpriteKind {
     export const Film = SpriteKind.create()
     export const UI = SpriteKind.create()
-    export const Bananna = SpriteKind.create()
 }
 // interaction between patrolling enemies and players 
 // 
@@ -20,18 +19,17 @@ controller.A.onEvent(ControllerButtonEvent.Released, function () {
 })
 // Interaction that allows player to pick up film
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSprite) {
-    Film_Count += 1
+    info.changeScoreBy(1)
     sprites.destroy(Spr_Film)
-    Spr_Player.sayText("I've got " + Film_Count + " Film.", 1000, true)
     music.setVolume(111)
     music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
 })
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
+        if (info.score() > 0) {
             projectile = sprites.createProjectileFromSprite(assets.image`Flash Left`, Spr_Player, -200, 0)
-            Film_Count += -1
+            info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
@@ -41,18 +39,18 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     controller.moveSprite(Spr_Player, 0, 0)
-    if (Film_Count <= 0) {
+    if (info.score() <= 0) {
         Spr_Player.sayText("Out of Film", 1000, true)
     } else {
-        Spr_Player.sayText("Film: " + Film_Count, 1000, true)
+        Spr_Player.sayText("Aim...", 1000, true)
     }
 })
 // right camera shot
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
+        if (info.score() > 0) {
             projectile = sprites.createProjectileFromSprite(assets.image`Flash Right`, Spr_Player, 200, 0)
-            Film_Count += -1
+            info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
@@ -63,9 +61,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 // Upwards Camera Shot
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
+        if (info.score() > 0) {
             projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
-            Film_Count += -1
+            info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
@@ -76,9 +74,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 // Downwards Camera Shot
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
+        if (info.score() > 0) {
             projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
-            Film_Count += -1
+            info.changeScoreBy(-1)
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
@@ -90,21 +88,19 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 // 
 // 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    otherSprite.vy = 0
+    Spr_Pat.vy = 0
     One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
     Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
-    info.changeScoreBy(10)
     music.setVolume(111)
     music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
     pause(3000)
-    otherSprite.vy = 50
+    Spr_Pat.vy = 50
 })
 let One_Liner: string[] = []
 let projectile: Sprite = null
 let Spr_Pat: Sprite = null
 let Spr_Film: Sprite = null
 let Spr_Player: Sprite = null
-let Film_Count = 0
 scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -228,9 +224,7 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
 tiles.setCurrentTilemap(tilemap`level2`)
-Film_Count = 5
-let Item_Name = 0
-info.setScore(0)
+info.setScore(5)
 info.setLife(3)
 Spr_Player = sprites.create(assets.image`Papa`, SpriteKind.Player)
 scene.cameraFollowSprite(Spr_Player)
@@ -242,9 +236,5 @@ Spr_Pat = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
 tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
 Spr_Pat.vy = 50
 Spr_Pat.setBounceOnWall(true)
-let Spr_Pat_2 = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
-tiles.placeOnTile(Spr_Pat_2, tiles.getTileLocation(15, 4))
-Spr_Pat_2.vy = 50
-Spr_Pat_2.setBounceOnWall(true)
 music.setVolume(50)
 music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
