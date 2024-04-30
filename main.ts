@@ -1,14 +1,24 @@
 namespace SpriteKind {
     export const Film = SpriteKind.create()
     export const UI = SpriteKind.create()
+    export const Bananna = SpriteKind.create()
 }
 // interaction between patrolling enemies and players 
 // 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    music.setVolume(255)
+    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     info.changeLifeBy(-1)
-    Spr_Pat.vy = 0
-    pause(2000)
-    Spr_Pat.vy = 50
+    scene.cameraShake(4, 500)
+    if (otherSprite.vy != 0) {
+        otherSprite.vy = 0
+        pause(2000)
+        otherSprite.vy = 50
+    } else if (otherSprite.vx != 0) {
+        otherSprite.vx = 0
+        pause(2000)
+        otherSprite.vx = 50
+    }
 })
 // resets movement once picture is taken
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
@@ -16,186 +26,69 @@ controller.A.onEvent(ControllerButtonEvent.Released, function () {
 })
 // Interaction that allows player to pick up film
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSprite) {
-    info.changeScoreBy(1)
+    Film_Count += 1
     sprites.destroy(Spr_Film)
+    Spr_Player.sayText("I've got " + Film_Count + " Film.", 1000, true)
+    music.setVolume(111)
+    music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
 })
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (info.score() > 0) {
-            controller.moveSprite(Spr_Player, 0, 0)
-            projectile = sprites.createProjectileFromSprite(img`
-                ........111.....................
-                .......11111....................
-                ......11111111..................
-                ......111111111.................
-                .....111111111111...............
-                ....11111111111111..............
-                ...11111111111111111............
-                ...111111111111111111...........
-                ..111111111111111111111.........
-                ..1111111111111111111111........
-                .111111111111111111111111.......
-                .1111111111111111111111111......
-                .11111111111111111111111111.....
-                1111111111111111111111111111....
-                1111111111111111111111111111....
-                1111111111111111111111111111....
-                1111111111111111111111111111....
-                1111111111111111111111111111....
-                1111111111111111111111111111....
-                .11111111111111111111111111.....
-                .1111111111111111111111111......
-                .111111111111111111111111.......
-                ..1111111111111111111111........
-                ..111111111111111111111.........
-                ...111111111111111111...........
-                ...11111111111111111............
-                ....11111111111111..............
-                .....111111111111...............
-                ......111111111.................
-                ......11111111..................
-                .......11111....................
-                ........111.....................
-                `, Spr_Player, -200, 0)
-            info.changeScoreBy(-1)
+        if (Film_Count > 0) {
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Left`, Spr_Player, -200, 0)
+            Film_Count += -1
             pause(100)
             sprites.destroy(projectile)
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
         }
+    }
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    controller.moveSprite(Spr_Player, 0, 0)
+    if (Film_Count <= 0) {
+        Spr_Player.sayText("Out of Film", 1000, true)
+    } else {
+        Spr_Player.sayText("Film: " + Film_Count, 1000, true)
     }
 })
 // right camera shot
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (info.score() > 0) {
-            controller.moveSprite(Spr_Player, 0, 0)
-            projectile = sprites.createProjectileFromSprite(img`
-                .....................111........
-                ....................11111.......
-                ..................11111111......
-                .................111111111......
-                ...............111111111111.....
-                ..............11111111111111....
-                ............11111111111111111...
-                ...........111111111111111111...
-                .........111111111111111111111..
-                ........1111111111111111111111..
-                .......111111111111111111111111.
-                ......1111111111111111111111111.
-                .....11111111111111111111111111.
-                ....1111111111111111111111111111
-                ....1111111111111111111111111111
-                ....1111111111111111111111111111
-                ....1111111111111111111111111111
-                ....1111111111111111111111111111
-                ....1111111111111111111111111111
-                .....11111111111111111111111111.
-                ......1111111111111111111111111.
-                .......111111111111111111111111.
-                ........1111111111111111111111..
-                .........111111111111111111111..
-                ...........111111111111111111...
-                ............11111111111111111...
-                ..............11111111111111....
-                ...............111111111111.....
-                .................111111111......
-                ..................11111111......
-                ....................11111.......
-                .....................111........
-                `, Spr_Player, 200, 0)
-            info.changeScoreBy(-1)
+        if (Film_Count > 0) {
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Right`, Spr_Player, 200, 0)
+            Film_Count += -1
             pause(100)
             sprites.destroy(projectile)
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
         }
     }
 })
 // Upwards Camera Shot
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (info.score() > 0) {
-            controller.moveSprite(Spr_Player, 0, 0)
-            projectile = sprites.createProjectileFromSprite(img`
-                .............111111.............
-                ..........111111111111..........
-                ........1111111111111111........
-                ......11111111111111111111......
-                .....1111111111111111111111.....
-                ....111111111111111111111111....
-                ..1111111111111111111111111111..
-                .111111111111111111111111111111.
-                11111111111111111111111111111111
-                11111111111111111111111111111111
-                11111111111111111111111111111111
-                .111111111111111111111111111111.
-                ..1111111111111111111111111111..
-                ..1111111111111111111111111111..
-                ...11111111111111111111111111...
-                ....111111111111111111111111....
-                ....111111111111111111111111....
-                .....1111111111111111111111.....
-                ......11111111111111111111......
-                ......11111111111111111111......
-                .......111111111111111111.......
-                ........1111111111111111........
-                ........1111111111111111........
-                .........11111111111111.........
-                ..........111111111111..........
-                ...........1111111111...........
-                ............11111111............
-                .............111111.............
-                ................................
-                ................................
-                ................................
-                ................................
-                `, Spr_Player, 0, -200)
-            info.changeScoreBy(-1)
+        if (Film_Count > 0) {
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
+            Film_Count += -1
             pause(100)
             sprites.destroy(projectile)
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
         }
     }
 })
 // Downwards Camera Shot
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
-        if (info.score() > 0) {
-            controller.moveSprite(Spr_Player, 0, 0)
-            projectile = sprites.createProjectileFromSprite(img`
-                ................................
-                ................................
-                ................................
-                ................................
-                .............111111.............
-                ............11111111............
-                ...........1111111111...........
-                ..........111111111111..........
-                .........11111111111111.........
-                ........1111111111111111........
-                ........1111111111111111........
-                .......111111111111111111.......
-                ......11111111111111111111......
-                ......11111111111111111111......
-                .....1111111111111111111111.....
-                ....111111111111111111111111....
-                ....111111111111111111111111....
-                ...11111111111111111111111111...
-                ..1111111111111111111111111111..
-                ..1111111111111111111111111111..
-                .111111111111111111111111111111.
-                11111111111111111111111111111111
-                11111111111111111111111111111111
-                11111111111111111111111111111111
-                .111111111111111111111111111111.
-                ..1111111111111111111111111111..
-                ....111111111111111111111111....
-                .....1111111111111111111111.....
-                ......11111111111111111111......
-                ........1111111111111111........
-                ..........111111111111..........
-                .............111111.............
-                `, Spr_Player, 0, 200)
-            info.changeScoreBy(-1)
+        if (Film_Count > 0) {
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
+            Film_Count += -1
             pause(100)
             sprites.destroy(projectile)
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
         }
     }
 })
@@ -203,76 +96,167 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 // 
 // 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    Spr_Pat.vy = 0
-    pause(3000)
-    Spr_Pat.vy = 50
+    if (otherSprite.vy != 0) {
+        otherSprite.vy = 0
+        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
+        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
+        info.changeScoreBy(10)
+        music.setVolume(111)
+        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
+        pause(3000)
+        otherSprite.vy = 50
+    } else if (otherSprite.vx > 0) {
+        otherSprite.vx = 0
+        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
+        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
+        info.changeScoreBy(10)
+        music.setVolume(111)
+        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
+        pause(3000)
+        otherSprite.vx = 50
+    }
 })
+let One_Liner: string[] = []
 let projectile: Sprite = null
-let Spr_Pat: Sprite = null
 let Spr_Film: Sprite = null
 let Spr_Player: Sprite = null
+let Film_Count = 0
+scene.setBackgroundImage(img`
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+    `)
 tiles.setCurrentTilemap(tilemap`level2`)
-info.setScore(5)
+Film_Count = 5
+let Item_Name = 0
+info.setScore(0)
 info.setLife(3)
-Spr_Player = sprites.create(img`
-    . . . . 8 8 8 8 8 8 8 . . . . . 
-    . . 8 8 8 8 8 8 8 8 8 8 8 . . . 
-    . 8 8 8 8 8 8 8 8 8 8 8 8 8 . . 
-    . 8 8 8 8 8 8 8 8 8 8 8 8 8 . . 
-    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 . 
-    8 8 8 8 8 8 8 8 8 8 8 8 1 1 8 . 
-    8 1 1 8 8 8 8 8 8 8 8 8 8 8 8 . 
-    8 1 1 8 8 8 8 8 8 8 8 8 8 8 8 . 
-    8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 . 
-    8 8 8 1 1 1 1 1 1 1 1 1 8 8 8 . 
-    8 8 8 8 8 8 1 8 8 8 8 8 8 8 8 . 
-    . 8 8 8 8 8 1 8 8 8 8 8 8 8 . . 
-    . 8 8 8 8 8 8 8 8 8 8 8 8 8 . . 
-    . . 8 8 8 8 8 8 8 8 8 8 8 . . . 
-    . . . . 8 8 8 8 8 8 8 . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
+Spr_Player = sprites.create(assets.image`Papa`, SpriteKind.Player)
 scene.cameraFollowSprite(Spr_Player)
 controller.moveSprite(Spr_Player, 100, 100)
 tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
-music.play(music.createSong(assets.song`Tip Toe`), music.PlaybackMode.LoopingInBackground)
-Spr_Film = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . f f f f f f f . . . . . 
-    . . . f b b b b b b b f . . . . 
-    . . f b b b b . b b b b f . . . 
-    . f b b . b b b b b . b b f . . 
-    . f b b b b b b b b b b b f . . 
-    . f b b b b b b b b b b b f . . 
-    . f b . b b b b b b b . b f . . 
-    . f b b b b b b b b b b b f . . 
-    . f b b b b b b b b b b b f . . 
-    . f b b . b b b b b . b b f . . 
-    . . f b b b b . b b b b f . . . 
-    . . . f b b b b b b b f . . . . 
-    . . . . f f f f f f f . . . . . 
-    . . . . . . . . . f . . . . . . 
-    . . . . . . . . . . f . . . . . 
-    `, SpriteKind.Film)
+Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
 tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
-Spr_Pat = sprites.create(img`
-    . . f f f f f f f f f . . . . . 
-    . f f f f f f f f f f f f . . . 
-    f f f f f f f f f f f f f f . . 
-    f f f f f f f f f f f f f f . . 
-    f f f f f f f f f f f f f f f f 
-    2 2 1 1 2 2 2 2 2 2 2 1 1 2 2 . 
-    2 2 2 2 1 2 2 2 2 2 1 2 2 2 2 . 
-    2 2 1 1 2 1 2 2 2 1 2 1 1 2 2 . 
-    2 2 1 1 2 2 2 2 2 2 2 1 1 2 2 . 
-    2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . 
-    2 2 2 2 2 1 1 1 1 1 2 2 2 2 2 . 
-    . 2 2 2 1 2 2 2 2 2 1 2 2 2 . . 
-    . 2 2 2 2 2 2 2 2 2 2 2 2 2 . . 
-    . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-    . . . . 2 2 2 2 2 2 2 . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Enemy)
+let Spr_Pat = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
 tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
 Spr_Pat.vy = 50
 Spr_Pat.setBounceOnWall(true)
+music.setVolume(50)
+music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
