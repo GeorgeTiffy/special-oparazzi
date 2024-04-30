@@ -10,9 +10,15 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     info.changeLifeBy(-1)
     scene.cameraShake(4, 500)
-    Spr_Pat.vy = 0
-    pause(2000)
-    Spr_Pat.vy = 50
+    if (otherSprite.vy != 0) {
+        otherSprite.vy = 0
+        pause(2000)
+        otherSprite.vy = 50
+    } else if (otherSprite.vx != 0) {
+        otherSprite.vx = 0
+        pause(2000)
+        otherSprite.vx = 50
+    }
 })
 // resets movement once picture is taken
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
@@ -90,18 +96,28 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 // 
 // 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    Spr_Pat.vy = 0
-    One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
-    Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
-    info.changeScoreBy(10)
-    music.setVolume(111)
-    music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
-    pause(3000)
-    Spr_Pat.vy = 50
+    if (otherSprite.vy != 0) {
+        otherSprite.vy = 0
+        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
+        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
+        info.changeScoreBy(10)
+        music.setVolume(111)
+        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
+        pause(3000)
+        otherSprite.vy = 50
+    } else if (otherSprite.vx > 0) {
+        otherSprite.vx = 0
+        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
+        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
+        info.changeScoreBy(10)
+        music.setVolume(111)
+        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
+        pause(3000)
+        otherSprite.vx = 50
+    }
 })
 let One_Liner: string[] = []
 let projectile: Sprite = null
-let Spr_Pat: Sprite = null
 let Spr_Film: Sprite = null
 let Spr_Player: Sprite = null
 let Film_Count = 0
@@ -238,7 +254,7 @@ controller.moveSprite(Spr_Player, 100, 100)
 tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
 Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
 tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
-Spr_Pat = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
+let Spr_Pat = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
 tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
 Spr_Pat.vy = 50
 Spr_Pat.setBounceOnWall(true)
