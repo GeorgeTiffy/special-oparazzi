@@ -58,6 +58,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSpr
     music.setVolume(111)
     music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
 })
+info.onCountdownEnd(function () {
+    music.play(music.melodyPlayable(music.zapped), music.PlaybackMode.UntilDone)
+    game.splash("\"You're taking too long!\"", "(-100 Points)")
+    info.changeScoreBy(-100)
+})
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
@@ -270,6 +275,7 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
 tiles.setCurrentTilemap(tilemap`level2`)
+music.setVolume(25)
 music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
 let Spr_Play_Dialogue = sprites.create(assets.image`pap Dialogue`, SpriteKind.Dialogue)
 tiles.placeOnTile(Spr_Play_Dialogue, tiles.getTileLocation(36, 7))
@@ -282,9 +288,10 @@ game.showLongText("Hello (name), I've got a job for you.", DialogLayout.Bottom)
 game.showLongText("It might be dangerous, but it should have a high payout.", DialogLayout.Bottom)
 game.showLongText("Think you can handle it?", DialogLayout.Bottom)
 music.stopAllSounds()
-pause(2000)
+pause(500)
 Film_Count = 5
 let Item_Name = 0
+info.startCountdown(90)
 info.setScore(0)
 info.setLife(3)
 spriteutils.setLifeImage(assets.image`Little Goobs`)
