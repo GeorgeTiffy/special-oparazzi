@@ -79,6 +79,19 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Spr_Player.sayText("Film: " + Film_Count, 1000, true)
     }
 })
+// Downwards Camera Shot
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
+        }
+    }
+})
 // right camera shot
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
@@ -88,7 +101,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
         }
     }
 })
@@ -97,19 +110,6 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (controller.A.isPressed()) {
         if (Film_Count > 0) {
             projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
-        }
-    }
-})
-// Downwards Camera Shot
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
             Film_Count += -1
             pause(100)
             sprites.destroy(projectile)
