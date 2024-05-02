@@ -2,6 +2,8 @@ namespace SpriteKind {
     export const Film = SpriteKind.create()
     export const UI = SpriteKind.create()
     export const Bananna = SpriteKind.create()
+    export const Enemy2 = SpriteKind.create()
+    export const Dialogue = SpriteKind.create()
 }
 // interaction between patrolling enemies and players 
 // 
@@ -20,9 +22,33 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         otherSprite.vx = 50
     }
 })
+info.onLifeZero(function () {
+    music.stopAllSounds()
+    game.setGameOverEffect(false, effects.melt)
+    game.setGameOverMessage(false, "YOU FAILED")
+    game.setGameOverPlayable(false, music.melodyPlayable(music.bigCrash), false)
+    game.gameOver(false)
+})
 // resets movement once picture is taken
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Spr_Player, 100, 100)
+})
+// interaction between patrolling enemies and players 
+// 
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherSprite) {
+    music.setVolume(255)
+    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+    info.changeLifeBy(-1)
+    scene.cameraShake(4, 500)
+    if (otherSprite.vy != 0) {
+        otherSprite.vy = 0
+        pause(2000)
+        otherSprite.vy = 50
+    } else if (otherSprite.vx != 0) {
+        otherSprite.vx = 0
+        pause(2000)
+        otherSprite.vx = 50
+    }
 })
 // Interaction that allows player to pick up film
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSprite) {
@@ -244,19 +270,90 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
 tiles.setCurrentTilemap(tilemap`level2`)
+music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
+let Spr_Play_Dialogue = sprites.create(assets.image`pap Dialogue`, SpriteKind.Dialogue)
+tiles.placeOnTile(Spr_Play_Dialogue, tiles.getTileLocation(36, 7))
+let Spr_Boss = sprites.create(assets.image`Boss`, SpriteKind.Dialogue)
+tiles.placeOnTile(Spr_Boss, tiles.getTileLocation(41, 7))
+let Spr_Camera = sprites.create(assets.image`Camera`, SpriteKind.Dialogue)
+tiles.placeOnTile(Spr_Camera, tiles.getTileLocation(39, 7))
+scene.cameraFollowSprite(Spr_Camera)
+game.showLongText("Hello (name), I've got a job for you.", DialogLayout.Bottom)
+game.showLongText("It might be dangerous, but it should have a high payout.", DialogLayout.Bottom)
+game.showLongText("Think you can handle it?", DialogLayout.Bottom)
+music.stopAllSounds()
+pause(2000)
 Film_Count = 5
 let Item_Name = 0
 info.setScore(0)
 info.setLife(3)
-Spr_Player = sprites.create(assets.image`Papa`, SpriteKind.Player)
+spriteutils.setLifeImage(assets.image`Little Goobs`)
+Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
 scene.cameraFollowSprite(Spr_Player)
 controller.moveSprite(Spr_Player, 100, 100)
 tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
 Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
 tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
-let Spr_Pat = sprites.create(assets.image`Patrol`, SpriteKind.Enemy)
+let Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
 tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
 Spr_Pat.vy = 50
 Spr_Pat.setBounceOnWall(true)
-music.setVolume(50)
+let Spr_Glas = sprites.create(img`
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ............11111111............
+    ...........1111111111...........
+    ...........1111111111...........
+    ...........1111111111...........
+    ...........f11111111f...........
+    ...........1ff11111f1...........
+    ..........1cccfcccfcc1..........
+    ..........11ccc111ccc1..........
+    ..........11ccc111ccc1..........
+    ...bbbbbbb111111111111bbbb......
+    ...bbbbbbb111111111111bbbf......
+    ...bbbbbb111f1111111111bbf......
+    ...fbbbbb11f1fffffff111bbf......
+    ...fbbbbb111f11111f1111bbf......
+    ...fbbbbb1111fffff11111bbf......
+    ...f.bbbb11111111111111b.f......
+    ...f.bbbbbbbbbbbbbbbbbbb.f......
+    ...f..bbbbbbbbbbbbbbbbbb.f......
+    ...f..bbbbbbbbbbbbbbbbbb.f......
+    ......bbbbbbbbbbbbbbbbbb........
+    .......bbbbbbbbbbbbbbbbb........
+    .......ffff........ffff.........
+    .......ffff........ffff.........
+    .......ffff........ffff.........
+    .......fffff.......fffff........
+    ................................
+    `, SpriteKind.Enemy2)
+tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+Spr_Glas.vy = 50
+Spr_Glas.setBounceOnWall(true)
+music.setVolume(25)
 music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+forever(function () {
+    if (Spr_Player.vy < 0) {
+        Spr_Player.setImage(assets.image`pap_back`)
+    } else if (Spr_Player.vy > 0) {
+        Spr_Player.setImage(assets.image`pap_front`)
+    } else if (Spr_Player.vx > 0) {
+        Spr_Player.setImage(assets.image`pap_right`)
+    } else if (Spr_Player.vx < 0) {
+        Spr_Player.setImage(assets.image`pap_left`)
+    }
+    if (Spr_Pat.vy < 0) {
+        Spr_Pat.setImage(assets.image`pat_back`)
+    } else if (Spr_Pat.vy > 0) {
+        Spr_Pat.setImage(assets.image`pat_front`)
+    } else if (Spr_Pat.vx > 0) {
+        Spr_Pat.setImage(assets.image`pat_right`)
+    } else if (Spr_Pat.vx < 0) {
+        Spr_Pat.setImage(assets.image`pat_left`)
+    }
+})
