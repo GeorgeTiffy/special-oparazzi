@@ -22,11 +22,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         otherSprite.vx = 50
     }
 })
-info.onCountdownEnd(function () {
-    music.play(music.melodyPlayable(music.zapped), music.PlaybackMode.UntilDone)
-    game.splash("\"You're taking too long!\"", "(-100 Points)")
-    info.changeScoreBy(-100)
-})
 info.onLifeZero(function () {
     music.stopAllSounds()
     game.setGameOverEffect(false, effects.melt)
@@ -62,11 +57,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSpr
     Spr_Player.sayText("I've got " + Film_Count + " Film.", 1000, true)
     music.setVolume(111)
     music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
-})
-info.onCountdownEnd(function () {
-    music.play(music.melodyPlayable(music.zapped), music.PlaybackMode.UntilDone)
-    game.splash("\"You're taking too long!\"", "(-100 Points)")
-    info.changeScoreBy(-100)
 })
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -280,7 +270,6 @@ scene.setBackgroundImage(img`
     dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     `)
 tiles.setCurrentTilemap(tilemap`level2`)
-music.setVolume(25)
 music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
 let Spr_Play_Dialogue = sprites.create(assets.image`pap Dialogue`, SpriteKind.Dialogue)
 tiles.placeOnTile(Spr_Play_Dialogue, tiles.getTileLocation(36, 7))
@@ -293,10 +282,9 @@ game.showLongText("Hello (name), I've got a job for you.", DialogLayout.Bottom)
 game.showLongText("It might be dangerous, but it should have a high payout.", DialogLayout.Bottom)
 game.showLongText("Think you can handle it?", DialogLayout.Bottom)
 music.stopAllSounds()
-pause(500)
+pause(2000)
 Film_Count = 5
 let Item_Name = 0
-info.startCountdown(90)
 info.setScore(0)
 info.setLife(3)
 spriteutils.setLifeImage(assets.image`Little Goobs`)
@@ -310,11 +298,40 @@ let Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
 tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
 Spr_Pat.vy = 50
 Spr_Pat.setBounceOnWall(true)
-let Spr_Pat2 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(21, 11))
-Spr_Pat2.vx = 50
-Spr_Pat2.setBounceOnWall(true)
-let Spr_Glas = sprites.create(assets.image`Glass_front`, SpriteKind.Enemy2)
+let Spr_Glas = sprites.create(img`
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ................................
+    ............11111111............
+    ...........1111111111...........
+    ...........1111111111...........
+    ...........1111111111...........
+    ...........f11111111f...........
+    ...........1ff11111f1...........
+    ..........1cccfcccfcc1..........
+    ..........11ccc111ccc1..........
+    ..........11ccc111ccc1..........
+    ...bbbbbbb111111111111bbbb......
+    ...bbbbbbb111111111111bbbf......
+    ...bbbbbb111f1111111111bbf......
+    ...fbbbbb11f1fffffff111bbf......
+    ...fbbbbb111f11111f1111bbf......
+    ...fbbbbb1111fffff11111bbf......
+    ...f.bbbb11111111111111b.f......
+    ...f.bbbbbbbbbbbbbbbbbbb.f......
+    ...f..bbbbbbbbbbbbbbbbbb.f......
+    ...f..bbbbbbbbbbbbbbbbbb.f......
+    ......bbbbbbbbbbbbbbbbbb........
+    .......bbbbbbbbbbbbbbbbb........
+    .......ffff........ffff.........
+    .......ffff........ffff.........
+    .......ffff........ffff.........
+    .......fffff.......fffff........
+    ................................
+    `, SpriteKind.Enemy2)
 tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
 Spr_Glas.vy = 50
 Spr_Glas.setBounceOnWall(true)
@@ -338,23 +355,5 @@ forever(function () {
         Spr_Pat.setImage(assets.image`pat_right`)
     } else if (Spr_Pat.vx < 0) {
         Spr_Pat.setImage(assets.image`pat_left`)
-    }
-    if (Spr_Pat2.vy < 0) {
-        Spr_Pat2.setImage(assets.image`pat_back`)
-    } else if (Spr_Pat2.vy > 0) {
-        Spr_Pat2.setImage(assets.image`pat_front`)
-    } else if (Spr_Pat2.vx > 0) {
-        Spr_Pat2.setImage(assets.image`pat_right`)
-    } else if (Spr_Pat2.vx < 0) {
-        Spr_Pat2.setImage(assets.image`pat_left`)
-    }
-    if (Spr_Glas.vy < 0) {
-        Spr_Glas.setImage(assets.image`glass_back`)
-    } else if (Spr_Glas.vy > 0) {
-        Spr_Glas.setImage(assets.image`Glass_front`)
-    } else if (Spr_Glas.vx > 0) {
-        Spr_Glas.setImage(assets.image`glass_right`)
-    } else if (Spr_Glas.vx < 0) {
-        Spr_Glas.setImage(assets.image`glass_left`)
     }
 })
