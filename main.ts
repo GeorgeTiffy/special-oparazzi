@@ -29,6 +29,44 @@ info.onLifeZero(function () {
     game.setGameOverPlayable(false, music.melodyPlayable(music.bigCrash), false)
     game.gameOver(false)
 })
+function BossText () {
+    game.setDialogTextColor(0)
+    game.setDialogFrame(img`
+        b b b b b b b b b b b b b b b 
+        b 3 b b b 3 b b b 3 b b b 3 b 
+        b b b 3 b b b 3 b b b 3 b b b 
+        b b 3 b b b b b b b b b 3 b b 
+        b b b b b b b b b b b b b b b 
+        b 3 b b b b b b b b b b b 3 b 
+        b b b b b b b b b b b b b b b 
+        b b 3 b b b b b b b b b 3 b b 
+        b b b b b b b b b b b b b b b 
+        b 3 b b b b b b b b b b b 3 b 
+        b b b b b b b b b b b b b b b 
+        b b 3 b b b b b b b b b 3 b b 
+        b b b 3 b b b 3 b b b 3 b b b 
+        b 3 b b b 3 b b b 3 b b b 3 b 
+        b b b b b b b b b b b b b b b 
+        `)
+    game.setDialogCursor(img`
+        . . . . . . . 9 . . . . . . . . 
+        . . . . . . . . 9 . . . . . . . 
+        . . . . . . . . 9 9 9 9 9 9 . . 
+        . . . . . . . . . . . . . 9 9 . 
+        . . . . . . . . . . . 9 9 9 . . 
+        . . . . . . . . . . . 9 9 . . . 
+        . . . . . . . . . . 9 9 9 9 . . 
+        5 5 5 5 3 3 3 3 3 3 4 3 9 9 9 . 
+        5 5 5 5 3 4 4 4 4 4 9 9 9 9 9 9 
+        . . . . . . . . . . . 9 9 9 9 . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
+}
 // resets movement once picture is taken
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Spr_Player, 100, 100)
@@ -67,7 +105,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
         }
     }
 })
@@ -88,7 +126,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
         }
     }
 })
@@ -114,7 +152,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
             pause(100)
             sprites.destroy(projectile)
             music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
         }
     }
 })
@@ -278,8 +316,11 @@ tiles.placeOnTile(Spr_Boss, tiles.getTileLocation(41, 7))
 let Spr_Camera = sprites.create(assets.image`Camera`, SpriteKind.Dialogue)
 tiles.placeOnTile(Spr_Camera, tiles.getTileLocation(39, 7))
 scene.cameraFollowSprite(Spr_Camera)
+BossText()
 game.showLongText("Hello (name), I've got a job for you.", DialogLayout.Bottom)
+BossText()
 game.showLongText("It might be dangerous, but it should have a high payout.", DialogLayout.Bottom)
+BossText()
 game.showLongText("Think you can handle it?", DialogLayout.Bottom)
 music.stopAllSounds()
 pause(2000)
@@ -298,41 +339,8 @@ let Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
 tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
 Spr_Pat.vy = 50
 Spr_Pat.setBounceOnWall(true)
-let Spr_Glas = sprites.create(img`
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ................................
-    ............11111111............
-    ...........1111111111...........
-    ...........1111111111...........
-    ...........1111111111...........
-    ...........f11111111f...........
-    ...........1ff11111f1...........
-    ..........1cccfcccfcc1..........
-    ..........11ccc111ccc1..........
-    ..........11ccc111ccc1..........
-    ...bbbbbbb111111111111bbbb......
-    ...bbbbbbb111111111111bbbf......
-    ...bbbbbb111f1111111111bbf......
-    ...fbbbbb11f1fffffff111bbf......
-    ...fbbbbb111f11111f1111bbf......
-    ...fbbbbb1111fffff11111bbf......
-    ...f.bbbb11111111111111b.f......
-    ...f.bbbbbbbbbbbbbbbbbbb.f......
-    ...f..bbbbbbbbbbbbbbbbbb.f......
-    ...f..bbbbbbbbbbbbbbbbbb.f......
-    ......bbbbbbbbbbbbbbbbbb........
-    .......bbbbbbbbbbbbbbbbb........
-    .......ffff........ffff.........
-    .......ffff........ffff.........
-    .......ffff........ffff.........
-    .......fffff.......fffff........
-    ................................
-    `, SpriteKind.Enemy2)
-tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+let Spr_Glas = sprites.create(assets.image`glass_front`, SpriteKind.Enemy2)
+tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(1.5, 15))
 Spr_Glas.vy = 50
 Spr_Glas.setBounceOnWall(true)
 music.setVolume(25)
@@ -355,5 +363,14 @@ forever(function () {
         Spr_Pat.setImage(assets.image`pat_right`)
     } else if (Spr_Pat.vx < 0) {
         Spr_Pat.setImage(assets.image`pat_left`)
+    }
+    if (Spr_Glas.vy < 0) {
+        Spr_Glas.setImage(assets.image`glass_back`)
+    } else if (Spr_Glas.vy > 0) {
+        Spr_Glas.setImage(assets.image`glass_front`)
+    } else if (Spr_Glas.vx > 0) {
+        Spr_Glas.setImage(assets.image`glass_right`)
+    } else if (Spr_Glas.vx < 0) {
+        Spr_Glas.setImage(assets.image`glass_left`)
     }
 })
