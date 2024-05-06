@@ -22,6 +22,32 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         otherSprite.vx = 50
     }
 })
+// Upwards Camera Shot
+controller.up.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
+            Film_Count += -1
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            pause(100)
+            sprites.destroy(projectile)
+        }
+    }
+})
+// Left camera shot
+controller.left.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Left`, Spr_Player, -200, 0)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
+        }
+    }
+})
 info.onLifeZero(function () {
     music.stopAllSounds()
     game.setGameOverEffect(false, effects.melt)
@@ -58,13 +84,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSpr
     music.setVolume(111)
     music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
 })
-// Left camera shot
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+// right camera shot
+controller.right.onEvent(ControllerButtonEvent.Released, function () {
     if (controller.A.isPressed()) {
         if (Film_Count > 0) {
             music.setVolume(255)
             music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Left`, Spr_Player, -200, 0)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Right`, Spr_Player, 200, 0)
             Film_Count += -1
             pause(100)
             sprites.destroy(projectile)
@@ -77,45 +103,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Spr_Player.sayText("Out of Film", 1000, true)
     } else {
         Spr_Player.sayText("Film: " + Film_Count, 1000, true)
-    }
-})
-// right camera shot
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Right`, Spr_Player, 200, 0)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
-        }
-    }
-})
-// Upwards Camera Shot
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
-            Film_Count += -1
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            pause(100)
-            sprites.destroy(projectile)
-        }
-    }
-})
-// Downwards Camera Shot
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
-        }
     }
 })
 // interaction between patrolling enemies and camera flash
@@ -140,6 +127,19 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
         pause(3000)
         otherSprite.vx = 50
+    }
+})
+// Downwards Camera Shot
+controller.down.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
+        }
     }
 })
 let One_Liner: string[] = []
@@ -355,5 +355,14 @@ forever(function () {
         Spr_Pat.setImage(assets.image`pat_right`)
     } else if (Spr_Pat.vx < 0) {
         Spr_Pat.setImage(assets.image`pat_left`)
+    }
+    if (Spr_Glas.vy < 0) {
+        Spr_Glas.setImage(assets.image`glas_back`)
+    } else if (Spr_Glas.vy > 0) {
+        Spr_Glas.setImage(assets.image`glas_front`)
+    } else if (Spr_Glas.vx > 0) {
+        Spr_Glas.setImage(assets.image`glas_right`)
+    } else if (Spr_Glas.vx < 0) {
+        Spr_Glas.setImage(assets.image`glas_left`)
     }
 })
