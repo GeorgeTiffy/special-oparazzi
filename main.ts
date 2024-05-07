@@ -5,8 +5,7 @@ namespace SpriteKind {
     export const Enemy2 = SpriteKind.create()
     export const Dialogue = SpriteKind.create()
 }
-// interaction between patrolling enemies and players 
-// 
+// interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     music.setVolume(255)
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
@@ -168,9 +167,24 @@ function RunLevel () {
         Spr_Camera = sprites.create(assets.image`Camera`, SpriteKind.Dialogue)
         tiles.placeOnTile(Spr_Camera, tiles.getTileLocation(9, 9))
         scene.cameraFollowSprite(Spr_Camera)
-        game.showLongText("Hello (name), I've got a job for you.", DialogLayout.Bottom)
-        game.showLongText("It might be dangerous, but it should have a high payout.", DialogLayout.Bottom)
-        game.showLongText("Think you can handle it?", DialogLayout.Bottom)
+        BawsmanDialogue()
+        game.showLongText("Ratzi I've got a job for you!", DialogLayout.Bottom)
+        RaziDialogue()
+        game.showLongText("Mr.Bawsman had walked up to my desk to talk", DialogLayout.Bottom)
+        game.showLongText("I knew this could only mean one thing...", DialogLayout.Bottom)
+        game.showLongText("he had a job for me...", DialogLayout.Bottom)
+        BawsmanDialogue()
+        game.showLongText("...", DialogLayout.Bottom)
+        game.showLongText("Right...", DialogLayout.Bottom)
+        game.showLongText("As you probably already know ", DialogLayout.Bottom)
+        game.showLongText("(celebrity) just starred in that new sci-fi movie", DialogLayout.Bottom)
+        game.showLongText("He's been caught on the phone during his own premiere once already", DialogLayout.Bottom)
+        game.showLongText("So this is prime photo opportunity!", DialogLayout.Bottom)
+        RaziDialogue()
+        game.showLongText("Bawsman was counting on me to do the job right, I knew I'd have to accept...", DialogLayout.Bottom)
+        game.showLongText("...", DialogLayout.Bottom)
+        music.stopAllSounds()
+        game.showLongText("I accept", DialogLayout.Bottom)
         Level += 1
         sprites.destroy(Spr_Play_Dialogue)
         sprites.destroy(Spr_Boss)
@@ -301,7 +315,6 @@ function RunLevel () {
             dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
             `)
         tiles.setCurrentTilemap(tilemap`Practice Area`)
-        music.stopAllSounds()
         Film_Count = 5
         Item_Name = 0
         info.setScore(0)
@@ -324,6 +337,44 @@ function RunLevel () {
         music.setVolume(25)
         music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     }
+}
+function RaziDialogue () {
+    game.setDialogFrame(img`
+        d d d d d d d d d d d d d d d 
+        d f d f d f d f d f d f d f d 
+        d d f f f f f f f f f f f d d 
+        d f f f f f f f f f f f f f d 
+        d d f f f f f f f f f f f d d 
+        d f f f f f f f f f f f f f d 
+        d d f f f f f f f f f f f d d 
+        d f f f f f f f f f f f f f d 
+        d d f f f f f f f f f f f d d 
+        d f f f f f f f f f f f f f d 
+        d d f f f f f f f f f f f d d 
+        d f f f f f f f f f f f f f d 
+        d d f f f f f f f f f f f d d 
+        d f d f d f d f d f d f d f d 
+        d d d d d d d d d d d d d d d 
+        `)
+    game.setDialogCursor(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . 3 . . . . . . . 
+        . . . . . . . . . 3 3 . . . . . 
+        . . . . . . . . . . . 3 . . . . 
+        . . . . . . . . . . . . 3 . . . 
+        . . . . . . . . . . . 3 . . . . 
+        . . . . . . . . . 3 3 . . . . . 
+        . . . . . . . . 3 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
+    game.setDialogTextColor(3)
 }
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
@@ -349,8 +400,7 @@ info.onLifeZero(function () {
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Spr_Player, 100, 100)
 })
-// interaction between patrolling enemies and players 
-// 
+// interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherSprite) {
     music.setVolume(255)
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
@@ -395,9 +445,58 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Spr_Player.sayText("Film: " + Film_Count, 1000, true)
     }
 })
+function BawsmanDialogue () {
+    game.setDialogFrame(img`
+        b b b b b b b b b b b b b b b 
+        b f f f f b b b b b f f f f b 
+        b f 1 b b 9 9 9 9 9 b b 1 f b 
+        b f b 9 9 9 9 9 9 9 9 9 b f b 
+        b f b 9 9 9 9 9 9 9 9 9 b f b 
+        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
+        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
+        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
+        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
+        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
+        b f b 9 9 9 9 9 9 9 9 9 b f b 
+        b f b 9 9 9 9 9 9 9 9 9 b f b 
+        b f 1 b b 9 9 9 9 9 b b 1 f b 
+        b f f f f b b b b b f f f f b 
+        b b b b b b b b b b b b b b b 
+        `)
+    game.setDialogCursor(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . f . . . . . . . 
+        . . . . . . . . . f f . . . . . 
+        . . . . . . . . . . . f . . . . 
+        . . . . . . . . . . . . f . . . 
+        . . . . . . . . . . . f . . . . 
+        . . . . . . . . . f f . . . . . 
+        . . . . . . . . f . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
+    game.setDialogTextColor(13)
+}
+// Downwards Camera Shot
+controller.down.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
+        }
+    }
+})
 // interaction between patrolling enemies and camera flash
-// 
-// 
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (otherSprite.vy != 0) {
         otherSprite.vy = 0
@@ -417,19 +516,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
         pause(3000)
         otherSprite.vx = 50
-    }
-})
-// Downwards Camera Shot
-controller.down.onEvent(ControllerButtonEvent.Released, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
-        }
     }
 })
 let One_Liner: string[] = []
