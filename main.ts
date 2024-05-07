@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const Bananna = SpriteKind.create()
     export const Enemy2 = SpriteKind.create()
     export const Dialogue = SpriteKind.create()
+    export const Drone = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -376,6 +377,19 @@ function RaziDialogue () {
         `)
     game.setDialogTextColor(3)
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 0) {
+        DroneActive = 1
+        controller.moveSprite(Spr_Player, 0, 0)
+        spriteutils.placeAngleFrom(
+        Spr_drone,
+        0,
+        1,
+        Spr_Player
+        )
+        scene.cameraFollowSprite(Spr_drone)
+    }
+})
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     if (controller.A.isPressed()) {
@@ -530,9 +544,154 @@ let Spr_Player: Sprite = null
 let projectile: Sprite = null
 let Film_Count = 0
 let Level = 0
+let Spr_drone: Sprite = null
+let DroneActive = 0
+DroneActive = 0
+Spr_drone = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Drone)
 Level = 0
 RunLevel()
 forever(function () {
+    if (DroneActive == 1) {
+        if (controller.left.isPressed()) {
+            Spr_drone.vx = -200
+            Spr_drone.vy = 0
+        } else if (controller.right.isPressed()) {
+            Spr_drone.vx = 200
+            Spr_drone.vy = 0
+        } else if (controller.up.isPressed()) {
+            Spr_drone.vy = -200
+            Spr_drone.vx = 0
+        } else if (controller.down.isPressed()) {
+            Spr_drone.vy = 200
+            Spr_drone.vx = 0
+        }
+    }
+    if (Spr_drone.isHittingTile(CollisionDirection.Left)) {
+        Spr_drone.vx = 0
+        Spr_drone.vy = 0
+        sprites.destroy(Spr_drone, effects.fire, 1000)
+        DroneActive = 0
+        pause(1000)
+        scene.cameraFollowSprite(Spr_Player)
+        Spr_drone = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Drone)
+        tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+        controller.moveSprite(Spr_Player)
+    } else if (Spr_drone.isHittingTile(CollisionDirection.Right)) {
+        Spr_drone.vx = 0
+        Spr_drone.vy = 0
+        sprites.destroy(Spr_drone, effects.fire, 1000)
+        DroneActive = 0
+        pause(1000)
+        scene.cameraFollowSprite(Spr_Player)
+        Spr_drone = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Drone)
+        tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+        controller.moveSprite(Spr_Player)
+    } else if (Spr_drone.isHittingTile(CollisionDirection.Bottom)) {
+        Spr_drone.vx = 0
+        Spr_drone.vy = 0
+        sprites.destroy(Spr_drone, effects.fire, 1000)
+        DroneActive = 0
+        pause(1000)
+        scene.cameraFollowSprite(Spr_Player)
+        Spr_drone = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Drone)
+        tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+        controller.moveSprite(Spr_Player)
+    } else if (Spr_drone.isHittingTile(CollisionDirection.Top)) {
+        Spr_drone.vx = 0
+        Spr_drone.vy = 0
+        sprites.destroy(Spr_drone, effects.fire, 1000)
+        DroneActive = 0
+        pause(1000)
+        scene.cameraFollowSprite(Spr_Player)
+        Spr_drone = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . d d d d d d d d d . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . d d d d d . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Drone)
+        tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+        controller.moveSprite(Spr_Player)
+    }
     if (Spr_Player.vy < 0) {
         Spr_Player.setImage(assets.image`pap_back`)
     } else if (Spr_Player.vy > 0) {
