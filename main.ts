@@ -341,34 +341,34 @@ function RunLevel () {
 }
 function RaziDialogue () {
     game.setDialogFrame(img`
-        d d d d d d d d d d d d d d d 
-        d f d f d f d f d f d f d f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f d f d f d f d f d f d f d 
-        d d d d d d d d d d d d d d d 
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+        7 5 7 5 7 5 7 5 7 5 7 5 7 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 7 5 7 5 7 5 7 5 7 5 7 5 7 
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
         `)
     game.setDialogCursor(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . 3 . . . . . . . 
-        . . . . . . . . . 3 3 . . . . . 
-        . . . . . . . . . . . 3 . . . . 
-        . . . . . . . . . . . . 3 . . . 
-        . . . . . . . . . . . 3 . . . . 
-        . . . . . . . . . 3 3 . . . . . 
-        . . . . . . . . 3 . . . . . . . 
+        . . . . . . . . 4 . . . . . . . 
+        . . . . . . . . . 4 4 . . . . . 
+        . . . . . . . . . . . 4 . . . . 
+        . . . . . . . . . . . . 4 . . . 
+        . . . . . . . . . . . 4 . . . . 
+        . . . . . . . . . 4 4 . . . . . 
+        . . . . . . . . 4 . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -380,6 +380,9 @@ function RaziDialogue () {
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (DroneActive == 0) {
         DroneActive = 1
+        music.stopAllSounds()
+        music.setVolume(75)
+        music.play(music.createSoundEffect(WaveShape.Noise, 1713, 1713, 255, 255, 1000, SoundExpressionEffect.Tremolo, InterpolationCurve.Logarithmic), music.PlaybackMode.LoopingInBackground)
         controller.moveSprite(Spr_Player, 0, 0)
         spriteutils.placeAngleFrom(
         Spr_drone,
@@ -461,34 +464,34 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function BawsmanDialogue () {
     game.setDialogFrame(img`
-        b b b b b b b b b b b b b b b 
-        b f f f f b b b b b f f f f b 
-        b f 1 b b 9 9 9 9 9 b b 1 f b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b f 1 b b 9 9 9 9 9 b b 1 f b 
-        b f f f f b b b b b f f f f b 
-        b b b b b b b b b b b b b b b 
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+        7 9 9 9 9 7 7 7 7 7 9 9 9 9 7 
+        7 9 4 7 7 8 8 8 8 8 7 7 4 9 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 9 4 7 7 8 8 8 8 8 7 7 4 9 7 
+        7 9 9 9 9 7 7 7 7 7 9 9 9 9 7 
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
         `)
     game.setDialogCursor(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . f . . . . . . . 
-        . . . . . . . . . f f . . . . . 
-        . . . . . . . . . . . f . . . . 
-        . . . . . . . . . . . . f . . . 
-        . . . . . . . . . . . f . . . . 
-        . . . . . . . . . f f . . . . . 
-        . . . . . . . . f . . . . . . . 
+        . . . . . . . . 9 . . . . . . . 
+        . . . . . . . . . 9 9 . . . . . 
+        . . . . . . . . . . . 9 . . . . 
+        . . . . . . . . . . . . 9 . . . 
+        . . . . . . . . . . . 9 . . . . 
+        . . . . . . . . . 9 9 . . . . . 
+        . . . . . . . . 9 . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -570,16 +573,16 @@ RunLevel()
 forever(function () {
     if (DroneActive == 1) {
         if (controller.left.isPressed()) {
-            Spr_drone.vx = -200
+            Spr_drone.vx = -175
             Spr_drone.vy = 0
         } else if (controller.right.isPressed()) {
-            Spr_drone.vx = 200
+            Spr_drone.vx = 175
             Spr_drone.vy = 0
         } else if (controller.up.isPressed()) {
-            Spr_drone.vy = -200
+            Spr_drone.vy = -175
             Spr_drone.vx = 0
         } else if (controller.down.isPressed()) {
-            Spr_drone.vy = 200
+            Spr_drone.vy = 175
             Spr_drone.vx = 0
         }
     }
@@ -610,6 +613,9 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Right)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
@@ -637,6 +643,9 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Bottom)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
@@ -664,6 +673,9 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Top)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
@@ -691,6 +703,9 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     }
     if (Spr_Player.vy < 0) {
         Spr_Player.setImage(assets.image`pap_back`)
