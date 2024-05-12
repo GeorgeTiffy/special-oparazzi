@@ -5,6 +5,7 @@ namespace SpriteKind {
     export const Enemy2 = SpriteKind.create()
     export const Dialogue = SpriteKind.create()
     export const Drone = SpriteKind.create()
+    export const Icon = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -161,10 +162,10 @@ function RunLevel () {
             dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
             dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
             `)
-        Spr_Play_Dialogue = sprites.create(assets.image`pap Dialogue`, SpriteKind.Dialogue)
-        tiles.placeOnTile(Spr_Play_Dialogue, tiles.getTileLocation(6, 9))
+        Spr_Play_Dialogue = sprites.create(assets.image`Razzi_Dialogue_Front`, SpriteKind.Dialogue)
+        tiles.placeOnTile(Spr_Play_Dialogue, tiles.getTileLocation(6, 8))
         Spr_Boss = sprites.create(assets.image`Boss`, SpriteKind.Dialogue)
-        tiles.placeOnTile(Spr_Boss, tiles.getTileLocation(12, 9))
+        tiles.placeOnTile(Spr_Boss, tiles.getTileLocation(12, 8))
         Spr_Camera = sprites.create(assets.image`Camera`, SpriteKind.Dialogue)
         tiles.placeOnTile(Spr_Camera, tiles.getTileLocation(9, 9))
         scene.cameraFollowSprite(Spr_Camera)
@@ -335,40 +336,41 @@ function RunLevel () {
         tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
         Spr_Glas.vy = 50
         Spr_Glas.setBounceOnWall(true)
+        SprLever = sprites.create(assets.image`myImage`, SpriteKind.Player)
         music.setVolume(25)
         music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     }
 }
 function RaziDialogue () {
     game.setDialogFrame(img`
-        d d d d d d d d d d d d d d d 
-        d f d f d f d f d f d f d f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f f f f f f f f f f f f f d 
-        d d f f f f f f f f f f f d d 
-        d f d f d f d f d f d f d f d 
-        d d d d d d d d d d d d d d d 
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+        7 5 7 5 7 5 7 5 7 5 7 5 7 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 5 5 5 5 5 5 5 5 5 5 5 5 7 
+        7 7 5 5 5 5 5 5 5 5 5 5 5 7 7 
+        7 5 7 5 7 5 7 5 7 5 7 5 7 5 7 
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
         `)
     game.setDialogCursor(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . . . . 3 . . . . . . . 
-        . . . . . . . . . 3 3 . . . . . 
-        . . . . . . . . . . . 3 . . . . 
-        . . . . . . . . . . . . 3 . . . 
-        . . . . . . . . . . . 3 . . . . 
-        . . . . . . . . . 3 3 . . . . . 
-        . . . . . . . . 3 . . . . . . . 
+        . . . . . . . . 4 . . . . . . . 
+        . . . . . . . . . 4 4 . . . . . 
+        . . . . . . . . . . . 4 . . . . 
+        . . . . . . . . . . . . 4 . . . 
+        . . . . . . . . . . . 4 . . . . 
+        . . . . . . . . . 4 4 . . . . . 
+        . . . . . . . . 4 . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -377,19 +379,6 @@ function RaziDialogue () {
         `)
     game.setDialogTextColor(3)
 }
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (DroneActive == 0) {
-        DroneActive = 1
-        controller.moveSprite(Spr_Player, 0, 0)
-        spriteutils.placeAngleFrom(
-        Spr_drone,
-        0,
-        1,
-        Spr_Player
-        )
-        scene.cameraFollowSprite(Spr_drone)
-    }
-})
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     if (controller.A.isPressed()) {
@@ -451,135 +440,55 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
         }
     }
 })
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 0) {
+        DroneActive = 1
+        music.stopAllSounds()
+        music.setVolume(75)
+        music.play(music.createSoundEffect(WaveShape.Noise, 1244, 1244, 114, 114, 5000, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.LoopingInBackground)
+        controller.moveSprite(Spr_Player, 0, 0)
+        spriteutils.placeAngleFrom(
+        Spr_drone,
+        0,
+        1,
+        Spr_Player
+        )
+        scene.cameraFollowSprite(Spr_drone)
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     controller.moveSprite(Spr_Player, 0, 0)
     if (Film_Count <= 0) {
+        game.setDialogTextColor(9)
         Spr_Player.sayText("Out of Film", 1000, true)
     } else {
         Spr_Player.sayText("Film: " + Film_Count, 1000, true)
     }
 })
-function BawsmanDialogue () {
-    game.setDialogFrame(img`
-        b b b b b b b b b b b b b b b 
-        b f f f f b b b b b f f f f b 
-        b f 1 b b 9 9 9 9 9 b b 1 f b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b b 9 9 9 9 9 9 9 9 9 9 9 b b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b f b 9 9 9 9 9 9 9 9 9 b f b 
-        b f 1 b b 9 9 9 9 9 b b 1 f b 
-        b f f f f b b b b b f f f f b 
-        b b b b b b b b b b b b b b b 
-        `)
-    game.setDialogCursor(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . f . . . . . . . 
-        . . . . . . . . . f f . . . . . 
-        . . . . . . . . . . . f . . . . 
-        . . . . . . . . . . . . f . . . 
-        . . . . . . . . . . . f . . . . 
-        . . . . . . . . . f f . . . . . 
-        . . . . . . . . f . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `)
-    game.setDialogTextColor(13)
+function RazziFunction () {
+    if (Spr_Player.vy < 0) {
+        Spr_Player.setImage(assets.image`pap_back`)
+    } else if (Spr_Player.vy > 0) {
+        Spr_Player.setImage(assets.image`pap_front`)
+    } else if (Spr_Player.vx > 0) {
+        Spr_Player.setImage(assets.image`pap_right`)
+    } else if (Spr_Player.vx < 0) {
+        Spr_Player.setImage(assets.image`pap_left`)
+    }
 }
-// Downwards Camera Shot
-controller.down.onEvent(ControllerButtonEvent.Released, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
-        }
-    }
-})
-// interaction between patrolling enemies and camera flash
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (otherSprite.vy != 0) {
-        otherSprite.vy = 0
-        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
-        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
-        info.changeScoreBy(10)
-        music.setVolume(111)
-        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
-        pause(3000)
-        otherSprite.vy = 50
-    } else if (otherSprite.vx > 0) {
-        otherSprite.vx = 0
-        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
-        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
-        info.changeScoreBy(10)
-        music.setVolume(111)
-        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
-        pause(3000)
-        otherSprite.vx = 50
-    }
-})
-let One_Liner: string[] = []
-let Spr_Glas: Sprite = null
-let Spr_Pat: Sprite = null
-let Spr_Film: Sprite = null
-let Item_Name = 0
-let Spr_Camera: Sprite = null
-let Spr_Boss: Sprite = null
-let Spr_Play_Dialogue: Sprite = null
-let Spr_Player: Sprite = null
-let projectile: Sprite = null
-let Film_Count = 0
-let Level = 0
-let Spr_drone: Sprite = null
-let DroneActive = 0
-DroneActive = 0
-Spr_drone = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Drone)
-Level = 0
-RunLevel()
-forever(function () {
+function DroneFunction () {
     if (DroneActive == 1) {
         if (controller.left.isPressed()) {
-            Spr_drone.vx = -200
+            Spr_drone.vx = -175
             Spr_drone.vy = 0
         } else if (controller.right.isPressed()) {
-            Spr_drone.vx = 200
+            Spr_drone.vx = 175
             Spr_drone.vy = 0
         } else if (controller.up.isPressed()) {
-            Spr_drone.vy = -200
+            Spr_drone.vy = -175
             Spr_drone.vx = 0
         } else if (controller.down.isPressed()) {
-            Spr_drone.vy = 200
+            Spr_drone.vy = 175
             Spr_drone.vx = 0
         }
     }
@@ -610,6 +519,9 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Right)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
@@ -637,6 +549,9 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Bottom)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
@@ -664,6 +579,9 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Top)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
@@ -691,25 +609,50 @@ forever(function () {
             `, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
+        music.stopAllSounds()
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
     }
-    if (Spr_Player.vy < 0) {
-        Spr_Player.setImage(assets.image`pap_back`)
-    } else if (Spr_Player.vy > 0) {
-        Spr_Player.setImage(assets.image`pap_front`)
-    } else if (Spr_Player.vx > 0) {
-        Spr_Player.setImage(assets.image`pap_right`)
-    } else if (Spr_Player.vx < 0) {
-        Spr_Player.setImage(assets.image`pap_left`)
-    }
-    if (Spr_Pat.vy < 0) {
-        Spr_Pat.setImage(assets.image`pat_back`)
-    } else if (Spr_Pat.vy > 0) {
-        Spr_Pat.setImage(assets.image`pat_front`)
-    } else if (Spr_Pat.vx > 0) {
-        Spr_Pat.setImage(assets.image`pat_right`)
-    } else if (Spr_Pat.vx < 0) {
-        Spr_Pat.setImage(assets.image`pat_left`)
-    }
+}
+function BawsmanDialogue () {
+    game.setDialogFrame(img`
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+        7 9 9 9 9 7 7 7 7 7 9 9 9 9 7 
+        7 9 4 7 7 8 8 8 8 8 7 7 4 9 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 7 8 8 8 8 8 8 8 8 8 8 8 7 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 9 7 8 8 8 8 8 8 8 8 8 7 9 7 
+        7 9 4 7 7 8 8 8 8 8 7 7 4 9 7 
+        7 9 9 9 9 7 7 7 7 7 9 9 9 9 7 
+        7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+        `)
+    game.setDialogCursor(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . 9 . . . . . . . 
+        . . . . . . . . . 9 9 . . . . . 
+        . . . . . . . . . . . 9 . . . . 
+        . . . . . . . . . . . . 9 . . . 
+        . . . . . . . . . . . 9 . . . . 
+        . . . . . . . . . 9 9 . . . . . 
+        . . . . . . . . 9 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)
+    game.setDialogTextColor(13)
+}
+function GlassesEnemy () {
     if (Spr_Glas.vy < 0) {
         Spr_Glas.setImage(assets.image`glas_back`)
     } else if (Spr_Glas.vy > 0) {
@@ -719,4 +662,116 @@ forever(function () {
     } else if (Spr_Glas.vx < 0) {
         Spr_Glas.setImage(assets.image`glas_left`)
     }
+}
+function NoticeInteractable () {
+    if (spriteutils.distanceBetween(Spr_Player, SprLever) < 50) {
+        spriteutils.placeAngleFrom(
+        Exclamation,
+        5,
+        10,
+        Spr_Player
+        )
+    }
+    if (0 == 0) {
+        spriteutils.placeAngleFrom(
+        Exclamation,
+        5,
+        10,
+        Spr_Player
+        )
+    }
+    if (spriteutils.distanceBetween(Spr_Player, SprLever) > 50) {
+        sprites.destroy(Exclamation)
+    }
+}
+// interaction between patrolling enemies and camera flash
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (otherSprite.vy != 0) {
+        otherSprite.vy = 0
+        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
+        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
+        info.changeScoreBy(10)
+        music.setVolume(111)
+        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
+        pause(3000)
+        otherSprite.vy = 50
+    } else if (otherSprite.vx > 0) {
+        otherSprite.vx = 0
+        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
+        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
+        info.changeScoreBy(10)
+        music.setVolume(111)
+        music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
+        pause(3000)
+        otherSprite.vx = 50
+    }
+})
+function PatrolEnemy () {
+    if (Spr_Pat.vy < 0) {
+        Spr_Pat.setImage(assets.image`pat_back`)
+    } else if (Spr_Pat.vy > 0) {
+        Spr_Pat.setImage(assets.image`pat_front`)
+    } else if (Spr_Pat.vx > 0) {
+        Spr_Pat.setImage(assets.image`pat_right`)
+    } else if (Spr_Pat.vx < 0) {
+        Spr_Pat.setImage(assets.image`pat_left`)
+    }
+}
+// Downwards Camera Shot
+controller.down.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
+        }
+    }
+})
+let One_Liner: string[] = []
+let SprLever: Sprite = null
+let Spr_Glas: Sprite = null
+let Spr_Pat: Sprite = null
+let Spr_Film: Sprite = null
+let Item_Name = 0
+let Spr_Camera: Sprite = null
+let Spr_Boss: Sprite = null
+let Spr_Play_Dialogue: Sprite = null
+let Spr_Player: Sprite = null
+let projectile: Sprite = null
+let Film_Count = 0
+let Exclamation: Sprite = null
+let Level = 0
+let Spr_drone: Sprite = null
+let DroneActive = 0
+DroneActive = 0
+Spr_drone = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . d d d d d d d d d . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . . . d d d d d . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Drone)
+Level = 0
+Exclamation = sprites.create(assets.image`Notice`, SpriteKind.Icon)
+RunLevel()
+forever(function () {
+    PatrolEnemy()
+    GlassesEnemy()
+    RazziFunction()
+    DroneFunction()
+    NoticeInteractable()
 })
