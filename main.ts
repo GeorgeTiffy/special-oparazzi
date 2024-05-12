@@ -377,19 +377,6 @@ function RaziDialogue () {
         `)
     game.setDialogTextColor(3)
 }
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (DroneActive == 0) {
-        DroneActive = 1
-        controller.moveSprite(Spr_Player, 0, 0)
-        spriteutils.placeAngleFrom(
-        Spr_drone,
-        0,
-        1,
-        Spr_Player
-        )
-        scene.cameraFollowSprite(Spr_drone)
-    }
-})
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     if (controller.A.isPressed()) {
@@ -449,6 +436,19 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
             pause(100)
             sprites.destroy(projectile)
         }
+    }
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 0) {
+        DroneActive = 1
+        controller.moveSprite(Spr_Player, 0, 0)
+        spriteutils.placeAngleFrom(
+        Spr_drone,
+        0,
+        1,
+        Spr_Player
+        )
+        scene.cameraFollowSprite(Spr_drone)
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
