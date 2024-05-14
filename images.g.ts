@@ -742,6 +742,25 @@ f 5 7 7 7 8 f
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `;
+            case "eds#zXizM@FD]KA;G=|2":
+            case "sdfgh":return img`
+. . . . d d d d d . . . . . . . 
+d d d d d d d d d d d d d . . . 
+. . . . d . . . . d d . d . . . 
+. . d d d d . . . d . . . d . . 
+d d . . . d d . . d . . . . d . 
+d . . . . d d d . . d . . . d d 
+d . . d d . . d d . . d d . . d 
+d . d d . . . d d d . . d . . d 
+d d d d d . . . d d . . . d d . 
+. d . . . . . d d d . . . . d d 
+. d . . . . d d . d d . . . . d 
+d . . . . d . . . . d . . . . d 
+. d d d . d . . . . . . . . . d 
+. d d d . d d . . . . . . d d . 
+d d d . . . d d . . d d d d . . 
+. . d d d d . d d d . . . . . . 
+`;
         }
         return null;
     })

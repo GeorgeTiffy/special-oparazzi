@@ -507,24 +507,7 @@ forever(function () {
         DroneActive = 0
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
-        Spr_drone = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Right)) {
@@ -534,24 +517,7 @@ forever(function () {
         DroneActive = 0
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
-        Spr_drone = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . 3 3 3 3 3 . . . . . . 
-            . . . . . 3 3 3 3 3 . . . . . . 
-            . . . 3 3 3 3 3 3 3 3 3 . . . . 
-            . . . 3 3 3 3 3 3 3 3 3 . . . . 
-            . . . 3 3 3 3 3 3 3 3 3 . . . . 
-            . . . 3 3 3 3 3 3 3 3 3 . . . . 
-            . . . 3 3 3 3 3 3 3 3 3 . . . . 
-            . . . . . 3 3 3 3 3 . . . . . . 
-            . . . . . 3 3 3 3 3 . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Bottom)) {
@@ -561,24 +527,7 @@ forever(function () {
         DroneActive = 0
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
-        Spr_drone = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . 9 9 9 9 9 . . . . . . 
-            . . . . . 9 9 9 9 9 . . . . . . 
-            . . . 9 9 9 9 9 9 9 9 9 . . . . 
-            . . . 9 9 9 9 9 9 9 9 9 . . . . 
-            . . . 9 9 9 9 9 9 9 9 9 . . . . 
-            . . . 9 9 9 9 9 9 9 9 9 . . . . 
-            . . . 9 9 9 9 9 9 9 9 9 . . . . 
-            . . . . . 9 9 9 9 9 . . . . . . 
-            . . . . . 9 9 9 9 9 . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
     } else if (Spr_drone.isHittingTile(CollisionDirection.Top)) {
@@ -588,24 +537,7 @@ forever(function () {
         DroneActive = 0
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
-        Spr_drone = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . c c c c c . . . . . . 
-            . . . . . c c c c c . . . . . . 
-            . . . c c c c c c c c c . . . . 
-            . . . c c c c c c c c c . . . . 
-            . . . c c c c c c c c c . . . . 
-            . . . c c c c c c c c c . . . . 
-            . . . c c c c c c c c c . . . . 
-            . . . . . c c c c c . . . . . . 
-            . . . . . c c c c c . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         controller.moveSprite(Spr_Player)
     }
