@@ -17,7 +17,7 @@
         "displayName": "Wall_2"
     },
     "tile1": {
-        "data": "hwQQABAAAABVVVVVWFVVVWVmZmZYZmZmZWZmZlhmZnZlRmZ2WEZmdmVmZnZYZmZ2ZWZmdlh2d3dlZmZ2iIiIiGV2d3dYVVVViIiIiFhmZmZVVVVVWGZmdmVmZmZYRmZ2ZWRmZlhmZnZlZmZ2WGZGdmVmRnZYZmZ2ZWZmdlhmZnZldnd3WHZ3dw==",
+        "data": "hwQQABAAAABVVVVVWFVVVWVmZmZYZmZmZWZmZlhmZnZlVmZ2WFZmdmVmZnZYZmZ2ZWZmdlh2d3dlZmZ2iIiIiGV2d3dYVVVViIiIiFhmZmZVVVVVWGZmdmVmZmZYVmZ2ZWVmZlhmZnZlZmZ2WGZWdmVmVnZYZmZ2ZWZmdlhmZnZldnd3WHZ3dw==",
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true,
         "displayName": "Wall_1"
