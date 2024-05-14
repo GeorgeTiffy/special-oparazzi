@@ -340,42 +340,9 @@ function RunLevel () {
     }
 }
 function RaziDialogue () {
-    game.setDialogFrame(img`
-        6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-        6 5 6 5 6 5 6 5 6 5 6 5 6 5 6 
-        6 6 5 5 5 5 5 5 5 5 5 5 5 6 6 
-        6 5 5 5 5 5 5 5 5 5 5 5 5 5 6 
-        6 6 5 5 5 5 5 5 5 5 5 5 5 6 6 
-        6 5 5 5 5 5 5 5 5 5 5 5 5 5 6 
-        6 6 5 5 5 5 5 5 5 5 5 5 5 6 6 
-        6 5 5 5 5 5 5 5 5 5 5 5 5 5 6 
-        6 6 5 5 5 5 5 5 5 5 5 5 5 6 6 
-        6 5 5 5 5 5 5 5 5 5 5 5 5 5 6 
-        6 6 5 5 5 5 5 5 5 5 5 5 5 6 6 
-        6 5 5 5 5 5 5 5 5 5 5 5 5 5 6 
-        6 6 5 5 5 5 5 5 5 5 5 5 5 6 6 
-        6 5 6 5 6 5 6 5 6 5 6 5 6 5 6 
-        6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-        `)
-    game.setDialogCursor(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . 9 . . . . . . . 
-        . . . . . . . . . 9 9 . . . . . 
-        . . . . . . . . . . . 9 . . . . 
-        . . . . . . . . . . . . 9 . . . 
-        . . . . . . . . . . . 9 . . . . 
-        . . . . . . . . . 9 9 . . . . . 
-        . . . . . . . . 9 . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `)
-    game.setDialogTextColor(3)
+    game.setDialogFrame(assets.image`RatziTextbox`)
+    game.setDialogCursor(assets.image`BlackTextArrow`)
+    game.setDialogTextColor(15)
 }
 // Left camera shot
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
@@ -460,42 +427,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function BawsmanDialogue () {
-    game.setDialogFrame(img`
-        6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-        6 9 9 9 9 6 6 6 6 6 9 9 9 9 6 
-        6 9 4 6 6 7 7 7 7 7 6 6 4 9 6 
-        6 9 6 7 7 7 7 7 7 7 7 7 6 9 6 
-        6 9 6 7 7 7 7 7 7 7 7 7 6 9 6 
-        6 6 7 7 7 7 7 7 7 7 7 7 7 6 6 
-        6 6 7 7 7 7 7 7 7 7 7 7 7 6 6 
-        6 6 7 7 7 7 7 7 7 7 7 7 7 6 6 
-        6 6 7 7 7 7 7 7 7 7 7 7 7 6 6 
-        6 6 7 7 7 7 7 7 7 7 7 7 7 6 6 
-        6 9 6 7 7 7 7 7 7 7 7 7 6 9 6 
-        6 9 6 7 7 7 7 7 7 7 7 7 6 9 6 
-        6 9 4 6 6 7 7 7 7 7 6 6 4 9 6 
-        6 9 9 9 9 6 6 6 6 6 9 9 9 9 6 
-        6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 
-        `)
-    game.setDialogCursor(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . 4 . . . . . . . 
-        . . . . . . . . . 4 4 . . . . . 
-        . . . . . . . . . . . 4 . . . . 
-        . . . . . . . . . . . . 4 . . . 
-        . . . . . . . . . . . 4 . . . . 
-        . . . . . . . . . 4 4 . . . . . 
-        . . . . . . . . 4 . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `)
-    game.setDialogTextColor(13)
+    game.setDialogFrame(assets.image`BawsmanTextbox`)
+    game.setDialogCursor(assets.image`WhiteTextArrow`)
+    game.setDialogTextColor(1)
 }
 // Downwards Camera Shot
 controller.down.onEvent(ControllerButtonEvent.Released, function () {
@@ -547,24 +481,7 @@ let Level = 0
 let Spr_drone: Sprite = null
 let DroneActive = 0
 DroneActive = 0
-Spr_drone = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . d d d d d d d d d . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . . . d d d d d . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Drone)
+Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
 Level = 0
 RunLevel()
 forever(function () {
@@ -621,15 +538,15 @@ forever(function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
+            . . . . . 3 3 3 3 3 . . . . . . 
+            . . . . . 3 3 3 3 3 . . . . . . 
+            . . . 3 3 3 3 3 3 3 3 3 . . . . 
+            . . . 3 3 3 3 3 3 3 3 3 . . . . 
+            . . . 3 3 3 3 3 3 3 3 3 . . . . 
+            . . . 3 3 3 3 3 3 3 3 3 . . . . 
+            . . . 3 3 3 3 3 3 3 3 3 . . . . 
+            . . . . . 3 3 3 3 3 . . . . . . 
+            . . . . . 3 3 3 3 3 . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -648,15 +565,15 @@ forever(function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
+            . . . . . 9 9 9 9 9 . . . . . . 
+            . . . . . 9 9 9 9 9 . . . . . . 
+            . . . 9 9 9 9 9 9 9 9 9 . . . . 
+            . . . 9 9 9 9 9 9 9 9 9 . . . . 
+            . . . 9 9 9 9 9 9 9 9 9 . . . . 
+            . . . 9 9 9 9 9 9 9 9 9 . . . . 
+            . . . 9 9 9 9 9 9 9 9 9 . . . . 
+            . . . . . 9 9 9 9 9 . . . . . . 
+            . . . . . 9 9 9 9 9 . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -675,15 +592,15 @@ forever(function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . d d d d d d d d d . . . . 
-            . . . . . d d d d d . . . . . . 
-            . . . . . d d d d d . . . . . . 
+            . . . . . c c c c c . . . . . . 
+            . . . . . c c c c c . . . . . . 
+            . . . c c c c c c c c c . . . . 
+            . . . c c c c c c c c c . . . . 
+            . . . c c c c c c c c c . . . . 
+            . . . c c c c c c c c c . . . . 
+            . . . c c c c c c c c c . . . . 
+            . . . . . c c c c c . . . . . . 
+            . . . . . c c c c c . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
