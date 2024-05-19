@@ -456,28 +456,24 @@ function P_Drone () {
             Spr_drone.vx = -150
             Spr_drone.vy = 0
             music.setVolume(101)
-            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
             music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.right.isPressed()) {
             music.stopAllSounds()
             Spr_drone.vx = 150
             Spr_drone.vy = 0
             music.setVolume(101)
-            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
             music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.up.isPressed()) {
             music.stopAllSounds()
             Spr_drone.vy = -150
             Spr_drone.vx = 0
             music.setVolume(101)
-            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
             music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.down.isPressed()) {
             music.stopAllSounds()
             Spr_drone.vy = 150
             Spr_drone.vx = 0
             music.setVolume(101)
-            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
             music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         }
     }
