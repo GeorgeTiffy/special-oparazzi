@@ -8,18 +8,20 @@ namespace SpriteKind {
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    music.setVolume(255)
-    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-    info.changeLifeBy(-1)
-    scene.cameraShake(4, 500)
     if (otherSprite.vy != 0) {
-        otherSprite.vy = 0
-        pause(2000)
-        otherSprite.vy = 50
-    } else if (otherSprite.vx != 0) {
-        otherSprite.vx = 0
-        pause(2000)
-        otherSprite.vx = 50
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        if (otherSprite.vy != 0) {
+            otherSprite.vy = 0
+            pause(2000)
+            otherSprite.vy = 50
+        } else if (otherSprite.vx != 0) {
+            otherSprite.vx = 0
+            pause(2000)
+            otherSprite.vx = 50
+        }
     }
 })
 // Upwards Camera Shot
@@ -206,6 +208,20 @@ function LVL_11 () {
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 0) {
+        DroneActive = 1
+        controller.moveSprite(Spr_Player, 0, 0)
+        spriteutils.placeAngleFrom(
+        Spr_drone,
+        0,
+        1,
+        Spr_Player
+        )
+        scene.cameraFollowSprite(Spr_drone)
+        music.stopAllSounds()
+    }
+})
 function E_Sunglasses () {
     if (Spr_Glas.vy < 0) {
         Spr_Glas.setImage(assets.image`glas_back`)
@@ -276,19 +292,6 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
             pause(100)
             sprites.destroy(projectile)
         }
-    }
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (DroneActive == 0) {
-        DroneActive = 1
-        controller.moveSprite(Spr_Player, 0, 0)
-        spriteutils.placeAngleFrom(
-        Spr_drone,
-        0,
-        1,
-        Spr_Player
-        )
-        scene.cameraFollowSprite(Spr_drone)
     }
 })
 function DialogueOne () {
@@ -449,59 +452,99 @@ function DialogueOne () {
 function P_Drone () {
     if (DroneActive == 1) {
         if (controller.left.isPressed()) {
-            Spr_drone.vx = -200
+            music.stopAllSounds()
+            Spr_drone.vx = -150
             Spr_drone.vy = 0
+            music.setVolume(101)
+            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
+            music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.right.isPressed()) {
-            Spr_drone.vx = 200
+            music.stopAllSounds()
+            Spr_drone.vx = 150
             Spr_drone.vy = 0
+            music.setVolume(101)
+            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
+            music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.up.isPressed()) {
-            Spr_drone.vy = -200
+            music.stopAllSounds()
+            Spr_drone.vy = -150
             Spr_drone.vx = 0
+            music.setVolume(101)
+            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
+            music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.down.isPressed()) {
-            Spr_drone.vy = 200
+            music.stopAllSounds()
+            Spr_drone.vy = 150
             Spr_drone.vx = 0
+            music.setVolume(101)
+            music.play(music.createSoundEffect(WaveShape.Noise, 1539, 1896, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
+            music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         }
     }
     if (Spr_drone.isHittingTile(CollisionDirection.Left)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
-        sprites.destroy(Spr_drone, effects.fire, 1000)
-        DroneActive = 0
+        sprites.destroy(Spr_drone, effects.fire, 100)
+        music.stopAllSounds()
+        scene.cameraShake(4, 500)
+        music.setVolume(101)
+        music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.UntilDone)
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
+        controller.moveSprite(Spr_Player)
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
         Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
-        controller.moveSprite(Spr_Player)
+        DroneActive = 0
     } else if (Spr_drone.isHittingTile(CollisionDirection.Right)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
-        sprites.destroy(Spr_drone, effects.fire, 1000)
-        DroneActive = 0
+        sprites.destroy(Spr_drone, effects.fire, 100)
+        music.stopAllSounds()
+        scene.cameraShake(4, 500)
+        music.setVolume(101)
+        music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.UntilDone)
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
+        controller.moveSprite(Spr_Player)
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
         Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
-        controller.moveSprite(Spr_Player)
+        DroneActive = 0
     } else if (Spr_drone.isHittingTile(CollisionDirection.Bottom)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
-        sprites.destroy(Spr_drone, effects.fire, 1000)
-        DroneActive = 0
+        sprites.destroy(Spr_drone, effects.fire, 100)
+        music.stopAllSounds()
+        scene.cameraShake(4, 500)
+        music.setVolume(101)
+        music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.UntilDone)
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
+        controller.moveSprite(Spr_Player)
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
         Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
-        controller.moveSprite(Spr_Player)
+        DroneActive = 0
     } else if (Spr_drone.isHittingTile(CollisionDirection.Top)) {
         Spr_drone.vx = 0
         Spr_drone.vy = 0
-        sprites.destroy(Spr_drone, effects.fire, 1000)
-        DroneActive = 0
+        sprites.destroy(Spr_drone, effects.fire, 100)
+        music.stopAllSounds()
+        scene.cameraShake(4, 500)
+        music.setVolume(101)
+        music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.UntilDone)
         pause(1000)
         scene.cameraFollowSprite(Spr_Player)
+        controller.moveSprite(Spr_Player)
+        music.setVolume(25)
+        music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
         Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
-        controller.moveSprite(Spr_Player)
+        DroneActive = 0
     }
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
