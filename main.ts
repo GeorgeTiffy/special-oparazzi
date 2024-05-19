@@ -28,10 +28,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
     if (controller.A.isPressed()) {
         if (Film_Count > 0) {
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
-            Film_Count += -1
             music.setVolume(255)
             music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
+            Film_Count += -1
             pause(100)
             sprites.destroy(projectile)
         }
