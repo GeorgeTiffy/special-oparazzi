@@ -61,6 +61,10 @@ function RaziDialogue () {
     game.setDialogCursor(assets.image`BlackTextArrow`)
     game.setDialogTextColor(15)
 }
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+    Spr_Player.setImage(assets.image`pap_back`)
+})
 sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSprite) {
     music.stopAllSounds()
     Spr_drone.vx = 0
@@ -140,6 +144,15 @@ info.onLifeZero(function () {
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Spr_Player, 100, 100)
 })
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+    animation.runImageAnimation(
+    Spr_Player,
+    assets.animation`RatziWalk_Left`,
+    100,
+    true
+    )
+})
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherSprite) {
     music.setVolume(255)
@@ -190,6 +203,15 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         scene.cameraFollowSprite(Spr_drone)
         music.stopAllSounds()
     }
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+    animation.runImageAnimation(
+    Spr_Player,
+    assets.animation`RatziWalk_Right`,
+    100,
+    true
+    )
 })
 function DialogueOne () {
     music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
@@ -448,17 +470,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Spr_Player.sayText("Film: " + Film_Count, 1000, true)
     }
 })
-function P_Ratzi () {
-    if (Spr_Player.vy < 0) {
-        Spr_Player.setImage(assets.image`pap_back`)
-    } else if (Spr_Player.vy > 0) {
-        Spr_Player.setImage(assets.image`pap_front`)
-    } else if (Spr_Player.vx > 0) {
-        Spr_Player.setImage(assets.image`pap_right`)
-    } else if (Spr_Player.vx < 0) {
-        Spr_Player.setImage(assets.image`pap_left`)
-    }
-}
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+    Spr_Player.setImage(assets.image`pap_front`)
+})
 function BawsmanDialogue () {
     game.setDialogFrame(assets.image`BawsmanTextbox`)
     game.setDialogCursor(assets.image`WhiteTextArrow`)
@@ -517,6 +532,7 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
         }
     }
 })
+let Walking = false
 let One_Liner: string[] = []
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
@@ -535,8 +551,13 @@ Level = 2
 RunLevel()
 DroneActive = 0
 Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+game.onUpdate(function () {
+    Walking = controller.up.isPressed() || (controller.down.isPressed() || (controller.left.isPressed() || controller.right.isPressed()))
+    if (!(Walking)) {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+    }
+})
 forever(function () {
-    P_Ratzi()
     P_Drone()
     E_Patrol()
     E_Sunglasses()
