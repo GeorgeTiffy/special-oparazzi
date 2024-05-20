@@ -61,10 +61,6 @@ function RaziDialogue () {
     game.setDialogCursor(assets.image`BlackTextArrow`)
     game.setDialogTextColor(15)
 }
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-    Spr_Player.setImage(assets.image`pap_back`)
-})
 sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSprite) {
     music.stopAllSounds()
     Spr_drone.vx = 0
@@ -144,15 +140,6 @@ info.onLifeZero(function () {
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Spr_Player, 100, 100)
 })
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-    animation.runImageAnimation(
-    Spr_Player,
-    assets.animation`RatziWalk_Left`,
-    100,
-    true
-    )
-})
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherSprite) {
     music.setVolume(255)
@@ -204,14 +191,14 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         music.stopAllSounds()
     }
 })
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-    animation.runImageAnimation(
-    Spr_Player,
-    assets.animation`RatziWalk_Right`,
-    100,
-    true
-    )
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 1) {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        Spr_Player.setImage(assets.image`RatzDrone_Down`)
+    } else {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        Spr_Player.setImage(assets.image`pap_back`)
+    }
 })
 function DialogueOne () {
     music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
@@ -368,27 +355,45 @@ function DialogueOne () {
     sprites.destroy(Spr_Boss)
     sprites.destroy(Spr_Camera)
 }
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 1) {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        Spr_Player.setImage(assets.image`RatzDrone_Left`)
+    } else {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        animation.runImageAnimation(
+        Spr_Player,
+        assets.animation`RatziWalk_Left`,
+        100,
+        true
+        )
+    }
+})
 function P_Drone () {
     if (DroneActive == 1) {
         if (controller.left.isPressed()) {
+            Spr_drone.setImage(assets.image`Car_Left`)
             music.stopAllSounds()
             Spr_drone.vx = -150
             Spr_drone.vy = 0
             music.setVolume(101)
             music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.right.isPressed()) {
+            Spr_drone.setImage(assets.image`Car_Right`)
             music.stopAllSounds()
             Spr_drone.vx = 150
             Spr_drone.vy = 0
             music.setVolume(101)
             music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.up.isPressed()) {
+            Spr_drone.setImage(assets.image`Car_Up`)
             music.stopAllSounds()
             Spr_drone.vy = -150
             Spr_drone.vx = 0
             music.setVolume(101)
             music.play(music.createSoundEffect(WaveShape.Noise, 2010, 2010, 102, 102, 9999, SoundExpressionEffect.Vibrato, InterpolationCurve.Curve), music.PlaybackMode.LoopingInBackground)
         } else if (controller.down.isPressed()) {
+            Spr_drone.setImage(assets.image`Car_Down`)
             music.stopAllSounds()
             Spr_drone.vy = 150
             Spr_drone.vx = 0
@@ -409,7 +414,7 @@ function P_Drone () {
         controller.moveSprite(Spr_Player)
         music.setVolume(25)
         music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`Car_Right`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         DroneActive = 0
     } else if (Spr_drone.isHittingTile(CollisionDirection.Right)) {
@@ -425,7 +430,7 @@ function P_Drone () {
         controller.moveSprite(Spr_Player)
         music.setVolume(25)
         music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`Car_Right`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         DroneActive = 0
     } else if (Spr_drone.isHittingTile(CollisionDirection.Bottom)) {
@@ -441,7 +446,7 @@ function P_Drone () {
         controller.moveSprite(Spr_Player)
         music.setVolume(25)
         music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`Car_Right`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         DroneActive = 0
     } else if (Spr_drone.isHittingTile(CollisionDirection.Top)) {
@@ -457,7 +462,7 @@ function P_Drone () {
         controller.moveSprite(Spr_Player)
         music.setVolume(25)
         music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-        Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+        Spr_drone = sprites.create(assets.image`Car_Right`, SpriteKind.Drone)
         tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
         DroneActive = 0
     }
@@ -470,15 +475,34 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Spr_Player.sayText("Film: " + Film_Count, 1000, true)
     }
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-    Spr_Player.setImage(assets.image`pap_front`)
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 1) {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        Spr_Player.setImage(assets.image`RatzDrone_Right`)
+    } else {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        animation.runImageAnimation(
+        Spr_Player,
+        assets.animation`RatziWalk_Right`,
+        100,
+        true
+        )
+    }
 })
 function BawsmanDialogue () {
     game.setDialogFrame(assets.image`BawsmanTextbox`)
     game.setDialogCursor(assets.image`WhiteTextArrow`)
     game.setDialogTextColor(1)
 }
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 1) {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        Spr_Player.setImage(assets.image`RatzDrone_Down`)
+    } else {
+        animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        Spr_Player.setImage(assets.image`pap_front`)
+    }
+})
 // interaction between patrolling enemies and camera flash
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (otherSprite.vy != 0) {
@@ -550,10 +574,10 @@ let Level = 0
 Level = 2
 RunLevel()
 DroneActive = 0
-Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+Spr_drone = sprites.create(assets.image`Car_Right`, SpriteKind.Drone)
 game.onUpdate(function () {
     Walking = controller.up.isPressed() || (controller.down.isPressed() || (controller.left.isPressed() || controller.right.isPressed()))
-    if (!(Walking)) {
+    if (!(Walking) || DroneActive == 1) {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
     }
 })

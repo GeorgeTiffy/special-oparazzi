@@ -154,6 +154,61 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Collum"
     },
+    "image25": {
+        "data": "hwQYABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAAAAAAAAAA8PNmfw8AAAAAAAAA8DNvf/cAAAAAAAAA8PP/8HcPAAAAAAAAAA/w/38PAAAAAAAAAAB/d3cPAPAAAPAPAAD/9/8PAP8AAG/2DwB/j4j4//8A/2Zv9v9/94iIiP/w+mZvb2/2d4+IiP+vb2b29vb2d/f///+vb2ZmZvb2d/f///+v+vZsZm/2d4+IiP+v+mZm/2b294iIiP+v329mZv9/j4j4//+v3/3//wB///j/AP/w3/0AAAD/AG/2APAA8P0AAAB///cPAAAAAA8AAAB/d/cAAAAAAAAAAADw/w8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "TargetSitting_1"
+    },
+    "image30": {
+        "data": "hwQYABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAP8PAAAAAAAA8A8P8Ij48P///w8A8P/4j/j/j4iIiPgA//+Ij4iIiIiIiPjw////iIiIiIiIiPjw/393j4iIiIiIiPjw/393j4iIiIiIiPj//393j4iIiIiIiPj//393j4iIiIiIiPj//393j4iIiIiIiPj//393j4iIiIiIiPj//393j4iIiIiIiPjw/393j4iIiIiIiPjw/393j4iIiIiIiPjw////iIiIiIiIiPgA//+Ij4iIiIiIiPgA8P/4j/j/j4iIiPgA8A8P8Ij48P///w8AAA8AAP8PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "RatzDrone_Back"
+    },
+    "image27": {
+        "data": "hwQYABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA8AAP8AAAAAAAAA8A/w/4j/APD//wAA////iIiI/4+IiA8A/3/3iIiIj4iIiPjw/3/3iPiIj4iIiPjw/x93j4+Ij4iIiPjw/29x/4iIj4iIiPj//49x94j/j4iIiPj//49x9/h/94iIiPj//x939/939////////29x9/939xgYiPj//49x//j//4iIiPjw/49xiPi7u4+IiPgA/w+PiL////uIiA8A8A////v7v7+PiA8A8A8A8Pu/+7+PiA8AAA8A8Pv7v7///wAAAAAAAL93t/sAAAAAAAAAAPB39w8AAAAAAAAAAAD/DwAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "RatzDrone_right"
+    },
+    "image28": {
+        "data": "hwQYABgAAAAAAAAAAAAAAAAAAAAAAAAAAAD/DwAAAAAAAAAAAPB39w8AAAAAAAAAAL93t/sAAAAAAA8A8Pv7v7///wAA8A8A8Pu/+7+PiA8A8A////v7v7+PiA8A/w+PiL////uIiA/w/49xiPi7u4+IiPj//49x//j//4iIiPj//29x9/939xgYiPj//x939/939////////49x9/h/94iIiPj//49x94j/j4iIiPjw/29x/4iIj4iIiPjw/x93j4+Ij4iIiPjw/3/3iPiIj4iIiPgA/3/3iIiIj4iIiPgA////iIiI/4+IiA8A8A/w/4j/APD//wAAAA8AAP8AAAAAAAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "RatzDrone_left"
+    },
+    "image26": {
+        "data": "hwQYABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAAD///AAD/DwAA8A/w+IiID/+I+AAA/w/wiI+I+IiIiA8A////iPiPd4+IiPjw/29xj4h4d/+IiPjw/49xj4j4/7+PiPj//49x/4i/j/j7iPj//29xf//7+7+/j/j//393f//7v/u//////393f/+Lv/u4j/j//29xf//7+7+/H/j//49x/4i/j/j7iPjw/49xj4j4/7+PiPjw/29xj4j4d/+IiPgA////iPh/d4+IiPgA/w/wiI+I+IiIiA8A8A/w+IiID/+I+AAA8AAAD///AAD/DwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "RatzDrone_Down"
+    },
+    "image29": {
+        "data": "hwQYABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAA//8AAAD/DwAA8A/wj4gP//+I+AAA/w/wiIj4iIiIiA8A////iIh3j4iIiPjw/29xj3h3/4iIiPjw/49xj/j/v4+IiPj//49x/7+///uIiPj//29x//u//7+PiPj//393//u/u7v//////393/7u7+7+PiPj//29x//v/+7+PGPj//49x/7//+/uIiPjw/49xj/j/v4+IiPjw/29xj4h/94iIiPgA////j/h394iIiPgA/w8A8IiIiI+IiA8A8A8AAI+PiI/4+AAA8AAAAPCPiP//DwAAAAAAAADw/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "RatzDrone_Right"
+    },
+    "image31": {
+        "data": "hwQYABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADw/wAAAAAA8AAAAPCPiP//DwAA8A8AAI+PiI/4+AAA/w8A8IiIiI+IiA8A////j/h394iIiPjw/29xj4h/94iIiPjw/49xj/j/v4+IiPj//49x/7//+/uIiPj//29x//v/+7+PGPj//393/7u7+7+PiPj//393//u/u7v//////29x//u//7+PiPj//49x/7+///uIiPjw/49xj/j/v4+IiPjw/29xj3h3/4iIiPgA////iIh3j4iIiPgA/w/wiIj4iIiIiA8A8A/wj4gP//+I+AAA8AAA//8AAAD/DwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "RatzDrone_Left"
+    },
+    "image32": {
+        "data": "hwQQABAAAAAAAAAA8P8AAAAAAACvMw8AAAAA8DMzDwAAAAA/MzMPAAAA8DM/8/sAAADw8/W/uw8AAPBf9fP7AAAA8FX/Mw8AAADw8fMzDwAAAAAf/zMPAAAAAPDx8/sAAAAAAD+/uw8AAAAAP/P7AAAAAAA/Mw8AAAAAAB8zDwAAAAAA8P8PAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Car_Right"
+    },
+    "image35": {
+        "data": "hwQQABAAAAAAAAAA8P8PAAAAAAAfMw8AAAAAAD8zDwAAAAAAP/P7AAAAAAA/v7sPAAAA8PHz+wAAAAAf/zMPAAAA8PHzMw8AAADwVf8zDwAAAPBf9fP7AAAA8PP1v7sPAADwMz/z+wAAAAA/MzMPAAAAAPAzMw8AAAAAAK8zDwAAAAAA8P8AAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Car_Left"
+    },
+    "image33": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAP//8AAAAA8PMx8wsAAADwPzHzCwAAAD8zM/MLAAAAPzE/Mw8AAAAfMfMzDwAAAB8x8zMPAAAAHzHzMw8AAAAfMfMzDwAAAD8xPzMPAAAAPzMz8wsAAADwPzHzCwAAAPDzMfMLAAAAAA///wAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Car_Down"
+    },
+    "image34": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAP//8AAAAA8POj8wsAAADwPzPzCwAAAB8zo/MLAAAAHzMzMw8AAAAfMTMxDwAAAB8xMzEPAAAAHzEzMQ8AAAAfMTMxDwAAAB8zMzMPAAAAHzOj8wsAAADwPzPzCwAAAPDzo/MLAAAAAA///wAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "Car_Up"
+    },
     "anim1": {
         "namespace": "myAnimations",
         "id": "anim1",
