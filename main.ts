@@ -44,6 +44,9 @@ function RunLevel () {
     if (Level == 2) {
         LVL_11()
     }
+    if (Level == 3) {
+        PlayerZoo()
+    }
 }
 function E_Patrol () {
     if (Spr_Pat.vy < 0) {
@@ -54,6 +57,15 @@ function E_Patrol () {
         Spr_Pat.setImage(assets.image`pat_right`)
     } else if (Spr_Pat.vx < 0) {
         Spr_Pat.setImage(assets.image`pat_left`)
+    }
+    if (Spr_Pat2.vy < 0) {
+        Spr_Pat2.setImage(assets.image`pat_back`)
+    } else if (Spr_Pat2.vy > 0) {
+        Spr_Pat2.setImage(assets.image`pat_front`)
+    } else if (Spr_Pat2.vx > 0) {
+        Spr_Pat2.setImage(assets.image`pat_right`)
+    } else if (Spr_Pat2.vx < 0) {
+        Spr_Pat2.setImage(assets.image`pat_left`)
     }
 }
 function RaziDialogue () {
@@ -82,7 +94,7 @@ sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSp
 function LVL_11 () {
     pause(2000)
     scene.setBackgroundImage(assets.image`Background`)
-    tiles.setCurrentTilemap(tilemap`Practice Area`)
+    tiles.setCurrentTilemap(tilemap`Lvl1_Rm1`)
     Film_Count = 5
     Item_Name = 0
     info.setScore(0)
@@ -91,13 +103,17 @@ function LVL_11 () {
     Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
     scene.cameraFollowSprite(Spr_Player)
     controller.moveSprite(Spr_Player, 100, 100)
-    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
+    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(10, 53))
     Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
     tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
     Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
+    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(35, 56))
     Spr_Pat.vy = 50
     Spr_Pat.setBounceOnWall(true)
+    Spr_Pat2 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(37, 50))
+    Spr_Pat2.vy = 50
+    Spr_Pat2.setBounceOnWall(true)
     Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
     tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
     Spr_Glas.vy = 50
@@ -543,6 +559,32 @@ sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy, function (sprite, otherSpr
     tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
     DroneActive = 0
 })
+function PlayerZoo () {
+    pause(2000)
+    scene.setBackgroundImage(assets.image`Background`)
+    tiles.setCurrentTilemap(tilemap`Practice Area`)
+    Film_Count = 5
+    Item_Name = 0
+    info.setScore(0)
+    info.setLife(3)
+    spriteutils.setLifeImage(assets.image`Little Goobs`)
+    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player, 100, 100)
+    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
+    Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
+    tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
+    Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
+    Spr_Pat.vy = 50
+    Spr_Pat.setBounceOnWall(true)
+    Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
+    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+    Spr_Glas.vy = 50
+    Spr_Glas.setBounceOnWall(true)
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+}
 // Downwards Camera Shot
 controller.down.onEvent(ControllerButtonEvent.Released, function () {
     if (controller.A.isPressed()) {
@@ -564,6 +606,7 @@ let Spr_Play_Dialogue: Sprite = null
 let Spr_Glas: Sprite = null
 let Spr_Film: Sprite = null
 let Item_Name = 0
+let Spr_Pat2: Sprite = null
 let Spr_Pat: Sprite = null
 let Spr_Player: Sprite = null
 let projectile: Sprite = null
