@@ -414,25 +414,6 @@ f 5 7 7 8 5 f
 f 5 7 7 7 8 f 
 . f f f f f . 
 `;
-            case "F4~x5tRx}/JF|)A#g8II":
-            case "Film":return img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . 8 8 8 8 . . . . . . 
-. . . . . 7 6 6 6 6 8 . . . . . 
-. . . . 7 6 6 6 6 6 6 8 . . . . 
-. . . 7 6 6 f 6 6 f 6 6 8 . . . 
-. . . 7 6 6 6 6 6 6 6 6 8 . . . 
-. . . 7 6 6 6 6 6 6 6 6 8 . . . 
-. . . 7 6 6 f 6 6 f 6 6 8 . . . 
-. . . . 7 6 6 6 6 6 6 8 . . . . 
-. . . . . 7 6 6 6 6 8 . . . . . 
-. . . . . . 7 7 8 8 . . . . . . 
-. . . . . . . 8 . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`;
             case "image6":
             case "pat_front":return img`
 ..........f.ff..........
@@ -1531,132 +1512,6 @@ ffffffffffffffffffffffffffffffffffffffffffffffff
 ...............ffff.......fff........f..ffffff........fff6f........fff..
 .............fffffff.....ffff..........fffffff.......ffff6f......fff....
 `;
-            case "image38":
-            case "CarUp_1":return img`
-..........ffffffffffffffffffff..........
-........ffffffffffffffffffffffff........
-......ff33ffffffffffffffffffff33ff......
-....ff3333333333333333333333333333ff....
-...f3333333ffffffffffffffffff3333333f...
-..f333ff33f111111111111111111f33ff333f..
-..f33f11f3f1111111111111111111ff11f33f..
-.f33f111ff11111111111111111111ff111f3f..
-.f3f515fff111111111111111111111ff515f3f.
-.f3f555ff1111111111111111111111ff555f3f.
-.f3f155ff111f11111111111111f1111f551f3f.
-.f3f15ff111fff111111111111fff111ff51f3f.
-.f3f55ff111fff111111111111fff1111f55f3f.
-.f3f55f111fffff1111111111fffff111f55f3f.
-.f3f5ff1111fff111111111111fff1111ff5f3f.
-.f33ff1111111111111111111111111111ff33f.
-.f333f1111111111111111111111111111f333f.
-.f333f1111111111111111111111111111f333f.
-.f333f1111111fffffffffffffff111111f333f.
-..f33f1111fffffffffffffffffffff111f33f..
-..f333ffffffffffffffffffffffffffff333f..
-..f33ffffffffffffffffffffffffffffff33f..
-..f33ffffffffffffffffffffffffffffff33f..
-..ff3ffffffffffffffffffffffffffffff3ff..
-.f333ffffffffffffffffffffffffffffff333f.
-f333ffffffffffffffffffffffffffffffff333f
-f33f3ffffffffffffffffffffffffffffff3f33f
-.ff33ffffffffffff333333ffffffffffff33ff.
-..f33ffffff333333333333333333ffffff33f..
-..f33fffff33333333333333333333fffff33f..
-..f33ffff3f333333333333333333f3ffff33f..
-..f33ffff3f333333333333333333f3ffff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33ff3333ff33333333333333ff3333ff33f..
-.f333ff3333ffff3333333333ffff3333f333f..
-.f3333f3333ffffffffffffffffff3333f333f..
-.f3333f3333ffffffffffffffffff3333f3333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f3333333333ffffffffffffffff3333333333f.
-.f333333333333333333333333333333333333f.
-.f333333333333333333333333333333333333f.
-..f33fffff333333333333333333333fffff3f..
-..f33fffffffffffffffffffffffffffffff3f..
-...f3fffffffffffffffffffffffffffffff3f..
-....f3333fffffffffffffffffffffffff33f...
-.....ffff3333333333333333333333333ff....
-.........fffff33333333333333ffffff......
-..............ffffffffffffff............
-........................................
-`;
-            case "image39":
-            case "CarDown_1":return img`
-........................................
-..............ffffffffffffff............
-.........fffff33333333333333ffffff......
-.....ffff3333333333333333333333333ff....
-....f3333fffffffffffffffffffffffff33f...
-...f3fffffffffffffffffffffffffffffff3f..
-..f33fffffffffffffffffffffffffffffff3f..
-..f33fffff333333333333333333333fffff3f..
-.f333333333333333333333333333333333333f.
-.f333333333333333333333333333333333333f.
-.f3333333333ffffffffffffffff3333333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f33333333ffffffffffffffffffff33333333f.
-.f3333f3333ffffffffffffffffff3333f3333f.
-.f3333f3333ffffffffffffffffff3333f333f..
-.f333ff3333ffff3333333333ffff3333f333f..
-..f33ff3333ff33333333333333ff3333ff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33fff333f3333333333333333f333fff33f..
-..f33ffff3f333333333333333333f3ffff33f..
-..f33ffff3f333333333333333333f3ffff33f..
-..f33fffff33333333333333333333fffff33f..
-..f33ffffff333333333333333333ffffff33f..
-.ff33ffffffffffff333333ffffffffffff33ff.
-f33f3ffffffffffffffffffffffffffffff3f33f
-f333ffffffffffffffffffffffffffffffff333f
-.f333ffffffffffffffffffffffffffffff333f.
-..ff3ffffffffffffffffffffffffffffff3ff..
-..f33ffffffffffffffffffffffffffffff33f..
-..f33ffffffffffffffffffffffffffffff33f..
-..f333ffffffffffffffffffffffffffff333f..
-..f33f1111fffffffffffffffffffff111f33f..
-.f333f1111111fffffffffffffff111111f333f.
-.f333f1111111111111111111111111111f333f.
-.f333f1111111111111111111111111111f333f.
-.f33ff1111111111111111111111111111ff33f.
-.f3f5ff1111fff111111111111fff1111ff5f3f.
-.f3f55f111fffff1111111111fffff111f55f3f.
-.f3f55ff111fff111111111111fff1111f55f3f.
-.f3f15ff111fff111111111111fff111ff51f3f.
-.f3f155ff111f11111111111111f1111f551f3f.
-.f3f555ff1111111111111111111111ff555f3f.
-.f3f515fff111111111111111111111ff515f3f.
-.f33f111ff11111111111111111111ff111f3f..
-..f33f11f3f1111111111111111111ff11f33f..
-..f333ff33f111111111111111111f33ff333f..
-...f3333333ffffffffffffffffff3333333f...
-....ff3333333333333333333333333333ff....
-......ff33ffffffffffffffffffff33ff......
-........ffffffffffffffffffffffff........
-..........ffffffffffffffffffff..........
-`;
             case "image32":
             case "Car_Right":return img`
 . . . . . . . . . . . . . . . . 
@@ -1732,6 +1587,406 @@ f f f a a a f f f a a a f f f .
 . f f f f b b b b b b f f f f . 
 . . a a a f f f f f f a a a . . 
 . . . . . . . . . . . . . . . . 
+`;
+            case "image39":
+            case "CarDown_B":return img`
+........................................
+..............ffffffffffffff............
+.........fffff33333333333333ffffff......
+.....ffff3333333333333333333333333ff....
+....f3333fffffffffffffffffffffffff33f...
+...f3fffffffffffffffffffffffffffffff3f..
+..f33fffffffffffffffffffffffffffffff3f..
+..f33fffff333333333333333333333fffff3f..
+.f333333333333333333333333333333333333f.
+.f333333333333333333333333333333333333f.
+.f3333333333ffffffffffffffff3333333333f.
+.f33333333ffffffffffffffffffff33333333f.
+.f33333333ffffffffffffffffffff33333333f.
+.f33333333ffffffffffffffffffff33333333f.
+.f33333333ffffffffffffffffffff33333333f.
+.f33333333ffffffffffffffffffff33333333f.
+.f33333333ffffffffffffffffffff33333333f.
+.f33333333ffffffffffffffffffff33333333f.
+.f3333f3333ffffffffffffffffff3333f3333f.
+.f3333f3333ffffffffffffffffff3333f333f..
+.f333ff3333ffff3333333333ffff3333f333f..
+..f33ff3333ff33333333333333ff3333ff33f..
+..f33fff333f3333333333333333f333fff33f..
+..f33fff333f3333333333333333f333fff33f..
+..f33fff333f3333333333333333f333fff33f..
+..f33fff333f3333333333333333f333fff33f..
+..f33fff333f3333333333333333f333fff33f..
+..f33fff333f3333333333333333f333fff33f..
+..f33ffff3f333333333333333333f3ffff33f..
+..f33ffff3f333333333333333333f3ffff33f..
+..f33fffff33333333333333333333fffff33f..
+..f33ffffff333333333333333333ffffff33f..
+.ff33ffffffffffff333333ffffffffffff33ff.
+f33f3ffffffffffffffffffffffffffffff3f33f
+f333ffffffffffffffffffffffffffffffff333f
+.f333ffffffffffffffffffffffffffffff333f.
+..ff3ffffffffffffffffffffffffffffff3ff..
+..f33ffffffffffffffffffffffffffffff33f..
+..f33ffffffffffffffffffffffffffffff33f..
+..f333ffffffffffffffffffffffffffff333f..
+..f33f1111fffffffffffffffffffff111f33f..
+.f333f1111111fffffffffffffff111111f333f.
+.f333f1111111111111111111111111111f333f.
+.f333f1111111111111111111111111111f333f.
+.f33ff1111111111111111111111111111ff33f.
+.f3f5ff1111fff111111111111fff1111ff5f3f.
+.f3f55f111fffff1111111111fffff111f55f3f.
+.f3f55ff111fff111111111111fff1111f55f3f.
+.f3f15ff111fff111111111111fff111ff51f3f.
+.f3f155ff111f11111111111111f1111f551f3f.
+.f3f555ff1111111111111111111111ff555f3f.
+.f3f515fff111111111111111111111ff515f3f.
+.f33f111ff11111111111111111111ff111f3f..
+..f33f11f3f1111111111111111111ff11f33f..
+..f333ff33f111111111111111111f33ff333f..
+...f3333333ffffffffffffffffff3333333f...
+....ff3333333333333333333333333333ff....
+......ff33ffffffffffffffffffff33ff......
+........ffffffffffffffffffffffff........
+..........ffffffffffffffffffff..........
+`;
+            case "image40":
+            case "CarRight_Y":return img`
+.................................ff.........................
+........fffffffffff.............fddf.....fffffffffff........
+.....fffdddddddddddffffffffffffffdddfffffdddddddddddfff.....
+....fddddddddddddddddddddddddddddfddfddddddddfffffffdddf....
+...fdfffddddddddddddddddddddddddddfdddddddddf5551155fdddf...
+...fdfffdddddddddddddffffffffffffffffffdffffff5555511fddf...
+..fdffffddddddddddffffffffffffffffffffff11111ffff55511fddf..
+..fdffffddddddddddddddffffffffffffffffff11111111ffff11fddf..
+..fdffffddddddddddddddddddddffffffffffff1111111111ffffddddf.
+..fdfffdddddddddddddddddddddddfffffffffff11111111111ffddddf.
+..fdfffddddfffffffddddddddddffdffffffffff11111f1111111fddfff
+..fdfffddddfffffffffffffffffddddfffffffff1111ffff111111fdfff
+.fddfffdddffffffffffffddddddddddffffffffff111fffff11111fdfff
+.fddfffdddfffffffffffdddddddddddffffffffff111ffff111111fdfff
+.fddfffdddfffffffffffdddddddddddffffffffff1111f11111111fdfff
+.fddfffdddffffffffffddddddddddddffffffffff1111111111111fdfff
+.fddfffdddffffffffffddddddddddddffffffffff1111111111111fdfff
+.fddfffdddffffffffffdddddddddddddfffffffff1111111111111fdfff
+.fddfffdddffffffffffdddddddddddddfffffffff1111111111111fdfff
+.fddfffdddffffffffffdddddddddddddfffffffff1111111111111fdfff
+.fddfffdddffffffffffdddddddddddddfffffffff1111111111111fdfff
+.fddfffdddffffffffffdddddddddddddfffffffff1111111111111fdfff
+.fddfffdddffffffffffdddddddddddddfffffffff1111111111111fdfff
+.fddfffdddffffffffffddddddddddddffffffffff1111111111111fdfff
+.fddfffdddffffffffffddddddddddddffffffffff1111111111111fdfff
+.fddfffdddfffffffffffdddddddddddffffffffff1111f11111111fdfff
+..fdfffdddfffffffffffdddddddddddffffffffff111ffff111111fdfff
+..fdfffdddffffffffffffddddddddddfffffffff1111fffff11111fdfff
+..fdfffddddfffffffffffffffffddddfffffffff1111ffff111111fdfff
+..fdfffddddfffffffddddddddddffdffffffffff11111f111111ffddfff
+..fdffffddddddddddddddddddddddffffffffff11111111111ffdddddf.
+...fdfffddddddddddddddddddddffffffffffff111111111fffffddddf.
+...fdfffddddddddddddddffffffffffffffffff1111111fffff11fddf..
+...fdfffddddddddddffffffffffffffffffffff11111ffff55511fddf..
+...fdfffddddddddddddfffffffffffffffffffdffffff5555511fddf...
+....fdddddddddddddddddddddddddddddfdddddddddf5551155fdddf...
+.....fdddddddddddddddddddddddddddfddfddddddddfffffffdddf....
+......ffdddddddddddddffffffffffffdddfffffddddddddddddff.....
+........fffffffffffff...........fddf.....ffffffffffff.......
+.................................ff.........................
+`;
+            case "image43":
+            case "CarRight_O":return img`
+.................................ff.........................
+........fffffffffff.............fccf.....fffffffffff........
+.....fffcccccccccccffffffffffffffcccfffffcccccccccccfff.....
+....fccccccccccccccccccccccccccccfccfccccccccfffffffcccf....
+...fcfffccccccccccccccccccccccccccfcccccccccf5551155fcccf...
+...fcfffcccccccccccccffffffffffffffffffcffffff5555511fccf...
+..fcffffccccccccccffffffffffffffffffffff11111ffff55511fccf..
+..fcffffccccccccccccccffffffffffffffffff11111111ffff11fccf..
+..fcffffccccccccccccccccccccffffffffffff1111111111ffffccccf.
+..fcfffcccccccccccccccccccccccfffffffffff11111111111ffccccf.
+..fcfffccccfffffffccccccccccffcffffffffff11111f1111111fccfff
+..fcfffccccfffffffffffffffffccccfffffffff1111ffff111111fcfff
+.fccfffcccffffffffffffccccccccccffffffffff111fffff11111fcfff
+.fccfffcccfffffffffffcccccccccccffffffffff111ffff111111fcfff
+.fccfffcccfffffffffffcccccccccccffffffffff1111f11111111fcfff
+.fccfffcccffffffffffccccccccccccffffffffff1111111111111fcfff
+.fccfffcccffffffffffccccccccccccffffffffff1111111111111fcfff
+.fccfffcccffffffffffcccccccccccccfffffffff1111111111111fcfff
+.fccfffcccffffffffffcccccccccccccfffffffff1111111111111fcfff
+.fccfffcccffffffffffcccccccccccccfffffffff1111111111111fcfff
+.fccfffcccffffffffffcccccccccccccfffffffff1111111111111fcfff
+.fccfffcccffffffffffcccccccccccccfffffffff1111111111111fcfff
+.fccfffcccffffffffffcccccccccccccfffffffff1111111111111fcfff
+.fccfffcccffffffffffccccccccccccffffffffff1111111111111fcfff
+.fccfffcccffffffffffccccccccccccffffffffff1111111111111fcfff
+.fccfffcccfffffffffffcccccccccccffffffffff1111f11111111fcfff
+..fcfffcccfffffffffffcccccccccccffffffffff111ffff111111fcfff
+..fcfffcccffffffffffffccccccccccfffffffff1111fffff11111fcfff
+..fcfffccccfffffffffffffffffccccfffffffff1111ffff111111fcfff
+..fcfffccccfffffffccccccccccffcffffffffff11111f111111ffccfff
+..fcffffccccccccccccccccccccccffffffffff11111111111ffcccccf.
+...fcfffccccccccccccccccccccffffffffffff111111111fffffccccf.
+...fcfffccccccccccccccffffffffffffffffff1111111fffff11fccf..
+...fcfffccccccccccffffffffffffffffffffff11111ffff55511fccf..
+...fcfffccccccccccccfffffffffffffffffffcffffff5555511fccf...
+....fcccccccccccccccccccccccccccccfcccccccccf5551155fcccf...
+.....fcccccccccccccccccccccccccccfccfccccccccfffffffcccf....
+......ffcccccccccccccffffffffffffcccfffffccccccccccccff.....
+........fffffffffffff...........fccf.....ffffffffffff.......
+.................................ff.........................
+`;
+            case "image44":
+            case "CarDown_G":return img`
+........................................
+..............ffffffffffffff............
+.........fffff99999999999999ffffff......
+.....ffff9999999999999999999999999ff....
+....f9999fffffffffffffffffffffffff99f...
+...f9fffffffffffffffffffffffffffffff9f..
+..f99fffffffffffffffffffffffffffffff9f..
+..f99fffff999999999999999999999fffff9f..
+.f999999999999999999999999999999999999f.
+.f999999999999999999999999999999999999f.
+.f9999999999ffffffffffffffff9999999999f.
+.f99999999ffffffffffffffffffff99999999f.
+.f99999999ffffffffffffffffffff99999999f.
+.f99999999ffffffffffffffffffff99999999f.
+.f99999999ffffffffffffffffffff99999999f.
+.f99999999ffffffffffffffffffff99999999f.
+.f99999999ffffffffffffffffffff99999999f.
+.f99999999ffffffffffffffffffff99999999f.
+.f9999f9999ffffffffffffffffff9999f9999f.
+.f9999f9999ffffffffffffffffff9999f999f..
+.f999ff9999ffff9999999999ffff9999f999f..
+..f99ff9999ff99999999999999ff9999ff99f..
+..f99fff999f9999999999999999f999fff99f..
+..f99fff999f9999999999999999f999fff99f..
+..f99fff999f9999999999999999f999fff99f..
+..f99fff999f9999999999999999f999fff99f..
+..f99fff999f9999999999999999f999fff99f..
+..f99fff999f9999999999999999f999fff99f..
+..f99ffff9f999999999999999999f9ffff99f..
+..f99ffff9f999999999999999999f9ffff99f..
+..f99fffff99999999999999999999fffff99f..
+..f99ffffff999999999999999999ffffff99f..
+.ff99ffffffffffff999999ffffffffffff99ff.
+f99f9ffffffffffffffffffffffffffffff9f99f
+f999ffffffffffffffffffffffffffffffff999f
+.f999ffffffffffffffffffffffffffffff999f.
+..ff9ffffffffffffffffffffffffffffff9ff..
+..f99ffffffffffffffffffffffffffffff99f..
+..f99ffffffffffffffffffffffffffffff99f..
+..f999ffffffffffffffffffffffffffff999f..
+..f99f1111fffffffffffffffffffff111f99f..
+.f999f1111111fffffffffffffff111111f999f.
+.f999f1111111111111111111111111111f999f.
+.f999f1111111111111111111111111111f999f.
+.f99ff1111111111111111111111111111ff99f.
+.f9f5ff1111fff111111111111fff1111ff5f9f.
+.f9f55f111fffff1111111111fffff111f55f9f.
+.f9f55ff111fff111111111111fff1111f55f9f.
+.f9f15ff111fff111111111111fff111ff51f9f.
+.f9f155ff111f11111111111111f1111f551f9f.
+.f9f555ff1111111111111111111111ff555f9f.
+.f9f515fff111111111111111111111ff515f9f.
+.f99f111ff11111111111111111111ff111f9f..
+..f99f11f9f1111111111111111111ff11f99f..
+..f999ff99f111111111111111111f99ff999f..
+...f9999999ffffffffffffffffff9999999f...
+....ff9999999999999999999999999999ff....
+......ff99ffffffffffffffffffff99ff......
+........ffffffffffffffffffffffff........
+..........ffffffffffffffffffff..........
+`;
+            case "image38":
+            case "CarUp_R":return img`
+..........ffffffffffffffffffff..........
+........ffffffffffffffffffffffff........
+......ffbbffffffffffffffffffffbbff......
+....ffbbbbbbbbbbbbbbbbbbbbbbbbbbbbff....
+...fbbbbbbbffffffffffffffffffbbbbbbbf...
+..fbbbffbbf111111111111111111fbbffbbbf..
+..fbbf11fbf1111111111111111111ff11fbbf..
+.fbbf111ff11111111111111111111ff111fbf..
+.fbf515fff111111111111111111111ff515fbf.
+.fbf555ff1111111111111111111111ff555fbf.
+.fbf155ff111f11111111111111f1111f551fbf.
+.fbf15ff111fff111111111111fff111ff51fbf.
+.fbf55ff111fff111111111111fff1111f55fbf.
+.fbf55f111fffff1111111111fffff111f55fbf.
+.fbf5ff1111fff111111111111fff1111ff5fbf.
+.fbbff1111111111111111111111111111ffbbf.
+.fbbbf1111111111111111111111111111fbbbf.
+.fbbbf1111111111111111111111111111fbbbf.
+.fbbbf1111111fffffffffffffff111111fbbbf.
+..fbbf1111fffffffffffffffffffff111fbbf..
+..fbbbffffffffffffffffffffffffffffbbbf..
+..fbbffffffffffffffffffffffffffffffbbf..
+..fbbffffffffffffffffffffffffffffffbbf..
+..ffbffffffffffffffffffffffffffffffbff..
+.fbbbffffffffffffffffffffffffffffffbbbf.
+fbbbffffffffffffffffffffffffffffffffbbbf
+fbbfbffffffffffffffffffffffffffffffbfbbf
+.ffbbffffffffffffbbbbbbffffffffffffbbff.
+..fbbffffffbbbbbbbbbbbbbbbbbbffffffbbf..
+..fbbfffffbbbbbbbbbbbbbbbbbbbbfffffbbf..
+..fbbffffbfbbbbbbbbbbbbbbbbbbfbffffbbf..
+..fbbffffbfbbbbbbbbbbbbbbbbbbfbffffbbf..
+..fbbfffbbbfbbbbbbbbbbbbbbbbfbbbfffbbf..
+..fbbfffbbbfbbbbbbbbbbbbbbbbfbbbfffbbf..
+..fbbfffbbbfbbbbbbbbbbbbbbbbfbbbfffbbf..
+..fbbfffbbbfbbbbbbbbbbbbbbbbfbbbfffbbf..
+..fbbfffbbbfbbbbbbbbbbbbbbbbfbbbfffbbf..
+..fbbfffbbbfbbbbbbbbbbbbbbbbfbbbfffbbf..
+..fbbffbbbbffbbbbbbbbbbbbbbffbbbbffbbf..
+.fbbbffbbbbffffbbbbbbbbbbffffbbbbfbbbf..
+.fbbbbfbbbbffffffffffffffffffbbbbfbbbf..
+.fbbbbfbbbbffffffffffffffffffbbbbfbbbbf.
+.fbbbbbbbbffffffffffffffffffffbbbbbbbbf.
+.fbbbbbbbbffffffffffffffffffffbbbbbbbbf.
+.fbbbbbbbbffffffffffffffffffffbbbbbbbbf.
+.fbbbbbbbbffffffffffffffffffffbbbbbbbbf.
+.fbbbbbbbbffffffffffffffffffffbbbbbbbbf.
+.fbbbbbbbbffffffffffffffffffffbbbbbbbbf.
+.fbbbbbbbbffffffffffffffffffffbbbbbbbbf.
+.fbbbbbbbbbbffffffffffffffffbbbbbbbbbbf.
+.fbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbf.
+.fbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbf.
+..fbbfffffbbbbbbbbbbbbbbbbbbbbbfffffbf..
+..fbbfffffffffffffffffffffffffffffffbf..
+...fbfffffffffffffffffffffffffffffffbf..
+....fbbbbfffffffffffffffffffffffffbbf...
+.....ffffbbbbbbbbbbbbbbbbbbbbbbbbbff....
+.........fffffbbbbbbbbbbbbbbffffff......
+..............ffffffffffffff............
+........................................
+`;
+            case "image41":
+            case "CarUp_L":return img`
+..........ffffffffffffffffffff..........
+........ffffffffffffffffffffffff........
+......ff44ffffffffffffffffffff44ff......
+....ff4444444444444444444444444444ff....
+...f4444444ffffffffffffffffff4444444f...
+..f444ff44f111111111111111111f44ff444f..
+..f44f11f4f1111111111111111111ff11f44f..
+.f44f111ff11111111111111111111ff111f4f..
+.f4f515fff111111111111111111111ff515f4f.
+.f4f555ff1111111111111111111111ff555f4f.
+.f4f155ff111f11111111111111f1111f551f4f.
+.f4f15ff111fff111111111111fff111ff51f4f.
+.f4f55ff111fff111111111111fff1111f55f4f.
+.f4f55f111fffff1111111111fffff111f55f4f.
+.f4f5ff1111fff111111111111fff1111ff5f4f.
+.f44ff1111111111111111111111111111ff44f.
+.f444f1111111111111111111111111111f444f.
+.f444f1111111111111111111111111111f444f.
+.f444f1111111fffffffffffffff111111f444f.
+..f44f1111fffffffffffffffffffff111f44f..
+..f444ffffffffffffffffffffffffffff444f..
+..f44ffffffffffffffffffffffffffffff44f..
+..f44ffffffffffffffffffffffffffffff44f..
+..ff4ffffffffffffffffffffffffffffff4ff..
+.f444ffffffffffffffffffffffffffffff444f.
+f444ffffffffffffffffffffffffffffffff444f
+f44f4ffffffffffffffffffffffffffffff4f44f
+.ff44ffffffffffff444444ffffffffffff44ff.
+..f44ffffff444444444444444444ffffff44f..
+..f44fffff44444444444444444444fffff44f..
+..f44ffff4f444444444444444444f4ffff44f..
+..f44ffff4f444444444444444444f4ffff44f..
+..f44fff444f4444444444444444f444fff44f..
+..f44fff444f4444444444444444f444fff44f..
+..f44fff444f4444444444444444f444fff44f..
+..f44fff444f4444444444444444f444fff44f..
+..f44fff444f4444444444444444f444fff44f..
+..f44fff444f4444444444444444f444fff44f..
+..f44ff4444ff44444444444444ff4444ff44f..
+.f444ff4444ffff4444444444ffff4444f444f..
+.f4444f4444ffffffffffffffffff4444f444f..
+.f4444f4444ffffffffffffffffff4444f4444f.
+.f44444444ffffffffffffffffffff44444444f.
+.f44444444ffffffffffffffffffff44444444f.
+.f44444444ffffffffffffffffffff44444444f.
+.f44444444ffffffffffffffffffff44444444f.
+.f44444444ffffffffffffffffffff44444444f.
+.f44444444ffffffffffffffffffff44444444f.
+.f44444444ffffffffffffffffffff44444444f.
+.f4444444444ffffffffffffffff4444444444f.
+.f444444444444444444444444444444444444f.
+.f444444444444444444444444444444444444f.
+..f44fffff444444444444444444444fffff4f..
+..f44fffffffffffffffffffffffffffffff4f..
+...f4fffffffffffffffffffffffffffffff4f..
+....f4444fffffffffffffffffffffffff44f...
+.....ffff4444444444444444444444444ff....
+.........fffff44444444444444ffffff......
+..............ffffffffffffff............
+........................................
+`;
+            case "image42":
+            case "CarLeft_P":return img`
+.........................ff.................................
+........fffffffffff.....feef.............fffffffffff........
+.....fffeeeeeeeeeeefffffeeeffffffffffffffeeeeeeeeeeefff.....
+....feeefffffffeeeeeeeefeefeeeeeeeeeeeeeeeeeeeeeeeeeeeef....
+...feeef5511555feeeeeeeeefeeeeeeeeeeeeeeeeeeeeeeeeeefffef...
+...feef1155555ffffffeffffffffffffffffffeeeeeeeeeeeeefffef...
+..feef11555ffff11111ffffffffffffffffffffffeeeeeeeeeeffffef..
+..feef11ffff11111111ffffffffffffffffffeeeeeeeeeeeeeeffffef..
+.feeeeffff1111111111ffffffffffffeeeeeeeeeeeeeeeeeeeeffffef..
+.feeeeff11111111111fffffffffffeeeeeeeeeeeeeeeeeeeeeeefffef..
+fffeef1111111f11111ffffffffffeffeeeeeeeeeefffffffeeeefffef..
+fffef111111ffff1111fffffffffeeeefffffffffffffffffeeeefffef..
+fffef11111fffff111ffffffffffeeeeeeeeeeffffffffffffeeefffeef.
+fffef111111ffff111ffffffffffeeeeeeeeeeefffffffffffeeefffeef.
+fffef11111111f1111ffffffffffeeeeeeeeeeefffffffffffeeefffeef.
+fffef1111111111111ffffffffffeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111ffffffffffeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111fffffffffeeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111fffffffffeeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111fffffffffeeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111fffffffffeeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111fffffffffeeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111fffffffffeeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111ffffffffffeeeeeeeeeeeeffffffffffeeefffeef.
+fffef1111111111111ffffffffffeeeeeeeeeeeeffffffffffeeefffeef.
+fffef11111111f1111ffffffffffeeeeeeeeeeefffffffffffeeefffeef.
+fffef111111ffff111ffffffffffeeeeeeeeeeefffffffffffeeefffef..
+fffef11111fffff1111fffffffffeeeeeeeeeeffffffffffffeeefffef..
+fffef111111ffff1111fffffffffeeeefffffffffffffffffeeeefffef..
+fffeeff111111f11111ffffffffffeffeeeeeeeeeefffffffeeeefffef..
+.feeeeeff11111111111ffffffffffeeeeeeeeeeeeeeeeeeeeeeffffef..
+.feeeefffff111111111ffffffffffffeeeeeeeeeeeeeeeeeeeefffef...
+..feef11fffff1111111ffffffffffffffffffeeeeeeeeeeeeeefffef...
+..feef11555ffff11111ffffffffffffffffffffffeeeeeeeeeefffef...
+...feef1155555ffffffefffffffffffffffffffeeeeeeeeeeeefffef...
+...feeef5511555feeeeeeeeefeeeeeeeeeeeeeeeeeeeeeeeeeeeeef....
+....feeefffffffeeeeeeeefeefeeeeeeeeeeeeeeeeeeeeeeeeeeef.....
+.....ffeeeeeeeeeeeefffffeeeffffffffffffeeeeeeeeeeeeeff......
+.......ffffffffffff.....feef...........fffffffffffff........
+.........................ff.................................
+`;
+            case "F4~x5tRx}/JF|)A#g8II":
+            case "Film":return img`
+. . . . f f f f f f f f . . . . 
+. . f f 7 7 7 7 7 7 7 7 f f . . 
+. f 7 7 8 8 8 8 8 8 8 8 7 7 f . 
+. f 7 f f f 8 8 8 8 f f f 7 f . 
+f 7 8 f f f 8 8 8 8 f f f 8 7 f 
+f 8 8 f f f 8 8 8 8 f f f 8 8 f 
+f 8 8 8 8 8 8 8 8 8 8 8 8 8 8 f 
+f 8 8 8 8 8 8 f f 8 8 8 8 8 8 f 
+f 8 8 8 8 8 8 f f 8 8 8 8 8 8 f 
+f 8 8 8 8 8 8 8 8 8 8 8 8 8 8 f 
+f 8 8 f f f 8 8 8 8 f f f 8 8 f 
+f 8 8 f f f 8 8 8 8 f f f 8 8 f 
+. f 8 f f f 8 8 8 8 f f f 8 f . 
+. f 8 8 8 8 8 8 8 8 8 8 8 8 f . 
+. . f f 8 8 8 8 8 8 8 8 f f . . 
+. . . . f f f f f f f f . . . . 
 `;
         }
         return null;
