@@ -5,6 +5,7 @@ namespace SpriteKind {
     export const Enemy2 = SpriteKind.create()
     export const Dialogue = SpriteKind.create()
     export const Drone = SpriteKind.create()
+    export const Door = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -92,6 +93,7 @@ sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSp
     DroneActive = 0
 })
 function LVL_11 () {
+    music.stopAllSounds()
     pause(2000)
     scene.setBackgroundImage(assets.image`Background`)
     tiles.setCurrentTilemap(tilemap`Lvl1_Rm1`)
@@ -118,6 +120,8 @@ function LVL_11 () {
     tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
     Spr_Glas.vy = 50
     Spr_Glas.setBounceOnWall(true)
+    Door1 = sprites.create(assets.image`Door1`, SpriteKind.Door)
+    tiles.placeOnTile(Door1, tiles.getTileLocation(59, 25))
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
@@ -192,6 +196,11 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
             sprites.destroy(projectile)
         }
     }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Door, function (sprite, otherSprite) {
+    Level = 3
+    sprites.destroy(Spr_Player)
+    RunLevel()
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (DroneActive == 0) {
@@ -560,6 +569,7 @@ sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy, function (sprite, otherSpr
     DroneActive = 0
 })
 function PlayerZoo () {
+    music.stopAllSounds()
     pause(2000)
     scene.setBackgroundImage(assets.image`Background`)
     tiles.setCurrentTilemap(tilemap`Practice Area`)
@@ -603,6 +613,7 @@ let One_Liner: string[] = []
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
 let Spr_Play_Dialogue: Sprite = null
+let Door1: Sprite = null
 let Spr_Glas: Sprite = null
 let Spr_Film: Sprite = null
 let Item_Name = 0
