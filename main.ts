@@ -22,7 +22,7 @@ function RunLevel () {
         LVL_11()
     }
     if (Level == 3) {
-    	
+        LVL_12()
     }
     if (Level == 4) {
         PlayerZoo()
@@ -642,6 +642,21 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherS
         otherSprite.vx = 50
     }
 })
+function LVL_12 () {
+    CheckPoint = 2
+    music.stopAllSounds()
+    pause(2000)
+    scene.setBackgroundImage(assets.image`Background`)
+    tiles.setCurrentTilemap(tilemap`Lvl1_Rm2`)
+    Hidden = 0
+    spriteutils.setLifeImage(assets.image`Little Goobs`)
+    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player, 100, 100)
+    Checkpoint()
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+}
 function BawsmanDialogue () {
     game.setDialogFrame(assets.image`BawsmanTextbox`)
     game.setDialogCursor(assets.image`WhiteTextArrow`)
