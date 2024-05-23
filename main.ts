@@ -12,39 +12,8 @@ namespace SpriteKind {
     export const Car2 = SpriteKind.create()
     export const Enemy3 = SpriteKind.create()
     export const HidingPlace = SpriteKind.create()
+    export const VisualFlourish = SpriteKind.create()
 }
-// interaction between patrolling enemies and players
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (otherSprite.vy != 0) {
-        music.setVolume(255)
-        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-        info.changeLifeBy(-1)
-        scene.cameraShake(4, 500)
-        Checkpoint()
-        if (otherSprite.vy != 0) {
-            otherSprite.vy = 0
-            pause(2000)
-            otherSprite.vy = 50
-        } else if (otherSprite.vx != 0) {
-            otherSprite.vx = 0
-            pause(2000)
-            otherSprite.vx = 50
-        }
-    }
-})
-// Upwards Camera Shot
-controller.up.onEvent(ControllerButtonEvent.Released, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
-        }
-    }
-})
 function RunLevel () {
     if (Level == 1) {
         DialogueOne()
@@ -53,6 +22,9 @@ function RunLevel () {
         LVL_11()
     }
     if (Level == 3) {
+    	
+    }
+    if (Level == 4) {
         PlayerZoo()
     }
 }
@@ -76,28 +48,36 @@ function E_Patrol () {
         Spr_Pat2.setImage(assets.image`pat_left`)
     }
 }
+// interaction between patrolling enemies and players
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSprite) {
+    if (otherSprite.vy != 0) {
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        Checkpoint()
+    }
+})
 function RaziDialogue () {
     game.setDialogFrame(assets.image`RatziTextbox`)
     game.setDialogCursor(assets.image`BlackTextArrow`)
     game.setDialogTextColor(15)
 }
-sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSprite) {
-    music.stopAllSounds()
-    Spr_drone.vx = 0
-    Spr_drone.vy = 0
-    sprites.destroy(Spr_drone, effects.fire, 50)
-    music.stopAllSounds()
-    scene.cameraShake(4, 500)
-    music.setVolume(101)
-    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
-    pause(1000)
-    scene.cameraFollowSprite(Spr_Player)
-    controller.moveSprite(Spr_Player)
-    music.setVolume(25)
-    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-    Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
-    tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
-    DroneActive = 0
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Hidden == 0) {
+        if (DroneActive == 1) {
+            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+            Spr_Player.setImage(assets.image`RatzDrone_Down`)
+        } else {
+            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+        }
+        animation.runImageAnimation(
+        Spr_Player,
+        assets.animation`RatziWalk_Down0`,
+        100,
+        true
+        )
+    }
 })
 function Cars_2 () {
     if (CarScore2 == 1) {
@@ -121,6 +101,20 @@ function Cars_2 () {
         Cars_2()
     }
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (DroneActive == 0) {
+        DroneActive = 1
+        controller.moveSprite(Spr_Player, 0, 0)
+        spriteutils.placeAngleFrom(
+        Spr_drone,
+        0,
+        1,
+        Spr_Player
+        )
+        scene.cameraFollowSprite(Spr_drone)
+        music.stopAllSounds()
+    }
+})
 function E_Sunglasses () {
     if (Spr_Glas.vy < 0) {
         Spr_Glas.setImage(assets.image`glas_back`)
@@ -132,25 +126,9 @@ function E_Sunglasses () {
         Spr_Glas.setImage(assets.image`glas_left`)
     }
 }
-// Left camera shot
-controller.left.onEvent(ControllerButtonEvent.Released, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Left`, Spr_Player, -200, 0)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
-        }
-    }
-})
-info.onLifeZero(function () {
-    music.stopAllSounds()
-    game.setGameOverEffect(false, effects.melt)
-    game.setGameOverMessage(false, "YOU FAILED")
-    game.setGameOverPlayable(false, music.melodyPlayable(music.bigCrash), false)
-    game.gameOver(false)
+sprites.onOverlap(SpriteKind.Car2, SpriteKind.SpeedBump, function (sprite, otherSprite) {
+    CarScore2 += 1
+    Cars_2()
 })
 spriteutils.onSpriteKindUpdateInterval(SpriteKind.Enemy3, 1500, function (sprite) {
     PatDirection0 += 1
@@ -158,9 +136,13 @@ spriteutils.onSpriteKindUpdateInterval(SpriteKind.Enemy3, 1500, function (sprite
         PatDirection0 = 0
     }
 })
-sprites.onOverlap(SpriteKind.Car2, SpriteKind.SpeedBump, function (sprite, otherSprite) {
-    CarScore2 += 1
-    Cars_2()
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    controller.moveSprite(Spr_Player, 0, 0)
+    if (Film_Count <= 0) {
+        Spr_Player.sayText("Out of Film", 1000, true)
+    } else {
+        Spr_Player.sayText("Film: " + Film_Count, 1000, true)
+    }
 })
 function Cars_1 () {
     if (CarScore == 1) {
@@ -184,49 +166,41 @@ function Cars_1 () {
         Cars_1()
     }
 }
-// resets movement once picture is taken
-controller.A.onEvent(ControllerButtonEvent.Released, function () {
-    controller.moveSprite(Spr_Player, 100, 100)
-})
-// interaction between patrolling enemies and players
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherSprite) {
-    music.setVolume(255)
-    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-    info.changeLifeBy(-1)
-    scene.cameraShake(4, 500)
-    Checkpoint()
-    if (otherSprite.vy != 0) {
-        otherSprite.vy = 0
-        pause(2000)
-        otherSprite.vy = 50
-    } else if (otherSprite.vx != 0) {
-        otherSprite.vx = 0
-        pause(2000)
-        otherSprite.vx = 50
+// Downwards Camera Shot
+controller.down.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
+        }
     }
 })
-// Interaction that allows player to pick up film
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSprite) {
-    Film_Count += 1
-    sprites.destroy(Spr_Film)
-    Spr_Player.sayText("I've got " + Film_Count + " Film.", 1000, true)
-    music.setVolume(111)
-    music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
-})
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hidden == 0) {
         if (DroneActive == 1) {
             animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-            Spr_Player.setImage(assets.image`RatzDrone_Down`)
+            Spr_Player.setImage(assets.image`RatzDrone_Left`)
         } else {
             animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+            animation.runImageAnimation(
+            Spr_Player,
+            assets.animation`RatziWalk_Left`,
+            100,
+            true
+            )
         }
-        animation.runImageAnimation(
-        Spr_Player,
-        assets.animation`RatziWalk_Down0`,
-        100,
-        true
-        )
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Door, function (sprite, otherSprite) {
+    if (Hidden == 1) {
+        Level = 3
+        sprites.destroy(Spr_Player)
+        BackDoor = 1
+        RunLevel()
     }
 })
 // right camera shot
@@ -242,57 +216,39 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
         }
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Door, function (sprite, otherSprite) {
-    if (Hidden == 1) {
-        Level = 3
-        sprites.destroy(Spr_Player)
-        RunLevel()
+// Left camera shot
+controller.left.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Left`, Spr_Player, -200, 0)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
+        }
     }
 })
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (DroneActive == 0) {
-        DroneActive = 1
-        controller.moveSprite(Spr_Player, 0, 0)
-        spriteutils.placeAngleFrom(
-        Spr_drone,
-        0,
-        1,
-        Spr_Player
-        )
-        scene.cameraFollowSprite(Spr_drone)
-        music.stopAllSounds()
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (Hidden == 0) {
+        if (DroneActive == 1) {
+            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+            Spr_Player.setImage(assets.image`RatzDrone_Right`)
+        } else {
+            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
+            animation.runImageAnimation(
+            Spr_Player,
+            assets.animation`RatziWalk_Right`,
+            100,
+            true
+            )
+        }
     }
 })
-// interaction between patrolling enemies and players
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSprite) {
-    if (otherSprite.vy != 0) {
-        music.setVolume(255)
-        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-        info.changeLifeBy(-1)
-        scene.cameraShake(4, 500)
-        Checkpoint()
-    }
+// resets movement once picture is taken
+controller.A.onEvent(ControllerButtonEvent.Released, function () {
+    controller.moveSprite(Spr_Player, 100, 100)
 })
-function CircularPatrol () {
-    if (Spr_PatCirc1.vy < 0) {
-        Spr_PatCirc1.setImage(assets.image`pat_back`)
-    } else if (Spr_PatCirc1.vy > 0) {
-        Spr_PatCirc1.setImage(assets.image`pat_front`)
-    } else if (Spr_PatCirc1.vx > 0) {
-        Spr_PatCirc1.setImage(assets.image`pat_right`)
-    } else if (Spr_PatCirc1.vx < 0) {
-        Spr_PatCirc1.setImage(assets.image`pat_left`)
-    }
-    if (PatDirection0 == 3) {
-        Spr_PatCirc1.setVelocity(0, 50)
-    } else if (PatDirection0 == 2) {
-        Spr_PatCirc1.setVelocity(50, 0)
-    } else if (PatDirection0 == 1) {
-        Spr_PatCirc1.setVelocity(0, -50)
-    } else if (PatDirection0 == 0) {
-        Spr_PatCirc1.setVelocity(-50, 0)
-    }
-}
 function LVL_11 () {
     CheckPoint = 1
     music.stopAllSounds()
@@ -320,15 +276,23 @@ function LVL_11 () {
     tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(37, 50))
     Spr_Pat2.vy = 50
     Spr_Pat2.setBounceOnWall(true)
+    Spr_Pat3 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    Spr_Pat3.vx = 75
+    Spr_Pat3.setBounceOnWall(true)
+    tiles.placeOnTile(Spr_Pat3, tiles.getTileLocation(64, 28))
     Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
-    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(50, 34))
     Spr_Glas.vy = 50
     Spr_Glas.setBounceOnWall(true)
     tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
-    Spr_PatCirc1 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy3)
-    tiles.placeOnTile(Spr_PatCirc1, tiles.getTileLocation(72, 26))
+    TicketWindow = sprites.create(assets.image`myImage2`, SpriteKind.VisualFlourish)
+    tiles.placeOnTile(TicketWindow, tiles.getTileLocation(52, 23))
+    TheaterSign = sprites.create(assets.image`myImage3`, SpriteKind.VisualFlourish)
+    tiles.placeOnTile(TheaterSign, tiles.getTileLocation(35, 19))
+    TheaterSign2 = sprites.create(assets.image`myImage3`, SpriteKind.VisualFlourish)
+    tiles.placeOnTile(TheaterSign2, tiles.getTileLocation(66, 19))
     Door1 = sprites.create(assets.image`Theater Door`, SpriteKind.Door)
-    tiles.placeOnTile(Door1, tiles.getTileLocation(59, 25))
+    tiles.placeOnTile(Door1, tiles.getTileLocation(59, 24))
     StationaryCar = sprites.create(assets.image`CarRight_O`, SpriteKind.Object)
     tiles.placeOnTile(StationaryCar, tiles.getTileLocation(28, 49))
     StationaryCar = sprites.create(assets.image`CarDown_R`, SpriteKind.Object)
@@ -346,6 +310,24 @@ function LVL_11 () {
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
+sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy, function (sprite, otherSprite) {
+    music.stopAllSounds()
+    Spr_drone.vx = 0
+    Spr_drone.vy = 0
+    sprites.destroy(Spr_drone, effects.fire, 50)
+    music.stopAllSounds()
+    scene.cameraShake(4, 500)
+    music.setVolume(101)
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    pause(1000)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player)
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+    Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+    tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+    DroneActive = 0
+})
 function DialogueOne () {
     music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
     tiles.setCurrentTilemap(tilemap`Dialogue`)
@@ -501,34 +483,17 @@ function DialogueOne () {
     sprites.destroy(Spr_Boss)
     sprites.destroy(Spr_Camera)
 }
-sprites.onOverlap(SpriteKind.Car, SpriteKind.SpeedBump, function (sprite, otherSprite) {
-    CarScore += 1
-    Cars_1()
-})
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Hidden == 0) {
-        if (DroneActive == 1) {
-            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-            Spr_Player.setImage(assets.image`RatzDrone_Left`)
-        } else {
-            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-            animation.runImageAnimation(
-            Spr_Player,
-            assets.animation`RatziWalk_Left`,
-            100,
-            true
-            )
+// Upwards Camera Shot
+controller.up.onEvent(ControllerButtonEvent.Released, function () {
+    if (controller.A.isPressed()) {
+        if (Film_Count > 0) {
+            music.setVolume(255)
+            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
+            projectile = sprites.createProjectileFromSprite(assets.image`Flash Up`, Spr_Player, 0, -200)
+            Film_Count += -1
+            pause(100)
+            sprites.destroy(projectile)
         }
-    }
-})
-// interaction between patrolling enemies and players
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Car, function (sprite, otherSprite) {
-    if (otherSprite.vy != 0) {
-        music.setVolume(255)
-        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-        info.changeLifeBy(-1)
-        scene.cameraShake(4, 500)
-        Checkpoint()
     }
 })
 function P_Drone () {
@@ -629,48 +594,14 @@ function P_Drone () {
         DroneActive = 0
     }
 }
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    controller.moveSprite(Spr_Player, 0, 0)
-    if (Film_Count <= 0) {
-        Spr_Player.sayText("Out of Film", 1000, true)
-    } else {
-        Spr_Player.sayText("Film: " + Film_Count, 1000, true)
-    }
-})
 function SpawnCrowd () {
     MovingCrowd = sprites.create(assets.image`Crowd_Left`, SpriteKind.HidingPlace)
-    tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(71, 30))
+    tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(72, 33))
     MovingCrowd.vx = -40
-    pause(5000)
+    pause(6000)
     MovingCrowd.vx = 0
     MovingCrowd.vy = -40
 }
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (Hidden == 0) {
-        if (DroneActive == 1) {
-            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-            Spr_Player.setImage(assets.image`RatzDrone_Right`)
-        } else {
-            animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-            animation.runImageAnimation(
-            Spr_Player,
-            assets.animation`RatziWalk_Right`,
-            100,
-            true
-            )
-        }
-    }
-})
-function BawsmanDialogue () {
-    game.setDialogFrame(assets.image`BawsmanTextbox`)
-    game.setDialogCursor(assets.image`WhiteTextArrow`)
-    game.setDialogTextColor(1)
-}
-sprites.onOverlap(SpriteKind.HidingPlace, SpriteKind.Door, function (sprite, otherSprite) {
-    pause(1000)
-    sprites.destroy(MovingCrowd)
-    SpawnCrowd()
-})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hidden == 0) {
         if (DroneActive == 1) {
@@ -687,11 +618,120 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+info.onLifeZero(function () {
+    music.stopAllSounds()
+    game.setGameOverEffect(false, effects.melt)
+    game.setGameOverMessage(false, "YOU FAILED")
+    game.setGameOverPlayable(false, music.melodyPlayable(music.bigCrash), false)
+    game.gameOver(false)
+})
+// interaction between patrolling enemies and players
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherSprite) {
+    music.setVolume(255)
+    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+    info.changeLifeBy(-1)
+    scene.cameraShake(4, 500)
+    Checkpoint()
+    if (otherSprite.vy != 0) {
+        otherSprite.vy = 0
+        pause(2000)
+        otherSprite.vy = 50
+    } else if (otherSprite.vx != 0) {
+        otherSprite.vx = 0
+        pause(2000)
+        otherSprite.vx = 50
+    }
+})
+function BawsmanDialogue () {
+    game.setDialogFrame(assets.image`BawsmanTextbox`)
+    game.setDialogCursor(assets.image`WhiteTextArrow`)
+    game.setDialogTextColor(1)
+}
+sprites.onOverlap(SpriteKind.HidingPlace, SpriteKind.Door, function (sprite, otherSprite) {
+    pause(500)
+    sprites.destroy(MovingCrowd)
+    animation.runImageAnimation(
+    Door1,
+    assets.animation`myAnim0`,
+    700,
+    false
+    )
+    SpawnCrowd()
+})
+sprites.onOverlap(SpriteKind.Car, SpriteKind.SpeedBump, function (sprite, otherSprite) {
+    CarScore += 1
+    Cars_1()
+})
+sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSprite) {
+    music.stopAllSounds()
+    Spr_drone.vx = 0
+    Spr_drone.vy = 0
+    sprites.destroy(Spr_drone, effects.fire, 50)
+    music.stopAllSounds()
+    scene.cameraShake(4, 500)
+    music.setVolume(101)
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    pause(1000)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player)
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+    Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+    tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+    DroneActive = 0
+})
+// Interaction that allows player to pick up film
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSprite) {
+    Film_Count += 1
+    sprites.destroy(Spr_Film)
+    Spr_Player.sayText("I've got " + Film_Count + " Film.", 1000, true)
+    music.setVolume(111)
+    music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
+})
 function Checkpoint () {
     if (CheckPoint == 1) {
         tiles.placeOnTile(Spr_Player, tiles.getTileLocation(10, 53))
+    } else if (CheckPoint == 2) {
+        tiles.placeOnTile(Spr_Player, tiles.getTileLocation(62, 28))
     }
 }
+function PlayerZoo () {
+    music.stopAllSounds()
+    pause(2000)
+    scene.setBackgroundImage(assets.image`Background`)
+    tiles.setCurrentTilemap(tilemap`Practice Area`)
+    Film_Count = 5
+    Item_Name = 0
+    info.setScore(0)
+    info.setLife(3)
+    spriteutils.setLifeImage(assets.image`Little Goobs`)
+    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player, 100, 100)
+    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
+    Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
+    tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
+    Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
+    Spr_Pat.vy = 50
+    Spr_Pat.setBounceOnWall(true)
+    Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
+    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+    Spr_Glas.vy = 50
+    Spr_Glas.setBounceOnWall(true)
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+}
+// interaction between patrolling enemies and players
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Car, function (sprite, otherSprite) {
+    if (otherSprite.vy != 0) {
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        Checkpoint()
+    }
+})
 // interaction between patrolling enemies and camera flash
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (otherSprite.vy != 0) {
@@ -714,70 +754,22 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         otherSprite.vx = 50
     }
 })
-sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy, function (sprite, otherSprite) {
-    music.stopAllSounds()
-    Spr_drone.vx = 0
-    Spr_drone.vy = 0
-    sprites.destroy(Spr_drone, effects.fire, 50)
-    music.stopAllSounds()
-    scene.cameraShake(4, 500)
-    music.setVolume(101)
-    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
-    pause(1000)
-    scene.cameraFollowSprite(Spr_Player)
-    controller.moveSprite(Spr_Player)
-    music.setVolume(25)
-    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-    Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
-    tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
-    DroneActive = 0
-})
-function PlayerZoo () {
-    music.stopAllSounds()
-    pause(2000)
-    scene.setBackgroundImage(assets.image`Background`)
-    tiles.setCurrentTilemap(tilemap`Practice Area`)
-    Film_Count = 5
-    Item_Name = 0
-    info.setScore(0)
-    info.setLife(3)
-    spriteutils.setLifeImage(img`
-        . . . . . . . 
-        . . . . . . . 
-        . . . . . . . 
-        . . . . . . . 
-        . . . . . . . 
-        . . . . . . . 
-        . . . . . . . 
-        . . . . . . . 
-        `)
-    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
-    scene.cameraFollowSprite(Spr_Player)
-    controller.moveSprite(Spr_Player, 100, 100)
-    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(2, 2))
-    Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
-    tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
-    Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(14, 4))
-    Spr_Pat.vy = 50
-    Spr_Pat.setBounceOnWall(true)
-    Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
-    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
-    Spr_Glas.vy = 50
-    Spr_Glas.setBounceOnWall(true)
-    music.setVolume(25)
-    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-}
-// Downwards Camera Shot
-controller.down.onEvent(ControllerButtonEvent.Released, function () {
-    if (controller.A.isPressed()) {
-        if (Film_Count > 0) {
-            music.setVolume(255)
-            music.play(music.createSong(assets.song`Click Sound`), music.PlaybackMode.InBackground)
-            projectile = sprites.createProjectileFromSprite(assets.image`Flash Down`, Spr_Player, 0, 200)
-            Film_Count += -1
-            pause(100)
-            sprites.destroy(projectile)
+// interaction between patrolling enemies and players
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (otherSprite.vy != 0) {
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        Checkpoint()
+        if (otherSprite.vy != 0) {
+            otherSprite.vy = 0
+            pause(2000)
+            otherSprite.vy = 50
+        } else if (otherSprite.vx != 0) {
+            otherSprite.vx = 0
+            pause(2000)
+            otherSprite.vx = 50
         }
     }
 })
@@ -790,26 +782,30 @@ let Spr_Play_Dialogue: Sprite = null
 let SpeedBump2: Sprite = null
 let StationaryCar: Sprite = null
 let Door1: Sprite = null
+let TheaterSign2: Sprite = null
+let TheaterSign: Sprite = null
+let TicketWindow: Sprite = null
+let Spr_Pat3: Sprite = null
+let Spr_Film: Sprite = null
 let Item_Name = 0
 let CheckPoint = 0
-let Spr_PatCirc1: Sprite = null
-let Hidden = 0
-let Spr_Film: Sprite = null
+let BackDoor = 0
+let projectile: Sprite = null
 let MeanCar3: Sprite = null
 let MeanCar2: Sprite = null
 let MeanCar: Sprite = null
 let CarScore = 0
+let Film_Count = 0
 let PatDirection0 = 0
 let Spr_Glas: Sprite = null
 let MeanCar6: Sprite = null
 let MeanCar5: Sprite = null
 let Meancar4: Sprite = null
 let CarScore2 = 0
+let Spr_Player: Sprite = null
+let Hidden = 0
 let Spr_Pat2: Sprite = null
 let Spr_Pat: Sprite = null
-let Spr_Player: Sprite = null
-let projectile: Sprite = null
-let Film_Count = 0
 let Spr_drone: Sprite = null
 let DroneActive = 0
 let Level = 0
@@ -823,19 +819,15 @@ game.onUpdate(function () {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
     }
 })
-game.onUpdateInterval(500, function () {
-    CircularPatrol()
-})
 forever(function () {
     P_Drone()
     E_Patrol()
     E_Sunglasses()
-    CircularPatrol()
-    if (spriteutils.distanceBetween(Spr_Player, MovingCrowd) < 100) {
+    if (Spr_Player.overlapsWith(MovingCrowd)) {
         Hidden = 1
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
         Spr_Player.setImage(assets.image`Ratzi_Hidden`)
-    } else if (spriteutils.distanceBetween(Spr_Player, MovingCrowd) > 110 && spriteutils.distanceBetween(Spr_Player, MovingCrowd) < 120) {
+    } else if (spriteutils.distanceBetween(Spr_Player, MovingCrowd) > 30 && spriteutils.distanceBetween(Spr_Player, MovingCrowd) < 50) {
         Hidden = 0
         Spr_Player.setImage(assets.image`pap_front`)
     }
