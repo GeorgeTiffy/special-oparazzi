@@ -9,6 +9,7 @@ namespace SpriteKind {
     export const Object = SpriteKind.create()
     export const Car = SpriteKind.create()
     export const SpeedBump = SpriteKind.create()
+    export const Car2 = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -17,6 +18,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
         info.changeLifeBy(-1)
         scene.cameraShake(4, 500)
+        Checkpoint()
         if (otherSprite.vy != 0) {
             otherSprite.vy = 0
             pause(2000)
@@ -95,6 +97,27 @@ sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSp
     tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
     DroneActive = 0
 })
+function Cars_2 () {
+    if (CarScore2 == 1) {
+        Meancar4 = sprites.create(assets.image`CarDown_Br`, SpriteKind.Car2)
+        tiles.placeOnTile(Meancar4, tiles.getTileLocation(22, 47))
+        Meancar4.vy = 75
+    } else if (CarScore2 == 2) {
+        sprites.destroy(Meancar4)
+        MeanCar5 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car2)
+        tiles.placeOnTile(MeanCar5, tiles.getTileLocation(22, 47))
+        MeanCar5.vy = 200
+    } else if (CarScore2 == 3) {
+        sprites.destroy(MeanCar5)
+        MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
+        tiles.placeOnTile(MeanCar6, tiles.getTileLocation(22, 47))
+        MeanCar6.vy = 450
+    } else if (CarScore2 == 4) {
+        sprites.destroy(MeanCar6)
+        CarScore2 = 1
+        Cars_2()
+    }
+}
 function E_Sunglasses () {
     if (Spr_Glas.vy < 0) {
         Spr_Glas.setImage(assets.image`glas_back`)
@@ -126,6 +149,31 @@ info.onLifeZero(function () {
     game.setGameOverPlayable(false, music.melodyPlayable(music.bigCrash), false)
     game.gameOver(false)
 })
+sprites.onOverlap(SpriteKind.Car2, SpriteKind.SpeedBump, function (sprite, otherSprite) {
+    CarScore2 += 1
+    Cars_2()
+})
+function Cars_1 () {
+    if (CarScore == 1) {
+        MeanCar = sprites.create(assets.image`CarDown_G`, SpriteKind.Car)
+        tiles.placeOnTile(MeanCar, tiles.getTileLocation(19, 47))
+        MeanCar.vy = 100
+    } else if (CarScore == 2) {
+        sprites.destroy(MeanCar)
+        MeanCar2 = sprites.create(assets.image`CarDown_DANGER`, SpriteKind.Car)
+        tiles.placeOnTile(MeanCar2, tiles.getTileLocation(19, 47))
+        MeanCar2.vy = 400
+    } else if (CarScore == 3) {
+        sprites.destroy(MeanCar2)
+        MeanCar3 = sprites.create(assets.image`CarDown_B`, SpriteKind.Car)
+        tiles.placeOnTile(MeanCar3, tiles.getTileLocation(19, 47))
+        MeanCar3.vy = 250
+    } else if (CarScore == 4) {
+        sprites.destroy(MeanCar3)
+        CarScore = 1
+        Cars_1()
+    }
+}
 // resets movement once picture is taken
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Spr_Player, 100, 100)
@@ -136,6 +184,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherS
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     info.changeLifeBy(-1)
     scene.cameraShake(4, 500)
+    Checkpoint()
     if (otherSprite.vy != 0) {
         otherSprite.vy = 0
         pause(2000)
@@ -186,7 +235,18 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         music.stopAllSounds()
     }
 })
+// interaction between patrolling enemies and players
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSprite) {
+    if (otherSprite.vy != 0) {
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        Checkpoint()
+    }
+})
 function LVL_11 () {
+    CheckPoint = 1
     music.stopAllSounds()
     pause(2000)
     scene.setBackgroundImage(assets.image`Background`)
@@ -199,7 +259,7 @@ function LVL_11 () {
     Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
     scene.cameraFollowSprite(Spr_Player)
     controller.moveSprite(Spr_Player, 100, 100)
-    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(10, 53))
+    Checkpoint()
     Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
     tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
     Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
@@ -218,17 +278,18 @@ function LVL_11 () {
     tiles.placeOnTile(Door1, tiles.getTileLocation(59, 25))
     StationaryCar = sprites.create(assets.image`CarRight_O`, SpriteKind.Object)
     tiles.placeOnTile(StationaryCar, tiles.getTileLocation(28, 49))
-    StationaryCar = sprites.create(assets.image`CarUp_R`, SpriteKind.Object)
+    StationaryCar = sprites.create(assets.image`CarDown_R`, SpriteKind.Object)
     tiles.placeOnTile(StationaryCar, tiles.getTileLocation(31, 50))
     StationaryCar = sprites.create(assets.image`CarDown_B`, SpriteKind.Object)
     tiles.placeOnTile(StationaryCar, tiles.getTileLocation(28, 56))
     StationaryCar = sprites.create(assets.image`CarLeft_P`, SpriteKind.Object)
     tiles.placeOnTile(StationaryCar, tiles.getTileLocation(31, 56))
     SpeedBump2 = sprites.create(assets.image`myImage0`, SpriteKind.SpeedBump)
-    tiles.placeOnTile(SpeedBump2, tiles.getTileLocation(80, 64))
-    MeanCar = sprites.create(assets.image`CarDown_G`, SpriteKind.Car)
-    tiles.placeOnTile(MeanCar, tiles.getTileLocation(19, 47))
-    MeanCar.vy = 50
+    tiles.placeOnTile(SpeedBump2, tiles.getTileLocation(21, 62))
+    CarScore = 1
+    Cars_1()
+    CarScore2 = 1
+    Cars_2()
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
@@ -401,6 +462,10 @@ function DialogueOne () {
     sprites.destroy(Spr_Boss)
     sprites.destroy(Spr_Camera)
 }
+sprites.onOverlap(SpriteKind.Car, SpriteKind.SpeedBump, function (sprite, otherSprite) {
+    CarScore += 1
+    Cars_1()
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (DroneActive == 1) {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
@@ -413,6 +478,16 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         true
         )
+    }
+})
+// interaction between patrolling enemies and players
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Car, function (sprite, otherSprite) {
+    if (otherSprite.vy != 0) {
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        Checkpoint()
     }
 })
 function P_Drone () {
@@ -554,6 +629,11 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         )
     }
 })
+function Checkpoint () {
+    if (CheckPoint == 1) {
+        tiles.placeOnTile(Spr_Player, tiles.getTileLocation(10, 53))
+    }
+}
 // interaction between patrolling enemies and camera flash
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (otherSprite.vy != 0) {
@@ -648,13 +728,21 @@ let One_Liner: string[] = []
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
 let Spr_Play_Dialogue: Sprite = null
-let MeanCar: Sprite = null
 let SpeedBump2: Sprite = null
 let StationaryCar: Sprite = null
 let Door1: Sprite = null
 let Item_Name = 0
+let CheckPoint = 0
 let Spr_Film: Sprite = null
+let MeanCar3: Sprite = null
+let MeanCar2: Sprite = null
+let MeanCar: Sprite = null
+let CarScore = 0
 let Spr_Glas: Sprite = null
+let MeanCar6: Sprite = null
+let MeanCar5: Sprite = null
+let Meancar4: Sprite = null
+let CarScore2 = 0
 let Spr_Pat2: Sprite = null
 let Spr_Pat: Sprite = null
 let Spr_Player: Sprite = null
