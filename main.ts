@@ -10,6 +10,7 @@ namespace SpriteKind {
     export const Car = SpriteKind.create()
     export const SpeedBump = SpriteKind.create()
     export const Car2 = SpriteKind.create()
+    export const Enemy3 = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -74,6 +75,16 @@ function E_Patrol () {
         Spr_Pat2.setImage(assets.image`pat_left`)
     }
 }
+// interaction between patrolling enemies and players
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSprite) {
+    if (otherSprite.vy != 0) {
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        Checkpoint()
+    }
+})
 function RaziDialogue () {
     game.setDialogFrame(assets.image`RatziTextbox`)
     game.setDialogCursor(assets.image`BlackTextArrow`)
@@ -235,18 +246,31 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         music.stopAllSounds()
     }
 })
-// interaction between patrolling enemies and players
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSprite) {
-    if (otherSprite.vy != 0) {
-        music.setVolume(255)
-        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-        info.changeLifeBy(-1)
-        scene.cameraShake(4, 500)
-        Checkpoint()
+spriteutils.onSpriteKindUpdateInterval(SpriteKind.Enemy3, 500, function (sprite) {
+    PatDirection0 += 1
+    if (PatDirection0 == 4) {
+        PatDirection0 = 0
     }
 })
 function CircularPatrol () {
-	
+    if (Spr_PatCirc1.vy < 0) {
+        Spr_PatCirc1.setImage(assets.image`pat_back`)
+    } else if (Spr_PatCirc1.vy > 0) {
+        Spr_PatCirc1.setImage(assets.image`pat_front`)
+    } else if (Spr_PatCirc1.vx > 0) {
+        Spr_PatCirc1.setImage(assets.image`pat_right`)
+    } else if (Spr_PatCirc1.vx < 0) {
+        Spr_PatCirc1.setImage(assets.image`pat_left`)
+    }
+    if (PatDirection0 == 3) {
+        Spr_PatCirc1.setVelocity(0, 50)
+    } else if (PatDirection0 == 2) {
+        Spr_PatCirc1.setVelocity(50, 0)
+    } else if (PatDirection0 == 1) {
+        Spr_PatCirc1.setVelocity(0, -50)
+    } else if (PatDirection0 == 0) {
+        Spr_PatCirc1.setVelocity(-50, 0)
+    }
 }
 function LVL_11 () {
     CheckPoint = 1
@@ -277,6 +301,9 @@ function LVL_11 () {
     tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
     Spr_Glas.vy = 50
     Spr_Glas.setBounceOnWall(true)
+    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+    Spr_PatCirc1 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy3)
+    tiles.placeOnTile(Spr_PatCirc1, tiles.getTileLocation(72, 26))
     Door1 = sprites.create(assets.image`Door1`, SpriteKind.Door)
     tiles.placeOnTile(Door1, tiles.getTileLocation(59, 25))
     StationaryCar = sprites.create(assets.image`CarRight_O`, SpriteKind.Object)
@@ -736,6 +763,8 @@ let StationaryCar: Sprite = null
 let Door1: Sprite = null
 let Item_Name = 0
 let CheckPoint = 0
+let Spr_PatCirc1: Sprite = null
+let PatDirection0 = 0
 let Spr_Film: Sprite = null
 let MeanCar3: Sprite = null
 let MeanCar2: Sprite = null
@@ -764,11 +793,12 @@ game.onUpdate(function () {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
     }
 })
-game.onUpdateInterval(500, function () {
-    CircularPatrol()
-})
 forever(function () {
     P_Drone()
     E_Patrol()
     E_Sunglasses()
+    CircularPatrol()
+})
+game.onUpdateInterval(500, function () {
+    CircularPatrol()
 })
