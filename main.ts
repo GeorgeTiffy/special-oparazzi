@@ -6,6 +6,9 @@ namespace SpriteKind {
     export const Dialogue = SpriteKind.create()
     export const Drone = SpriteKind.create()
     export const Door = SpriteKind.create()
+    export const Object = SpriteKind.create()
+    export const Car = SpriteKind.create()
+    export const SpeedBump = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -92,39 +95,6 @@ sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSp
     tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
     DroneActive = 0
 })
-function LVL_11 () {
-    music.stopAllSounds()
-    pause(2000)
-    scene.setBackgroundImage(assets.image`Background`)
-    tiles.setCurrentTilemap(tilemap`Lvl1_Rm1`)
-    Film_Count = 5
-    Item_Name = 0
-    info.setScore(0)
-    info.setLife(3)
-    spriteutils.setLifeImage(assets.image`Little Goobs`)
-    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
-    scene.cameraFollowSprite(Spr_Player)
-    controller.moveSprite(Spr_Player, 100, 100)
-    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(10, 53))
-    Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
-    tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
-    Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(35, 56))
-    Spr_Pat.vy = 50
-    Spr_Pat.setBounceOnWall(true)
-    Spr_Pat2 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-    tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(37, 50))
-    Spr_Pat2.vy = 50
-    Spr_Pat2.setBounceOnWall(true)
-    Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
-    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
-    Spr_Glas.vy = 50
-    Spr_Glas.setBounceOnWall(true)
-    Door1 = sprites.create(assets.image`Door1`, SpriteKind.Door)
-    tiles.placeOnTile(Door1, tiles.getTileLocation(59, 25))
-    music.setVolume(25)
-    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
-}
 function E_Sunglasses () {
     if (Spr_Glas.vy < 0) {
         Spr_Glas.setImage(assets.image`glas_back`)
@@ -216,14 +186,65 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         music.stopAllSounds()
     }
 })
+function LVL_11 () {
+    music.stopAllSounds()
+    pause(2000)
+    scene.setBackgroundImage(assets.image`Background`)
+    tiles.setCurrentTilemap(tilemap`Lvl1_Rm1`)
+    Film_Count = 5
+    Item_Name = 0
+    info.setScore(0)
+    info.setLife(3)
+    spriteutils.setLifeImage(assets.image`Little Goobs`)
+    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player, 100, 100)
+    tiles.placeOnTile(Spr_Player, tiles.getTileLocation(10, 53))
+    Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
+    tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
+    Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(35, 56))
+    Spr_Pat.vy = 50
+    Spr_Pat.setBounceOnWall(true)
+    Spr_Pat2 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(37, 50))
+    Spr_Pat2.vy = 50
+    Spr_Pat2.setBounceOnWall(true)
+    Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
+    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+    Spr_Glas.vy = 50
+    Spr_Glas.setBounceOnWall(true)
+    Door1 = sprites.create(assets.image`Door1`, SpriteKind.Door)
+    tiles.placeOnTile(Door1, tiles.getTileLocation(59, 25))
+    StationaryCar = sprites.create(assets.image`CarRight_O`, SpriteKind.Object)
+    tiles.placeOnTile(StationaryCar, tiles.getTileLocation(28, 49))
+    StationaryCar = sprites.create(assets.image`CarUp_R`, SpriteKind.Object)
+    tiles.placeOnTile(StationaryCar, tiles.getTileLocation(31, 50))
+    StationaryCar = sprites.create(assets.image`CarDown_B`, SpriteKind.Object)
+    tiles.placeOnTile(StationaryCar, tiles.getTileLocation(28, 56))
+    StationaryCar = sprites.create(assets.image`CarLeft_P`, SpriteKind.Object)
+    tiles.placeOnTile(StationaryCar, tiles.getTileLocation(31, 56))
+    SpeedBump2 = sprites.create(assets.image`myImage0`, SpriteKind.SpeedBump)
+    tiles.placeOnTile(SpeedBump2, tiles.getTileLocation(80, 64))
+    MeanCar = sprites.create(assets.image`CarDown_G`, SpriteKind.Car)
+    tiles.placeOnTile(MeanCar, tiles.getTileLocation(19, 47))
+    MeanCar.vy = 50
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (DroneActive == 1) {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
         Spr_Player.setImage(assets.image`RatzDrone_Down`)
     } else {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-        Spr_Player.setImage(assets.image`pap_back`)
     }
+    animation.runImageAnimation(
+    Spr_Player,
+    assets.animation`RatziWalk_Down0`,
+    100,
+    true
+    )
 })
 function DialogueOne () {
     music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
@@ -525,7 +546,12 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         Spr_Player.setImage(assets.image`RatzDrone_Down`)
     } else {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
-        Spr_Player.setImage(assets.image`pap_front`)
+        animation.runImageAnimation(
+        Spr_Player,
+        assets.animation`RatziWalk_Down`,
+        100,
+        true
+        )
     }
 })
 // interaction between patrolling enemies and camera flash
@@ -577,7 +603,16 @@ function PlayerZoo () {
     Item_Name = 0
     info.setScore(0)
     info.setLife(3)
-    spriteutils.setLifeImage(assets.image`Little Goobs`)
+    spriteutils.setLifeImage(img`
+        . . . . . . . 
+        . . . . . . . 
+        . . . . . . . 
+        . . . . . . . 
+        . . . . . . . 
+        . . . . . . . 
+        . . . . . . . 
+        . . . . . . . 
+        `)
     Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
     scene.cameraFollowSprite(Spr_Player)
     controller.moveSprite(Spr_Player, 100, 100)
@@ -613,10 +648,13 @@ let One_Liner: string[] = []
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
 let Spr_Play_Dialogue: Sprite = null
+let MeanCar: Sprite = null
+let SpeedBump2: Sprite = null
+let StationaryCar: Sprite = null
 let Door1: Sprite = null
-let Spr_Glas: Sprite = null
-let Spr_Film: Sprite = null
 let Item_Name = 0
+let Spr_Film: Sprite = null
+let Spr_Glas: Sprite = null
 let Spr_Pat2: Sprite = null
 let Spr_Pat: Sprite = null
 let Spr_Player: Sprite = null
