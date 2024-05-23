@@ -13,6 +13,7 @@ namespace SpriteKind {
     export const Enemy3 = SpriteKind.create()
     export const HidingPlace = SpriteKind.create()
     export const VisualFlourish = SpriteKind.create()
+    export const Target = SpriteKind.create()
 }
 function RunLevel () {
     if (Level == 1) {
@@ -80,25 +81,31 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function Cars_2 () {
-    if (CarScore2 == 1) {
-        Meancar4 = sprites.create(assets.image`CarDown_Br`, SpriteKind.Car2)
-        tiles.placeOnTile(Meancar4, tiles.getTileLocation(22, 47))
-        Meancar4.vy = 75
-    } else if (CarScore2 == 2) {
+    if (CheckPoint == 1) {
+        if (CarScore2 == 1) {
+            Meancar4 = sprites.create(assets.image`CarDown_Br`, SpriteKind.Car2)
+            tiles.placeOnTile(Meancar4, tiles.getTileLocation(22, 47))
+            Meancar4.vy = 75
+        } else if (CarScore2 == 2) {
+            sprites.destroy(Meancar4)
+            MeanCar5 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car2)
+            tiles.placeOnTile(MeanCar5, tiles.getTileLocation(22, 47))
+            MeanCar5.vy = 125
+        } else if (CarScore2 == 3) {
+            sprites.destroy(MeanCar5)
+            pause(2000)
+            MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
+            tiles.placeOnTile(MeanCar6, tiles.getTileLocation(22, 47))
+            MeanCar6.vy = 300
+        } else if (CarScore2 == 4) {
+            sprites.destroy(MeanCar6)
+            CarScore2 = 1
+            Cars_2()
+        }
+    } else {
         sprites.destroy(Meancar4)
-        MeanCar5 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car2)
-        tiles.placeOnTile(MeanCar5, tiles.getTileLocation(22, 47))
-        MeanCar5.vy = 125
-    } else if (CarScore2 == 3) {
         sprites.destroy(MeanCar5)
-        pause(2000)
-        MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
-        tiles.placeOnTile(MeanCar6, tiles.getTileLocation(22, 47))
-        MeanCar6.vy = 300
-    } else if (CarScore2 == 4) {
         sprites.destroy(MeanCar6)
-        CarScore2 = 1
-        Cars_2()
     }
 }
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -145,25 +152,31 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function Cars_1 () {
-    if (CarScore == 1) {
-        MeanCar = sprites.create(assets.image`CarDown_G`, SpriteKind.Car)
-        tiles.placeOnTile(MeanCar, tiles.getTileLocation(19, 47))
-        MeanCar.vy = 100
-    } else if (CarScore == 2) {
+    if (CheckPoint == 1) {
+        if (CarScore == 1) {
+            MeanCar = sprites.create(assets.image`CarDown_G`, SpriteKind.Car)
+            tiles.placeOnTile(MeanCar, tiles.getTileLocation(19, 47))
+            MeanCar.vy = 100
+        } else if (CarScore == 2) {
+            sprites.destroy(MeanCar)
+            pause(2000)
+            MeanCar2 = sprites.create(assets.image`CarDown_DANGER`, SpriteKind.Car)
+            tiles.placeOnTile(MeanCar2, tiles.getTileLocation(19, 47))
+            MeanCar2.vy = 250
+        } else if (CarScore == 3) {
+            sprites.destroy(MeanCar2)
+            MeanCar3 = sprites.create(assets.image`CarDown_B`, SpriteKind.Car)
+            tiles.placeOnTile(MeanCar3, tiles.getTileLocation(19, 47))
+            MeanCar3.vy = 150
+        } else if (CarScore == 4) {
+            sprites.destroy(MeanCar3)
+            CarScore = 1
+            Cars_1()
+        }
+    } else {
         sprites.destroy(MeanCar)
-        pause(2000)
-        MeanCar2 = sprites.create(assets.image`CarDown_DANGER`, SpriteKind.Car)
-        tiles.placeOnTile(MeanCar2, tiles.getTileLocation(19, 47))
-        MeanCar2.vy = 250
-    } else if (CarScore == 3) {
         sprites.destroy(MeanCar2)
-        MeanCar3 = sprites.create(assets.image`CarDown_B`, SpriteKind.Car)
-        tiles.placeOnTile(MeanCar3, tiles.getTileLocation(19, 47))
-        MeanCar3.vy = 150
-    } else if (CarScore == 4) {
         sprites.destroy(MeanCar3)
-        CarScore = 1
-        Cars_1()
     }
 }
 // Downwards Camera Shot
@@ -178,6 +191,10 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
             sprites.destroy(projectile)
         }
     }
+})
+// interaction between patrolling enemies and camera flash
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Target, function (sprite, otherSprite) {
+    game.gameOver(true)
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hidden == 0) {
@@ -262,10 +279,6 @@ function LVL_11 () {
     info.setLife(3)
     spriteutils.setLifeImage(assets.image`Little Goobs`)
     SpawnCrowd()
-    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
-    scene.cameraFollowSprite(Spr_Player)
-    controller.moveSprite(Spr_Player, 100, 100)
-    Checkpoint()
     Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
     tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
     Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
@@ -307,6 +320,10 @@ function LVL_11 () {
     Cars_1()
     CarScore2 = 1
     Cars_2()
+    Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player, 100, 100)
+    Checkpoint()
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
@@ -595,12 +612,16 @@ function P_Drone () {
     }
 }
 function SpawnCrowd () {
-    MovingCrowd = sprites.create(assets.image`Crowd_Left`, SpriteKind.HidingPlace)
-    tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(72, 33))
-    MovingCrowd.vx = -40
-    pause(6000)
-    MovingCrowd.vx = 0
-    MovingCrowd.vy = -40
+    if (CheckPoint == 1) {
+        MovingCrowd = sprites.create(assets.image`Crowd_Left`, SpriteKind.HidingPlace)
+        tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(72, 33))
+        MovingCrowd.vx = -40
+        pause(6000)
+        MovingCrowd.vx = 0
+        MovingCrowd.vy = -40
+    } else {
+        sprites.destroy(MovingCrowd)
+    }
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hidden == 0) {
@@ -650,9 +671,19 @@ function LVL_12 () {
     tiles.setCurrentTilemap(tilemap`Lvl1_Rm2`)
     Hidden = 0
     spriteutils.setLifeImage(assets.image`Little Goobs`)
+    sprites.destroy(Spr_Film)
+    sprites.destroy(Spr_Pat)
+    sprites.destroy(Spr_Pat2)
+    sprites.destroy(Spr_Glas)
+    sprites.destroy(TicketWindow)
+    sprites.destroy(TheaterSign2)
+    sprites.destroy(TheaterSign)
+    sprites.destroy(Door1)
     Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
     scene.cameraFollowSprite(Spr_Player)
     controller.moveSprite(Spr_Player, 100, 100)
+    Target1 = sprites.create(assets.image`Target1`, SpriteKind.Target)
+    tiles.placeOnTile(Target1, tiles.getTileLocation(38, 27))
     Checkpoint()
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
@@ -790,6 +821,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 })
 let Walking = false
 let One_Liner: string[] = []
+let Target1: Sprite = null
 let MovingCrowd: Sprite = null
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
@@ -803,7 +835,6 @@ let TicketWindow: Sprite = null
 let Spr_Pat3: Sprite = null
 let Spr_Film: Sprite = null
 let Item_Name = 0
-let CheckPoint = 0
 let BackDoor = 0
 let projectile: Sprite = null
 let MeanCar3: Sprite = null
@@ -817,6 +848,7 @@ let MeanCar6: Sprite = null
 let MeanCar5: Sprite = null
 let Meancar4: Sprite = null
 let CarScore2 = 0
+let CheckPoint = 0
 let Spr_Player: Sprite = null
 let Hidden = 0
 let Spr_Pat2: Sprite = null
