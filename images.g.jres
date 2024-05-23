@@ -259,6 +259,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "Film"
     },
+    "image45": {
+        "data": "hwQQABAAAAAAAAD/////AAAAAF9VVfUAAAAAX1VV9QAAAABfVVX1AAAAAH93d/cAAADwf3d39wAAAF9/fXf3AADwVX93d/cAAF9Vf3d39wAAHxF/h4j3AAAfEX+HiPcAAB8RfxgR+AAAHxF/GBH4AAAfEX8YEfgAAB8Rf4eI9wAA8P/w////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "CamLife"
+    },
     "anim1": {
         "namespace": "myAnimations",
         "id": "anim1",
