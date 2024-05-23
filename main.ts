@@ -106,12 +106,12 @@ function Cars_2 () {
         sprites.destroy(Meancar4)
         MeanCar5 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car2)
         tiles.placeOnTile(MeanCar5, tiles.getTileLocation(22, 47))
-        MeanCar5.vy = 200
+        MeanCar5.vy = 125
     } else if (CarScore2 == 3) {
         sprites.destroy(MeanCar5)
         MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
         tiles.placeOnTile(MeanCar6, tiles.getTileLocation(22, 47))
-        MeanCar6.vy = 450
+        MeanCar6.vy = 300
     } else if (CarScore2 == 4) {
         sprites.destroy(MeanCar6)
         CarScore2 = 1
@@ -162,12 +162,12 @@ function Cars_1 () {
         sprites.destroy(MeanCar)
         MeanCar2 = sprites.create(assets.image`CarDown_DANGER`, SpriteKind.Car)
         tiles.placeOnTile(MeanCar2, tiles.getTileLocation(19, 47))
-        MeanCar2.vy = 400
+        MeanCar2.vy = 250
     } else if (CarScore == 3) {
         sprites.destroy(MeanCar2)
         MeanCar3 = sprites.create(assets.image`CarDown_B`, SpriteKind.Car)
         tiles.placeOnTile(MeanCar3, tiles.getTileLocation(19, 47))
-        MeanCar3.vy = 250
+        MeanCar3.vy = 150
     } else if (CarScore == 4) {
         sprites.destroy(MeanCar3)
         CarScore = 1
@@ -245,6 +245,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSpr
         Checkpoint()
     }
 })
+function CircularPatrol () {
+	
+}
 function LVL_11 () {
     CheckPoint = 1
     music.stopAllSounds()
@@ -760,6 +763,9 @@ game.onUpdate(function () {
     if (!(Walking) || DroneActive == 1) {
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
     }
+})
+game.onUpdateInterval(500, function () {
+    CircularPatrol()
 })
 forever(function () {
     P_Drone()
