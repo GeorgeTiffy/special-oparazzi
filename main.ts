@@ -693,6 +693,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_3, function (sprite, otherSp
         `)
     game.showLongText("By the way, you won't wanna use that camera too much...", DialogLayout.Center)
     game.showLongText("If you direct your eye to the corner you'll see that you only have a limited amount of film.", DialogLayout.Center)
+    game.showLongText("You'll want at least one of those so you can snap a pick of your target.", DialogLayout.Center)
     if (Film_Count == 0) {
         game.showLongText("Looks like you went a little trigger happy there, I'll help you out but just this once...", DialogLayout.Center)
         Film_Count = 1
