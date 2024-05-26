@@ -18,24 +18,18 @@ namespace SpriteKind {
     export const Tut_1 = SpriteKind.create()
     export const Tut_2 = SpriteKind.create()
     export const Tut_3 = SpriteKind.create()
+    export const Cameras = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (otherSprite.vy != 0) {
-        music.setVolume(255)
-        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-        info.changeLifeBy(-1)
-        scene.cameraShake(4, 500)
-        Checkpoint()
-        if (otherSprite.vy != 0) {
-            otherSprite.vy = 0
-            pause(2000)
-            otherSprite.vy = 75
-        } else if (otherSprite.vx != 0) {
-            otherSprite.vx = 0
-            pause(2000)
-            otherSprite.vx = 75
-        }
+        otherSprite.vy = 0
+        pause(2000)
+        otherSprite.vy = 75
+    } else if (otherSprite.vx != 0) {
+        otherSprite.vx = 0
+        pause(2000)
+        otherSprite.vx = 75
     }
 })
 // Upwards Camera Shot
@@ -374,8 +368,8 @@ function LVL_11 () {
     Hidden = 0
     info.setScore(0)
     info.setLife(3)
-    spriteutils.setLifeImage(assets.image`Little Goobs`)
     SpawnCrowd()
+    spriteutils.setLifeImage(assets.image`Little Goobs`)
     Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
     tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
     Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
@@ -413,6 +407,14 @@ function LVL_11 () {
     tiles.placeOnTile(StationaryCar, tiles.getTileLocation(31, 56))
     SpeedBump2 = sprites.create(assets.image`myImage0`, SpriteKind.SpeedBump)
     tiles.placeOnTile(SpeedBump2, tiles.getTileLocation(21, 62))
+    FlashCams = sprites.create(assets.image`Cameras Still`, SpriteKind.Cameras)
+    tiles.placeOnTile(FlashCams, tiles.getTileLocation(27, 15))
+    animation.runImageAnimation(
+    FlashCams,
+    assets.animation`Cameras`,
+    1500,
+    true
+    )
     Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
     scene.cameraFollowSprite(Spr_Player)
     Spr_Player.z += 100
@@ -657,6 +659,13 @@ function LVL_12 () {
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Cameras, function (sprite, otherSprite) {
+    music.setVolume(255)
+    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+    info.changeLifeBy(-1)
+    scene.cameraShake(4, 500)
+    Checkpoint()
+})
 function BawsmanDialogue () {
     game.setDialogFrame(assets.image`BawsmanTextbox`)
     game.setDialogCursor(assets.image`WhiteTextArrow`)
@@ -843,6 +852,7 @@ let Tutorial_2: Sprite = null
 let Tutorial_1: Sprite = null
 let Tutorial_0: Sprite = null
 let FilmUi: Sprite = null
+let FlashCams: Sprite = null
 let SpeedBump2: Sprite = null
 let StationaryCar: Sprite = null
 let TheaterSign2: Sprite = null
