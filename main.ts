@@ -14,6 +14,8 @@ namespace SpriteKind {
     export const HidingPlace = SpriteKind.create()
     export const VisualFlourish = SpriteKind.create()
     export const Target = SpriteKind.create()
+    export const Tut_0 = SpriteKind.create()
+    export const Tut_1 = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -350,10 +352,6 @@ function LVL_11 () {
     tiles.placeOnTile(StationaryCar, tiles.getTileLocation(31, 56))
     SpeedBump2 = sprites.create(assets.image`myImage0`, SpriteKind.SpeedBump)
     tiles.placeOnTile(SpeedBump2, tiles.getTileLocation(21, 62))
-    CarScore = 1
-    Cars_1()
-    CarScore2 = 1
-    Cars_2()
     Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
     scene.cameraFollowSprite(Spr_Player)
     Spr_Player.z += 100
@@ -362,6 +360,13 @@ function LVL_11 () {
     FilmUi = sprites.create(assets.image`Film_5`, SpriteKind.UI)
     FilmUi.setFlag(SpriteFlag.RelativeToCamera, true)
     FilmUi.setPosition(14, 107)
+    FilmUi.z += 100
+    Tutorial_0 = sprites.create(assets.image`Dialogue`, SpriteKind.Tut_0)
+    tiles.placeOnTile(Tutorial_0, tiles.getTileLocation(15, 53))
+    Tutorial_0.setFlag(SpriteFlag.Invisible, true)
+    Tutorial_1 = sprites.create(assets.image`Dialogue`, SpriteKind.Tut_1)
+    tiles.placeOnTile(Tutorial_1, tiles.getTileLocation(17, 53))
+    Tutorial_1.setFlag(SpriteFlag.Invisible, true)
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
@@ -529,11 +534,7 @@ function P_Drone () {
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     controller.moveSprite(Spr_Player, 0, 0)
-    if (Film_Count <= 0) {
-        Spr_Player.sayText("Out of Film", 1000, true)
-    } else {
-        Spr_Player.sayText("Film: " + Film_Count, 1000, true)
-    }
+    pause(200)
 })
 function SpawnCrowd () {
     if (CheckPoint == 1) {
@@ -594,6 +595,33 @@ function BawsmanDialogue () {
     game.setDialogCursor(assets.image`WhiteTextArrow`)
     game.setDialogTextColor(1)
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_1, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    game.setDialogTextColor(9)
+    game.setDialogFrame(img`
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        9 9 f f f f f f f f f f f 9 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 9 f f f f f f f f f f f 9 9 
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        `)
+    game.showLongText("Also! Whenever you take damage, you'll also lose a Camera!", DialogLayout.Center)
+    game.showLongText("If you run out of cameras it's game over!", DialogLayout.Center)
+    CarScore = 1
+    Cars_1()
+    CarScore2 = 1
+    Cars_2()
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hidden == 0) {
         if (DroneActive == 1) {
@@ -609,6 +637,28 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
             )
         }
     }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_0, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    game.setDialogTextColor(9)
+    game.setDialogFrame(img`
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        9 9 f f f f f f f f f f f 9 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 9 f f f f f f f f f f f 9 9 
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        `)
+    game.showLongText("Moving Objects are usually pretty scary, don't let them touch you unless you want to get sent back to the last checkpoint.", DialogLayout.Center)
 })
 function Checkpoint () {
     if (CheckPoint == 1) {
@@ -710,6 +760,8 @@ let Target1: Sprite = null
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
 let Spr_Play_Dialogue: Sprite = null
+let Tutorial_1: Sprite = null
+let Tutorial_0: Sprite = null
 let FilmUi: Sprite = null
 let SpeedBump2: Sprite = null
 let StationaryCar: Sprite = null
