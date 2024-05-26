@@ -16,6 +16,8 @@ namespace SpriteKind {
     export const Target = SpriteKind.create()
     export const Tut_0 = SpriteKind.create()
     export const Tut_1 = SpriteKind.create()
+    export const Tut_2 = SpriteKind.create()
+    export const Tut_3 = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -28,11 +30,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         if (otherSprite.vy != 0) {
             otherSprite.vy = 0
             pause(2000)
-            otherSprite.vy = 50
+            otherSprite.vy = 75
         } else if (otherSprite.vx != 0) {
             otherSprite.vx = 0
             pause(2000)
-            otherSprite.vx = 50
+            otherSprite.vx = 75
         }
     }
 })
@@ -63,6 +65,24 @@ function RunLevel () {
         PlayerZoo()
     }
 }
+sprites.onOverlap(SpriteKind.Drone, SpriteKind.Car2, function (sprite, otherSprite) {
+    music.stopAllSounds()
+    Spr_drone.vx = 0
+    Spr_drone.vy = 0
+    sprites.destroy(Spr_drone, effects.fire, 50)
+    music.stopAllSounds()
+    scene.cameraShake(4, 500)
+    music.setVolume(101)
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    pause(1000)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player)
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+    Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+    tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+    DroneActive = 0
+})
 function E_Patrol () {
     if (Spr_Pat.vy < 0) {
         Spr_Pat.setImage(assets.image`pat_back`)
@@ -88,6 +108,24 @@ function RaziDialogue () {
     game.setDialogCursor(assets.image`BlackTextArrow`)
     game.setDialogTextColor(15)
 }
+sprites.onOverlap(SpriteKind.Drone, SpriteKind.Car, function (sprite, otherSprite) {
+    music.stopAllSounds()
+    Spr_drone.vx = 0
+    Spr_drone.vy = 0
+    sprites.destroy(Spr_drone, effects.fire, 50)
+    music.stopAllSounds()
+    scene.cameraShake(4, 500)
+    music.setVolume(101)
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    pause(1000)
+    scene.cameraFollowSprite(Spr_Player)
+    controller.moveSprite(Spr_Player)
+    music.setVolume(25)
+    music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+    Spr_drone = sprites.create(assets.image`RCCar`, SpriteKind.Drone)
+    tiles.placeOnTile(Spr_drone, tiles.getTileLocation(2, 2))
+    DroneActive = 0
+})
 // interaction between patrolling enemies and camera flash
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Target, function (sprite, otherSprite) {
     game.gameOver(true)
@@ -201,6 +239,29 @@ function Cars_1 () {
         sprites.destroy(MeanCar3)
     }
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_2, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    game.setDialogTextColor(9)
+    game.setDialogFrame(img`
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        9 9 f f f f f f f f f f f 9 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 9 f f f f f f f f f f f 9 9 
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        `)
+    game.showLongText("These enemies are bodyguards, using your camera you should be able to stun them.", DialogLayout.Center)
+    game.showLongText("To flash your camera hold A and point in the direction you want to shoot it in. ", DialogLayout.Center)
+})
 // resets movement once picture is taken
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(Spr_Player, 100, 100)
@@ -215,11 +276,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherS
     if (otherSprite.vy != 0) {
         otherSprite.vy = 0
         pause(2000)
-        otherSprite.vy = 50
+        otherSprite.vy = 75
     } else if (otherSprite.vx != 0) {
         otherSprite.vx = 0
         pause(2000)
-        otherSprite.vx = 50
+        otherSprite.vx = 75
     }
 })
 // Interaction that allows player to pick up film
@@ -367,6 +428,12 @@ function LVL_11 () {
     Tutorial_1 = sprites.create(assets.image`Dialogue`, SpriteKind.Tut_1)
     tiles.placeOnTile(Tutorial_1, tiles.getTileLocation(17, 53))
     Tutorial_1.setFlag(SpriteFlag.Invisible, true)
+    Tutorial_2 = sprites.create(assets.image`Dialogue`, SpriteKind.Tut_2)
+    tiles.placeOnTile(Tutorial_2, tiles.getTileLocation(33, 53))
+    Tutorial_2.setFlag(SpriteFlag.Invisible, true)
+    Tutorial_3 = sprites.create(assets.image`Dialogue`, SpriteKind.Tut_3)
+    tiles.placeOnTile(Tutorial_3, tiles.getTileLocation(42, 53))
+    Tutorial_3.setFlag(SpriteFlag.Invisible, true)
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
 }
@@ -595,7 +662,7 @@ function BawsmanDialogue () {
     game.setDialogCursor(assets.image`WhiteTextArrow`)
     game.setDialogTextColor(1)
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_1, function (sprite, otherSprite) {
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_3, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     game.setDialogTextColor(9)
     game.setDialogFrame(img`
@@ -615,12 +682,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_1, function (sprite, otherSp
         9 9 f f f f f f f f f f f 9 9 
         f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
         `)
-    game.showLongText("Also! Whenever you take damage, you'll also lose a Camera!", DialogLayout.Center)
-    game.showLongText("If you run out of cameras it's game over!", DialogLayout.Center)
-    CarScore = 1
-    Cars_1()
-    CarScore2 = 1
-    Cars_2()
+    game.showLongText("By the way, you won't wanna use that camera too much...", DialogLayout.Center)
+    game.showLongText("If you direct your eye to the corner you'll see that you only have a limited amount of film.", DialogLayout.Center)
+    if (Film_Count == 0) {
+        game.showLongText("Looks like you went a little trigger happy there, I'll help you out but just this once...", DialogLayout.Center)
+        Film_Count = 1
+    }
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Hidden == 0) {
@@ -641,23 +708,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_0, function (sprite, otherSprite) {
     sprites.destroy(otherSprite)
     game.setDialogTextColor(9)
-    game.setDialogFrame(img`
-        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
-        9 9 f f f f f f f f f f f 9 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 f f f f f f f f f f f f f 9 
-        9 9 f f f f f f f f f f f 9 9 
-        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
-        `)
+    game.setDialogFrame(assets.image`Tutorial`)
     game.showLongText("Moving Objects are usually pretty scary, don't let them touch you unless you want to get sent back to the last checkpoint.", DialogLayout.Center)
 })
 function Checkpoint () {
@@ -677,7 +728,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         music.setVolume(111)
         music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
         pause(3000)
-        otherSprite.vy = 50
+        otherSprite.vy = 75
     } else if (otherSprite.vx > 0) {
         otherSprite.vx = 0
         One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
@@ -686,7 +737,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         music.setVolume(111)
         music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
         pause(3000)
-        otherSprite.vx = 50
+        otherSprite.vx = 75
     }
 })
 sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -747,6 +798,33 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
         }
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Tut_1, function (sprite, otherSprite) {
+    sprites.destroy(otherSprite)
+    game.setDialogTextColor(9)
+    game.setDialogFrame(img`
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        9 9 f f f f f f f f f f f 9 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 f f f f f f f f f f f f f 9 
+        9 9 f f f f f f f f f f f 9 9 
+        f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+        `)
+    game.showLongText("Also! Whenever you take damage, you'll also lose a Camera!", DialogLayout.Center)
+    game.showLongText("If you run out of cameras it's game over!", DialogLayout.Center)
+    CarScore = 1
+    Cars_1()
+    CarScore2 = 1
+    Cars_2()
+})
 spriteutils.onSpriteKindUpdateInterval(SpriteKind.Enemy3, 1500, function (sprite) {
     PatDirection0 += 1
     if (PatDirection0 == 4) {
@@ -760,6 +838,8 @@ let Target1: Sprite = null
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
 let Spr_Play_Dialogue: Sprite = null
+let Tutorial_3: Sprite = null
+let Tutorial_2: Sprite = null
 let Tutorial_1: Sprite = null
 let Tutorial_0: Sprite = null
 let FilmUi: Sprite = null

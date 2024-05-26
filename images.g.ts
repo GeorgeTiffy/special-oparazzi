@@ -2964,6 +2964,24 @@ bbbbbbbbbbbbbbbb
 bbbbbbbbbbbbbbbb
 bbbbbbbbbbbbbbbb
 `;
+            case "ht0}F6^YsB|kLa*":
+            case "Tutorial":return img`
+f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+9 9 f f f f f f f f f f f 9 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 f f f f f f f f f f f f f 9 
+9 9 f f f f f f f f f f f 9 9 
+f 9 9 9 9 9 9 9 9 9 9 9 9 9 f 
+`;
         }
         return null;
     })
