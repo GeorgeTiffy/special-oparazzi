@@ -177,14 +177,23 @@ function Cars_2 () {
     }
 }
 function E_Sunglasses () {
-    if (Spr_Glas.vy < 0) {
-        Spr_Glas.setImage(assets.image`glas_back`)
-    } else if (Spr_Glas.vy > 0) {
-        Spr_Glas.setImage(assets.image`glas_front`)
-    } else if (Spr_Glas.vx > 0) {
-        Spr_Glas.setImage(assets.image`glas_right`)
-    } else if (Spr_Glas.vx < 0) {
-        Spr_Glas.setImage(assets.image`glas_left`)
+    if (Spr_Glas1.vy < 0) {
+        Spr_Glas1.setImage(assets.image`glas_back`)
+    } else if (Spr_Glas1.vy > 0) {
+        Spr_Glas1.setImage(assets.image`glas_front`)
+    } else if (Spr_Glas1.vx > 0) {
+        Spr_Glas1.setImage(assets.image`glas_right`)
+    } else if (Spr_Glas1.vx < 0) {
+        Spr_Glas1.setImage(assets.image`glas_left`)
+    }
+    if (Spr_Glas2.vy < 0) {
+        Spr_Glas2.setImage(assets.image`glas_back`)
+    } else if (Spr_Glas2.vy > 0) {
+        Spr_Glas2.setImage(assets.image`glas_front`)
+    } else if (Spr_Glas2.vx > 0) {
+        Spr_Glas2.setImage(assets.image`glas_right`)
+    } else if (Spr_Glas2.vx < 0) {
+        Spr_Glas2.setImage(assets.image`glas_left`)
     }
 }
 // Left camera shot
@@ -366,6 +375,24 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSpr
         Checkpoint()
     }
 })
+function GlassesChase () {
+    if (Hidden == 0) {
+        if (spriteutils.distanceBetween(Spr_Glas1, Spr_Player) < 75) {
+            Spr_Glas1.follow(Spr_Player, 75)
+        } else if (spriteutils.distanceBetween(Spr_Glas1, Spr_Player) > 120) {
+            Spr_Glas1.follow(Spr_Player, 0)
+            tiles.placeOnTile(Spr_Glas1, tiles.getTileLocation(58, 28))
+        }
+    }
+    if (Hidden == 0) {
+        if (spriteutils.distanceBetween(Spr_Glas2, Spr_Player) < 75) {
+            Spr_Glas2.follow(Spr_Player, 75)
+        } else if (spriteutils.distanceBetween(Spr_Glas2, Spr_Player) > 120) {
+            Spr_Glas2.follow(Spr_Player, 0)
+            tiles.placeOnTile(Spr_Glas2, tiles.getTileLocation(61, 28))
+        }
+    }
+}
 function LVL_11 () {
     CheckPoint = 1
     music.stopAllSounds()
@@ -390,6 +417,10 @@ function LVL_11 () {
     Spr_Pat2.setBounceOnWall(true)
     Spr_Glas = sprites.create(assets.image`glas_left`, SpriteKind.Enemy2)
     tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(50, 34))
+    Spr_Glas1 = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
+    tiles.placeOnTile(Spr_Glas1, tiles.getTileLocation(58, 28))
+    Spr_Glas2 = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
+    tiles.placeOnTile(Spr_Glas2, tiles.getTileLocation(61, 28))
     MovingCrowd = sprites.create(assets.image`Crowd_Left`, SpriteKind.HidingPlace)
     tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(72, 33))
     SpawnCrowd()
@@ -863,6 +894,7 @@ let StationaryCar: Sprite = null
 let TheaterSign2: Sprite = null
 let TheaterSign: Sprite = null
 let TicketWindow: Sprite = null
+let Spr_Glas: Sprite = null
 let Item_Name = 0
 let BackDoor = 0
 let Door1: Sprite = null
@@ -873,7 +905,8 @@ let MeanCar3: Sprite = null
 let MeanCar2: Sprite = null
 let MeanCar: Sprite = null
 let CarScore = 0
-let Spr_Glas: Sprite = null
+let Spr_Glas2: Sprite = null
+let Spr_Glas1: Sprite = null
 let MeanCar6: Sprite = null
 let MeanCar5: Sprite = null
 let Meancar4: Sprite = null
@@ -918,6 +951,7 @@ forever(function () {
     P_Drone()
     E_Patrol()
     E_Sunglasses()
+    GlassesChase()
     if (Spr_Player.overlapsWith(MovingCrowd)) {
         Hidden = 1
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
