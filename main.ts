@@ -24,12 +24,14 @@ namespace SpriteKind {
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    Hidden = 0
-    music.setVolume(255)
-    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
-    info.changeLifeBy(-1)
-    scene.cameraShake(4, 500)
-    Checkpoint()
+    if (otherSprite.vy != 0) {
+        Hidden = 0
+        music.setVolume(255)
+        music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+        info.changeLifeBy(-1)
+        scene.cameraShake(4, 500)
+        Checkpoint()
+    }
     if (otherSprite.vy != 0) {
         otherSprite.vy = 0
         pause(2000)
@@ -187,18 +189,15 @@ sprites.onOverlap(SpriteKind.Drone, SpriteKind.Enemy2, function (sprite, otherSp
 function Cars_2 () {
     if (CheckPoint == 1) {
         if (CarScore2 == 1) {
-            Meancar4 = sprites.create(assets.image`CarDown_G`, SpriteKind.Car2)
             tiles.placeOnTile(Meancar4, tiles.getTileLocation(22, 47))
             Meancar4.vy = 75
         } else if (CarScore2 == 2) {
             tiles.placeOnTile(Meancar4, tiles.getTileLocation(1, 1))
-            MeanCar5 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car2)
             tiles.placeOnTile(MeanCar5, tiles.getTileLocation(22, 47))
             MeanCar5.vy = 125
         } else if (CarScore2 == 3) {
             tiles.placeOnTile(MeanCar5, tiles.getTileLocation(1, 1))
             timer.after(2000, function () {
-                MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
                 tiles.placeOnTile(MeanCar6, tiles.getTileLocation(22, 47))
                 MeanCar6.vy = 300
             })
@@ -260,19 +259,16 @@ sprites.onOverlap(SpriteKind.Car2, SpriteKind.SpeedBump, function (sprite, other
 function Cars_1 () {
     if (CheckPoint == 1) {
         if (CarScore == 1) {
-            MeanCar = sprites.create(assets.image`CarDown_G`, SpriteKind.Car)
             tiles.placeOnTile(MeanCar, tiles.getTileLocation(19, 47))
             MeanCar.vy = 100
         } else if (CarScore == 2) {
             tiles.placeOnTile(MeanCar, tiles.getTileLocation(1, 1))
             timer.after(2000, function () {
-                MeanCar2 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car)
                 tiles.placeOnTile(MeanCar2, tiles.getTileLocation(19, 47))
                 MeanCar2.vy = 250
             })
         } else if (CarScore == 3) {
             tiles.placeOnTile(MeanCar2, tiles.getTileLocation(1, 1))
-            MeanCar3 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car)
             tiles.placeOnTile(MeanCar3, tiles.getTileLocation(19, 47))
             MeanCar3.vy = 150
         } else if (CarScore == 4) {
@@ -450,8 +446,20 @@ function LVL_11 () {
     tiles.placeOnTile(Spr_CameraPU, tiles.getTileLocation(50, 2))
     Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
     tiles.placeOnTile(Spr_Film, tiles.getTileLocation(75, 19))
+    MeanCar = sprites.create(assets.image`CarDown_G`, SpriteKind.Car)
+    tiles.placeOnTile(MeanCar, tiles.getTileLocation(1, 1))
+    MeanCar2 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car)
+    tiles.placeOnTile(MeanCar2, tiles.getTileLocation(1, 1))
+    MeanCar3 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car)
+    tiles.placeOnTile(MeanCar3, tiles.getTileLocation(1, 1))
+    Meancar4 = sprites.create(assets.image`CarDown_G`, SpriteKind.Car2)
+    tiles.placeOnTile(Meancar4, tiles.getTileLocation(1, 1))
+    MeanCar5 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car2)
+    tiles.placeOnTile(MeanCar5, tiles.getTileLocation(1, 1))
+    MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
+    tiles.placeOnTile(MeanCar6, tiles.getTileLocation(1, 1))
     Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(35, 56))
+    tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(37, 53))
     Spr_Pat.vy = 75
     Spr_Pat.setBounceOnWall(true)
     Spr_Pat5 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
@@ -467,8 +475,8 @@ function LVL_11 () {
     Spr_Pat3.vx = 75
     Spr_Pat3.setBounceOnWall(true)
     Spr_Pat2 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-    tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(37, 50))
-    Spr_Pat2.vy = 75
+    tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(35, 53))
+    Spr_Pat2.vy = -75
     Spr_Pat2.setBounceOnWall(true)
     Spr_Glas = sprites.create(assets.image`glas_left`, SpriteKind.Enemy2)
     tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(50, 34))
@@ -863,8 +871,6 @@ function Checkpoint () {
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (otherSprite.vy != 0) {
         otherSprite.vy = 0
-        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
-        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
         info.changeScoreBy(10)
         music.setVolume(111)
         music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
@@ -872,8 +878,6 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         otherSprite.vy = 75
     } else if (otherSprite.vx > 0) {
         otherSprite.vx = 0
-        One_Liner = ["Eat Film!!", "Gotcha!", "Say Cheese!"]
-        Spr_Player.sayText(One_Liner._pickRandom(), 1000, true)
         info.changeScoreBy(10)
         music.setVolume(111)
         music.play(music.createSong(assets.song`MY EYES`), music.PlaybackMode.UntilDone)
@@ -974,7 +978,6 @@ spriteutils.onSpriteKindUpdateInterval(SpriteKind.Enemy3, 1500, function (sprite
 })
 let Walking = false
 let PatDirection0 = 0
-let One_Liner: string[] = []
 let Target1: Sprite = null
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
