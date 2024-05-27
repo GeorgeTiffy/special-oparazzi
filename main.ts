@@ -19,6 +19,8 @@ namespace SpriteKind {
     export const Tut_2 = SpriteKind.create()
     export const Tut_3 = SpriteKind.create()
     export const Cameras = SpriteKind.create()
+    export const CameraPickup = SpriteKind.create()
+    export const Interactable = SpriteKind.create()
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -52,6 +54,9 @@ controller.up.onEvent(ControllerButtonEvent.Released, function () {
     }
 })
 function RunLevel () {
+    if (Level == 0) {
+    	
+    }
     if (Level == 1) {
         DialogueOne()
     }
@@ -65,6 +70,13 @@ function RunLevel () {
         PlayerZoo()
     }
 }
+// Interaction that allows player to pick up film
+sprites.onOverlap(SpriteKind.Player, SpriteKind.CameraPickup, function (sprite, otherSprite) {
+    info.changeLifeBy(1)
+    sprites.destroy(otherSprite)
+    music.setVolume(111)
+    music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
+})
 sprites.onOverlap(SpriteKind.Drone, SpriteKind.Car2, function (sprite, otherSprite) {
     music.stopAllSounds()
     Spr_drone.vx = 0
@@ -101,6 +113,33 @@ function E_Patrol () {
         Spr_Pat2.setImage(assets.image`pat_right`)
     } else if (Spr_Pat2.vx < 0) {
         Spr_Pat2.setImage(assets.image`pat_left`)
+    }
+    if (Spr_Pat3.vy < 0) {
+        Spr_Pat3.setImage(assets.image`pat_back`)
+    } else if (Spr_Pat3.vy > 0) {
+        Spr_Pat3.setImage(assets.image`pat_front`)
+    } else if (Spr_Pat3.vx > 0) {
+        Spr_Pat3.setImage(assets.image`pat_right`)
+    } else if (Spr_Pat3.vx < 0) {
+        Spr_Pat3.setImage(assets.image`pat_left`)
+    }
+    if (Spr_Pat4.vy < 0) {
+        Spr_Pat4.setImage(assets.image`pat_back`)
+    } else if (Spr_Pat4.vy > 0) {
+        Spr_Pat4.setImage(assets.image`pat_front`)
+    } else if (Spr_Pat4.vx > 0) {
+        Spr_Pat4.setImage(assets.image`pat_right`)
+    } else if (Spr_Pat4.vx < 0) {
+        Spr_Pat4.setImage(assets.image`pat_left`)
+    }
+    if (Spr_Pat5.vy < 0) {
+        Spr_Pat5.setImage(assets.image`pat_back`)
+    } else if (Spr_Pat5.vy > 0) {
+        Spr_Pat5.setImage(assets.image`pat_front`)
+    } else if (Spr_Pat5.vx > 0) {
+        Spr_Pat5.setImage(assets.image`pat_right`)
+    } else if (Spr_Pat5.vx < 0) {
+        Spr_Pat5.setImage(assets.image`pat_left`)
     }
 }
 function RaziDialogue () {
@@ -298,8 +337,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherS
 // Interaction that allows player to pick up film
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Film, function (sprite, otherSprite) {
     Film_Count += 1
-    sprites.destroy(Spr_Film)
-    Spr_Player.sayText("I've got " + Film_Count + " Film.", 1000, true)
+    sprites.destroy(otherSprite)
     music.setVolume(111)
     music.play(music.createSong(assets.song`Refill Film`), music.PlaybackMode.UntilDone)
 })
@@ -411,12 +449,26 @@ function LVL_11 () {
     info.setScore(0)
     info.setLife(3)
     spriteutils.setLifeImage(assets.image`Little Goobs`)
+    Spr_CameraPU = sprites.create(assets.image`CamLife`, SpriteKind.CameraPickup)
+    tiles.placeOnTile(Spr_CameraPU, tiles.getTileLocation(50, 2))
     Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
-    tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
+    tiles.placeOnTile(Spr_Film, tiles.getTileLocation(75, 19))
     Spr_Pat = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
     tiles.placeOnTile(Spr_Pat, tiles.getTileLocation(35, 56))
     Spr_Pat.vy = 75
     Spr_Pat.setBounceOnWall(true)
+    Spr_Pat5 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat5, tiles.getTileLocation(38, 30))
+    Spr_Pat5.vy = 75
+    Spr_Pat5.setBounceOnWall(true)
+    Spr_Pat4 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat4, tiles.getTileLocation(33, 30))
+    Spr_Pat4.vx = 75
+    Spr_Pat4.setBounceOnWall(true)
+    Spr_Pat3 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
+    tiles.placeOnTile(Spr_Pat3, tiles.getTileLocation(27, 30))
+    Spr_Pat3.vx = 75
+    Spr_Pat3.setBounceOnWall(true)
     Spr_Pat2 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
     tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(37, 50))
     Spr_Pat2.vy = 75
@@ -487,8 +539,40 @@ function LVL_11 () {
     Tutorial_3 = sprites.create(assets.image`Dialogue`, SpriteKind.Tut_3)
     tiles.placeOnTile(Tutorial_3, tiles.getTileLocation(42, 53))
     Tutorial_3.setFlag(SpriteFlag.Invisible, true)
+    Interactable = sprites.create(assets.image`Interactable_1`, SpriteKind.Interactable)
+    tiles.placeOnTile(Interactable, tiles.getTileLocation(49, 47))
     music.setVolume(25)
     music.play(music.createSong(assets.song`T1P-T03`), music.PlaybackMode.LoopingInBackground)
+}
+function TrashCan () {
+    if (spriteutils.distanceBetween(Spr_Player, Interactable) < 50) {
+        music.setVolume(111)
+        music.play(music.melodyPlayable(music.magicWand), music.PlaybackMode.InBackground)
+        if (InteractableTut == 1) {
+            game.showLongText("When you hear that sound, press A to interact with something nearby.", DialogLayout.Center)
+            InteractableTut = 0
+            TrashDialogue1 = 1
+        }
+        if (Film_Count == 6) {
+            if (controller.A.isPressed()) {
+                game.showLongText("Haha, thanks for the film!", DialogLayout.Bottom)
+                game.showLongText("Now I can use some of these cameras I've got!", DialogLayout.Bottom)
+                game.showLongText("I'll let you hold onto one of them for the trouble.", DialogLayout.Bottom)
+                game.showLongText("Here's your camera", DialogLayout.Bottom)
+                info.changeLifeBy(1)
+                Film_Count = 1
+            }
+        } else if (Film_Count != 6) {
+            if (controller.A.isPressed() && TrashDialogue1 == 1) {
+                game.showLongText("Hey Kid! Over here in the trashcan!", DialogLayout.Bottom)
+                game.showLongText("I've got a deal for you, I've got all these cameras but no film!", DialogLayout.Bottom)
+                game.showLongText("If you come back to me with 6 film then I can give you one of my cameras!", DialogLayout.Bottom)
+                TrashDialogue1 = 2
+            } else if (controller.A.isPressed() && TrashDialogue1 == 2) {
+                game.showLongText("Come back when you've got that film for me!", DialogLayout.Bottom)
+            }
+        }
+    }
 }
 function DialogueOne () {
     music.play(music.createSong(assets.song`Tip Toe Intro`), music.PlaybackMode.LoopingInBackground)
@@ -654,7 +738,6 @@ function P_Drone () {
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     controller.moveSprite(Spr_Player, 0, 0)
-    pause(200)
 })
 function SpawnCrowd () {
     if (CheckPoint == 1) {
@@ -899,6 +982,8 @@ let Target1: Sprite = null
 let Spr_Camera: Sprite = null
 let Spr_Boss: Sprite = null
 let Spr_Play_Dialogue: Sprite = null
+let TrashDialogue1 = 0
+let Interactable: Sprite = null
 let Tutorial_3: Sprite = null
 let Tutorial_2: Sprite = null
 let Tutorial_1: Sprite = null
@@ -911,11 +996,12 @@ let TheaterSign2: Sprite = null
 let TheaterSign: Sprite = null
 let TicketWindow: Sprite = null
 let Spr_Glas: Sprite = null
+let Spr_Film: Sprite = null
+let Spr_CameraPU: Sprite = null
 let Item_Name = 0
 let BackDoor = 0
 let Door1: Sprite = null
 let MovingCrowd: Sprite = null
-let Spr_Film: Sprite = null
 let MeanCar3: Sprite = null
 let MeanCar2: Sprite = null
 let MeanCar: Sprite = null
@@ -927,6 +1013,9 @@ let MeanCar5: Sprite = null
 let Meancar4: Sprite = null
 let CarScore2 = 0
 let CheckPoint = 0
+let Spr_Pat5: Sprite = null
+let Spr_Pat4: Sprite = null
+let Spr_Pat3: Sprite = null
 let Spr_Pat2: Sprite = null
 let Spr_Pat: Sprite = null
 let Spr_Player: Sprite = null
@@ -936,6 +1025,8 @@ let Hidden = 0
 let Spr_drone: Sprite = null
 let DroneActive = 0
 let Level = 0
+let InteractableTut = 0
+InteractableTut = 1
 Level = 2
 RunLevel()
 DroneActive = 0
@@ -968,6 +1059,7 @@ forever(function () {
     E_Patrol()
     E_Sunglasses()
     GlassesChase()
+    TrashCan()
     if (Spr_Player.overlapsWith(MovingCrowd)) {
         Hidden = 1
         animation.stopAnimation(animation.AnimationTypes.All, Spr_Player)
