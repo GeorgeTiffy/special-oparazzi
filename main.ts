@@ -54,9 +54,6 @@ controller.up.onEvent(ControllerButtonEvent.Released, function () {
     }
 })
 function RunLevel () {
-    if (Level == 0) {
-    	
-    }
     if (Level == 1) {
         DialogueOne()
     }
@@ -1024,11 +1021,11 @@ let Film_Count = 0
 let Hidden = 0
 let Spr_drone: Sprite = null
 let DroneActive = 0
-let Level = 0
 let InteractableTut = 0
-InteractableTut = 1
+let Level = 0
 Level = 2
 RunLevel()
+InteractableTut = 1
 DroneActive = 0
 Spr_drone = sprites.create(assets.image`Car_Right`, SpriteKind.Drone)
 game.onUpdate(function () {
