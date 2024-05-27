@@ -4,7 +4,8 @@
     "dependencies": {
         "device": "*",
         "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.4.1",
-        "color": "*"
+        "color": "*",
+        "Timers": "github:microsoft/arcade-timers#v1.1.0"
     },
     "files": [
         "main.blocks",

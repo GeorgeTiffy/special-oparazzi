@@ -22,6 +22,11 @@ namespace SpriteKind {
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    music.setVolume(255)
+    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
+    info.changeLifeBy(-1)
+    scene.cameraShake(4, 500)
+    Checkpoint()
     if (otherSprite.vy != 0) {
         otherSprite.vy = 0
         pause(2000)
@@ -149,18 +154,19 @@ function Cars_2 () {
             tiles.placeOnTile(Meancar4, tiles.getTileLocation(22, 47))
             Meancar4.vy = 75
         } else if (CarScore2 == 2) {
-            sprites.destroy(Meancar4)
+            tiles.placeOnTile(Meancar4, tiles.getTileLocation(1, 1))
             MeanCar5 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car2)
             tiles.placeOnTile(MeanCar5, tiles.getTileLocation(22, 47))
             MeanCar5.vy = 125
         } else if (CarScore2 == 3) {
-            sprites.destroy(MeanCar5)
-            pause(2000)
-            MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
-            tiles.placeOnTile(MeanCar6, tiles.getTileLocation(22, 47))
-            MeanCar6.vy = 300
+            tiles.placeOnTile(MeanCar5, tiles.getTileLocation(1, 1))
+            timer.after(2000, function () {
+                MeanCar6 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car2)
+                tiles.placeOnTile(MeanCar6, tiles.getTileLocation(22, 47))
+                MeanCar6.vy = 300
+            })
         } else if (CarScore2 == 4) {
-            sprites.destroy(MeanCar6)
+            tiles.placeOnTile(MeanCar6, tiles.getTileLocation(1, 1))
             CarScore2 = 1
             Cars_2()
         }
@@ -212,22 +218,23 @@ function Cars_1 () {
             tiles.placeOnTile(MeanCar, tiles.getTileLocation(19, 47))
             MeanCar.vy = 100
         } else if (CarScore == 2) {
-            sprites.destroy(MeanCar)
-            pause(2000)
-            MeanCar2 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car)
-            tiles.placeOnTile(MeanCar2, tiles.getTileLocation(19, 47))
-            MeanCar2.vy = 250
+            tiles.placeOnTile(MeanCar, tiles.getTileLocation(1, 1))
+            timer.after(2000, function () {
+                MeanCar2 = sprites.create(assets.image`CarDown_DANGER2`, SpriteKind.Car)
+                tiles.placeOnTile(MeanCar2, tiles.getTileLocation(19, 47))
+                MeanCar2.vy = 250
+            })
         } else if (CarScore == 3) {
-            sprites.destroy(MeanCar2)
+            tiles.placeOnTile(MeanCar2, tiles.getTileLocation(1, 1))
             MeanCar3 = sprites.create(assets.image`CarDown_R`, SpriteKind.Car)
             tiles.placeOnTile(MeanCar3, tiles.getTileLocation(19, 47))
             MeanCar3.vy = 150
         } else if (CarScore == 4) {
-            sprites.destroy(MeanCar3)
+            tiles.placeOnTile(MeanCar3, tiles.getTileLocation(1, 1))
             CarScore = 1
             Cars_1()
         }
-    } else {
+    } else if (CheckPoint == 2) {
         sprites.destroy(MeanCar)
         sprites.destroy(MeanCar2)
         sprites.destroy(MeanCar3)
@@ -314,14 +321,6 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
         }
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Door, function (sprite, otherSprite) {
-    if (Hidden == 1) {
-        Level = 3
-        sprites.destroy(Spr_Player)
-        BackDoor = 1
-        RunLevel()
-    }
-})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (DroneActive == 0) {
         DroneActive = 1
@@ -337,15 +336,25 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 sprites.onOverlap(SpriteKind.HidingPlace, SpriteKind.Door, function (sprite, otherSprite) {
-    pause(500)
-    sprites.destroy(MovingCrowd)
-    animation.runImageAnimation(
-    Door1,
-    assets.animation`myAnim0`,
-    700,
-    false
-    )
-    SpawnCrowd()
+    MovingCrowd.vx = 0
+    MovingCrowd.vy = 0
+    timer.after(500, function () {
+        Hidden = 0
+        tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(72, 33))
+        animation.runImageAnimation(
+        Door1,
+        assets.animation`myAnim0`,
+        700,
+        false
+        )
+        SpawnCrowd()
+    })
+    if (Hidden == 1) {
+        Level = 3
+        sprites.destroy(Spr_Player)
+        BackDoor = 1
+        RunLevel()
+    }
 })
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Car2, function (sprite, otherSprite) {
@@ -368,7 +377,6 @@ function LVL_11 () {
     Hidden = 0
     info.setScore(0)
     info.setLife(3)
-    SpawnCrowd()
     spriteutils.setLifeImage(assets.image`Little Goobs`)
     Spr_Film = sprites.create(assets.image`Film`, SpriteKind.Film)
     tiles.placeOnTile(Spr_Film, tiles.getTileLocation(20, 2))
@@ -380,15 +388,11 @@ function LVL_11 () {
     tiles.placeOnTile(Spr_Pat2, tiles.getTileLocation(37, 50))
     Spr_Pat2.vy = 75
     Spr_Pat2.setBounceOnWall(true)
-    Spr_Pat3 = sprites.create(assets.image`pat_front`, SpriteKind.Enemy)
-    Spr_Pat3.vx = 75
-    Spr_Pat3.setBounceOnWall(true)
-    tiles.placeOnTile(Spr_Pat3, tiles.getTileLocation(64, 28))
-    Spr_Glas = sprites.create(assets.image`glas_front`, SpriteKind.Enemy2)
+    Spr_Glas = sprites.create(assets.image`glas_left`, SpriteKind.Enemy2)
     tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(50, 34))
-    Spr_Glas.vy = 75
-    Spr_Glas.setBounceOnWall(true)
-    tiles.placeOnTile(Spr_Glas, tiles.getTileLocation(2, 15))
+    MovingCrowd = sprites.create(assets.image`Crowd_Left`, SpriteKind.HidingPlace)
+    tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(72, 33))
+    SpawnCrowd()
     TicketWindow = sprites.create(assets.image`myImage2`, SpriteKind.VisualFlourish)
     tiles.placeOnTile(TicketWindow, tiles.getTileLocation(52, 23))
     TheaterSign = sprites.create(assets.image`myImage3`, SpriteKind.VisualFlourish)
@@ -607,12 +611,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function SpawnCrowd () {
     if (CheckPoint == 1) {
-        MovingCrowd = sprites.create(assets.image`Crowd_Left`, SpriteKind.HidingPlace)
-        tiles.placeOnTile(MovingCrowd, tiles.getTileLocation(72, 33))
         MovingCrowd.vx = -40
-        pause(6000)
-        MovingCrowd.vx = 0
-        MovingCrowd.vy = -40
+        timer.after(8000, function () {
+            MovingCrowd.vx = 0
+            MovingCrowd.vy = -40
+        })
     } else {
         sprites.destroy(MovingCrowd)
     }
@@ -649,6 +652,7 @@ function LVL_12 () {
     sprites.destroy(TheaterSign2)
     sprites.destroy(TheaterSign)
     sprites.destroy(Door1)
+    sprites.destroy(FlashCams)
     Spr_Player = sprites.create(assets.image`pap_front`, SpriteKind.Player)
     scene.cameraFollowSprite(Spr_Player)
     Spr_Player.z += 100
@@ -859,11 +863,10 @@ let StationaryCar: Sprite = null
 let TheaterSign2: Sprite = null
 let TheaterSign: Sprite = null
 let TicketWindow: Sprite = null
-let Spr_Pat3: Sprite = null
 let Item_Name = 0
+let BackDoor = 0
 let Door1: Sprite = null
 let MovingCrowd: Sprite = null
-let BackDoor = 0
 let Hidden = 0
 let Spr_Film: Sprite = null
 let MeanCar3: Sprite = null
