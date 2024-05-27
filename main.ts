@@ -22,6 +22,7 @@ namespace SpriteKind {
 }
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Hidden = 0
     music.setVolume(255)
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     info.changeLifeBy(-1)
@@ -278,6 +279,7 @@ controller.A.onEvent(ControllerButtonEvent.Released, function () {
 })
 // interaction between patrolling enemies and players
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy2, function (sprite, otherSprite) {
+    Hidden = 0
     music.setVolume(255)
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     info.changeLifeBy(-1)
@@ -383,6 +385,8 @@ function GlassesChase () {
             Spr_Glas1.follow(Spr_Player, 0)
             tiles.placeOnTile(Spr_Glas1, tiles.getTileLocation(58, 28))
         }
+    } else if (Hidden == 1) {
+        Spr_Glas1.follow(Spr_Player, 0)
     }
     if (Hidden == 0) {
         if (spriteutils.distanceBetween(Spr_Glas2, Spr_Player) < 75) {
@@ -391,6 +395,8 @@ function GlassesChase () {
             Spr_Glas2.follow(Spr_Player, 0)
             tiles.placeOnTile(Spr_Glas2, tiles.getTileLocation(61, 28))
         }
+    } else if (Hidden == 1) {
+        Spr_Glas2.follow(Spr_Player, 0)
     }
 }
 function LVL_11 () {
@@ -899,7 +905,6 @@ let Item_Name = 0
 let BackDoor = 0
 let Door1: Sprite = null
 let MovingCrowd: Sprite = null
-let Hidden = 0
 let Spr_Film: Sprite = null
 let MeanCar3: Sprite = null
 let MeanCar2: Sprite = null
@@ -917,6 +922,7 @@ let Spr_Pat: Sprite = null
 let Spr_Player: Sprite = null
 let projectile: Sprite = null
 let Film_Count = 0
+let Hidden = 0
 let Spr_drone: Sprite = null
 let DroneActive = 0
 let Level = 0
